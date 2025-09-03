@@ -10,6 +10,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -27,6 +28,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@hookform/resolvers": "^5.2.1",
     "@reduxjs/toolkit": "^2.9.0",
     "clsx": "^2.1.1",
@@ -51,6 +53,7 @@
     "@types/react-dom": "^19.1.9",
     "@typescript-eslint/eslint-plugin": "^8.42.0",
     "@typescript-eslint/parser": "^8.42.0",
+    "babel-plugin-react-compiler": "^19.1.0-rc.3",
     "eslint": "^9.34.0",
     "eslint-config-next": "^15.5.2",
     "eslint-config-prettier": "^10.1.8",

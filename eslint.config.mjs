@@ -1,3 +1,4 @@
+import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import nextPlugin from "@next/eslint-plugin-next";
 import eslintPluginImport from "eslint-plugin-import";
@@ -11,11 +12,15 @@ import simpleImportSort from "eslint-plugin-simple-import-sort";
 import unicorn from "eslint-plugin-unicorn";
 import unusedImports from "eslint-plugin-unused-imports";
 import globals from "globals";
-import path from "node:path";
 import { fileURLToPath } from "node:url";
 import tseslint from "typescript-eslint";
+import path from "node:path";
 
 import { eslintRules } from "./_configs/eslint-rules.js";
+
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,6 +42,14 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...tseslint.configs.stylistic,
+
+  ...compat.config({
+    extends: ["next"],
+    rules: {
+      "@next/next/no-page-custom-font": "off",
+      "react/no-unescaped-entities": "off",
+    },
+  }),
   perfectionist.configs["recommended-natural"],
   unicorn.configs.recommended,
   eslintPluginPrettier,
@@ -67,6 +80,14 @@ export default tseslint.config(
     },
     rules: {
       ...eslintRules,
+      "no-relative-import-paths/no-relative-import-paths": [
+        "error",
+        {
+          allowSameFolder: false,
+          prefix: "@",
+          rootDir: ".",
+        },
+      ],
       "@next/next/no-before-interactive-script-outside-document": "error",
       "@next/next/no-css-tags": "error",
       "@next/next/no-head-element": "error",
@@ -78,14 +99,10 @@ export default tseslint.config(
       "@next/next/no-sync-scripts": "error",
       "@next/next/no-title-in-document-head": "error",
       "@next/next/no-unwanted-polyfillio": "error",
-      "no-relative-import-paths/no-relative-import-paths": [
-        "error",
-        {
-          allowSameFolder: false,
-          prefix: "@",
-          rootDir: ".",
-        },
-      ],
+
+      "unicorn/filename-case": "off",
+      "unicorn/no-empty-file": "off",
+
       "perfectionist/sort-imports": "off",
       "react-compiler/react-compiler": "error",
       "simple-import-sort/exports": "error",
@@ -138,6 +155,13 @@ export default tseslint.config(
       react: {
         version: "detect",
       },
+    },
+  },
+  {
+    files: ["**/eslint.config.{js,cjs,mjs}"],
+    rules: {
+      "perfectionist/sort-imports": "off",
+      "perfectionist/sort-objects": "off",
     },
   },
 );
