@@ -29,7 +29,8 @@
       "@hooks/*": ["./hooks/*"],
       "@store/*": ["./store/*"],
       "@api/*": ["./api/*"],
-      "@configs/*": ["_configs/*"]
+      "@configs/*": ["_configs/*"],
+      "@shared/*": ["shared/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -36,6 +36,7 @@
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
+    "firebase": "^12.2.1",
     "modern-normalize": "^3.0.1",
     "next": "^15.5.2",
     "next-intl": "^4.3.6",
