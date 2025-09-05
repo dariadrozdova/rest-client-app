@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @theme {
   --font-inter: "Inter", sans-serif;
@@ -9,7 +7,7 @@
 
   /* Light mode */
   --color-bg-primary: hsl(0, 0%, 98%);
-  --color-bg-secondary: hsl(210, 40%, 96%);
+  --color-bg-secondary: hsl(210, 40%, 92%);
   --color-text-primary: hsl(222, 47%, 11%);
   --color-text-secondary: hsl(215, 20%, 40%);
   --color-border-default: hsl(213, 27%, 84%);
@@ -20,9 +18,9 @@
   --color-accent-navy: hsl(222, 47%, 18%);
 }
 
-.dark {
+/*.dark {
   @theme {
-    /* Dark mode overrides */
+     Dark mode overrides
     --color-bg-primary: hsl(222, 14%, 10%);
     --color-bg-secondary: hsl(222, 14%, 15%);
     --color-text-primary: hsl(210, 40%, 98%);
@@ -34,4 +32,4 @@
     --color-accent-blue: hsl(217, 91%, 60%);
     --color-accent-navy: hsl(222, 47%, 18%);
   }
-}
+}*/
