@@ -11,9 +11,9 @@ export default async function Layout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>; // <-- Next 15: params is async
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params; // <-- await before use
+  const { locale } = await params;
 
   setRequestLocale(locale);
   const messages = await getMessages();
