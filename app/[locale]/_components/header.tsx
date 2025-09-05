@@ -1,10 +1,13 @@
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
-import { LanguageSwitch } from "@app/_components/language-switch";
+import { logoFull } from "@app/[locale]/(public)/images";
 
-import logoFull from "@/app/(public)/images/icons/Logo-paddle-text.svg";
+import { LanguageSwitch } from "@/app/[locale]/_components/language-switch";
 import { classNames } from "@/shared/styles";
-export function Header() {
+
+export default async function Header() {
+  const t = await getTranslations("header");
   return (
     <section className="">
       <div className="bg-bg-primary flex flex-row items-center justify-between px-6 py-2">
@@ -17,7 +20,7 @@ export function Header() {
               "font-medium transition-colors duration-300",
             )}
           >
-            Log off
+            {t("logoff")}
           </button>
         </div>
       </div>
