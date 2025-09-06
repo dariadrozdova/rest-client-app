@@ -1,1 +1,1 @@
-export type { Language } from "./types";
+export type { Language, Section } from "./types";
