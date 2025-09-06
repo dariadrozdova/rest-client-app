@@ -1,0 +1,7 @@
+{
+  "localStorage": {
+    "read": "Failed to read from localStorage for key: {key}. Error: {error}",
+    "write": "Failed to write to localStorage for key: {key}. Error: {error}",
+    "remove": "Failed to remove from localStorage for key: {key}. Error: {error}"
+  }
+}

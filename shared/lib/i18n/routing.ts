@@ -4,6 +4,6 @@ import { LANGUAGES } from "@/shared/globals";
 
 export const routing = defineRouting({
   defaultLocale: "en",
-  localePrefix: "as-needed",
+  localePrefix: "always",
   locales: LANGUAGES.map((lang) => lang.code),
 });

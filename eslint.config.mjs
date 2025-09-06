@@ -102,6 +102,7 @@ export default tseslint.config(
 
       "unicorn/filename-case": "off",
       "unicorn/no-empty-file": "off",
+      "unicorn/prefer-string-raw": "off",
 
       "perfectionist/sort-imports": "off",
       "react-compiler/react-compiler": "error",
