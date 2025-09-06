@@ -11,8 +11,8 @@
     "team": {
       "title": "LoneStarDev Team",
       "links": {
-        "daria": "Daria Drozdova",
-        "valeria": "Valeria Bessonava",
+        "daria": "Daria Tkachenko",
+        "valeria": "Valeria Bessonova",
         "aleksei": "Aleksei Shapovalov"
       }
     },
@@ -20,15 +20,15 @@
       "title": "Inspired by",
       "links": {
         "rsSchool": "RS School",
-        "reactCourse": "React course 2025",
+        "reactCourse": "React Course (RS School)",
         "mentor": "Mentor (andron13)"
       }
     },
     "support": {
-      "title": "Connect",
+      "title": "Support RS School",
       "links": {
-        "github": "GitHub",
-        "contact": "Contact Us"
+        "boosty": "Subscribe on Boosty",
+        "opencollective": "Donate on Open Collective"
       }
     }
   },

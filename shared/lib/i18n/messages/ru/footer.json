@@ -20,15 +20,15 @@
       "title": "Нас вдохновили",
       "links": {
         "rsSchool": "RS School",
-        "reactCourse": "Курс React 2025",
+        "reactCourse": "Курс React (RS School)",
         "mentor": "Ментор (andron13)"
       }
     },
-    "connect": {
-      "title": "Контакты",
+    "support": {
+      "title": "Поддержать RS School",
       "links": {
-        "github": "GitHub",
-        "contact": "Связаться с нами"
+        "boosty": "Подписаться на Boosty",
+        "opencollective": "Пожертвовать на Open Collective"
       }
     }
   },
