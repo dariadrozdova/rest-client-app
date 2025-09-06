@@ -88,7 +88,7 @@ export const eslintRules = {
   "unicorn/prefer-query-selector": "off",
   "unicorn/prevent-abbreviations": [
     "error",
-    { allowList: { props: true, Props: true } },
+    { allowList: { props: true, Props: true, params: true, Params: true } },
   ],
   "unicorn/explicit-length-check": "off",
   "unicorn/filename-case": [
