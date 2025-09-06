@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "product": {
+      "title": "Product",
+      "links": {
+        "howItWorks": "How it works",
+        "clients": "Our clients",
+        "pricing": "Pricing"
+      }
+    },
+    "team": {
+      "title": "LoneStarDev Team",
+      "links": {
+        "daria": "Daria Drozdova",
+        "valeria": "Valeria Bessonava",
+        "aleksei": "Aleksei Shapovalov"
+      }
+    },
+    "inspired": {
+      "title": "Inspired by",
+      "links": {
+        "rsSchool": "RS School",
+        "reactCourse": "React course 2025",
+        "mentor": "Mentor (andron13)"
+      }
+    },
+    "connect": {
+      "title": "Connect",
+      "links": {
+        "github": "GitHub",
+        "contact": "Contact Us"
+      }
+    }
+  },
+  "legal": {
+    "copyright": "© {year} {company}. All rights reserved.",
+    "build": "Build v{version}"
+  }
+}
