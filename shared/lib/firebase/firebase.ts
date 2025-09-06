@@ -22,8 +22,8 @@ export const database = getFirestore(app);
 let analytics: Analytics | null = null;
 
 if (typeof window !== "undefined") {
-  const isAnalyticsSupported = await isSupported();
-  if (isAnalyticsSupported) {
+  const supported = await isSupported();
+  if (supported) {
     analytics = getAnalytics(app);
   }
 }

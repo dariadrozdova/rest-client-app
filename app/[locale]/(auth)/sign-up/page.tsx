@@ -1,6 +1,6 @@
 "use client";
 
-import EmailSignUpForm from "@app/(auth)/sign-up/_components/sign-up-form";
+import EmailSignUpForm from "@app/[locale]/(auth)/sign-up/_components/sign-up-form";
 
 export default function SignUpPage() {
   return (
