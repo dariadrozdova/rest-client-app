@@ -25,7 +25,9 @@
     "typecheck": "tsc --noEmit",
     "fix:all": "npm run typecheck && npm run format:fix && npm run lint:fix",
     "ncu:ux": "ncu -u",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typegen": "next typegen",
+    "type-check": "npm run typegen && tsc --noEmit"
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.1",
