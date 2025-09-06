@@ -1,7 +1,9 @@
-import { defineRouting } from 'next-intl/routing';
+import { defineRouting } from "next-intl/routing";
+
+import { LANGUAGES } from "@/shared/globals";
 
 export const routing = defineRouting({
-  defaultLocale: 'en',
-
-  locales: ['en', 'ru', 'be'],
+  defaultLocale: "en",
+  localePrefix: "as-needed",
+  locales: LANGUAGES.map((lang) => lang.code),
 });

@@ -1,18 +1,24 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+
 import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
-import { routing } from "./routing";
+
+import { routing } from "@/shared/lib/i18n/routing";
 
 async function loadMessages(locale: string) {
-  const dir = path.join(process.cwd(), "shared/lib/i18n/messages", locale);
-  const files = await fs.readdir(dir);
-  const messages: Record<string, any> = {};
+  const directory = path.join(
+    process.cwd(),
+    "shared/lib/i18n/messages",
+    locale,
+  );
+  const files = await fs.readdir(directory);
+  const messages: Record<string, string> = {};
 
   for (const file of files) {
     if (file.endsWith(".json")) {
       const ns = file.replace(".json", "");
-      const content = await fs.readFile(path.join(dir, file), "utf-8");
+      const content = await fs.readFile(path.join(directory, file), "utf8");
       messages[ns] = JSON.parse(content);
     }
   }
