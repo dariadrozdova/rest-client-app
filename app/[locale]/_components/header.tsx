@@ -11,7 +11,7 @@ export default async function Header() {
   return (
     <section className="">
       <div className="bg-bg-primary flex flex-row items-center justify-between px-6 py-2">
-        <Image alt="logo" height={60} src={logoFull} width={150} />
+        <Image alt="logo" height={60} priority src={logoFull} width={150} />
         <div className="justify-space-between flex flex-row">
           <LanguageSwitch />
           <button

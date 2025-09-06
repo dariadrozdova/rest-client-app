@@ -1,0 +1,7 @@
+{
+  "localStorage": {
+    "read": "Не удалось прочитать из localStorage для ключа: {key}. Ошибка: {error}",
+    "write": "Не удалось записать в localStorage для ключа: {key}. Ошибка: {error}",
+    "remove": "Не удалось удалить из localStorage для ключа: {key}. Ошибка: {error}"
+  }
+}
