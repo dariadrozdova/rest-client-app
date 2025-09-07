@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/shared/lib/auth/get-session";
 
-export default async function ProtectedLayout({
+export default async function AuthLayout({
   children,
   params,
 }: {
@@ -12,10 +12,8 @@ export default async function ProtectedLayout({
 }) {
   const session = await getServerSession();
   const resolvedParams = await params;
-  if (!session) {
-    redirect(
-      `/${resolvedParams.locale}/auth/sign-in?next=/${resolvedParams.locale}${decodeURIComponent("")}`,
-    );
+  if (session) {
+    redirect(`/${resolvedParams.locale}`);
   }
   return <>{children}</>;
 }
