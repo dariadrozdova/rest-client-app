@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
-import { getServerSession } from "@/shared/lib/auth/get-session";
+import { getServerSession } from "@shared/lib/auth/get-session";
 
 export default async function ProtectedLayout({
   children,
@@ -14,7 +14,7 @@ export default async function ProtectedLayout({
   const resolvedParams = await params;
   if (!session) {
     redirect(
-      `/${resolvedParams.locale}/auth/sign-in?next=/${resolvedParams.locale}${decodeURIComponent("")}`,
+      `/${resolvedParams.locale}/sign-in?next=/${resolvedParams.locale}${decodeURIComponent("")}`,
     );
   }
   return <>{children}</>;
