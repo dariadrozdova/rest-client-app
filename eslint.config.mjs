@@ -105,7 +105,7 @@ export default tseslint.config(
 
       "perfectionist/sort-imports": "off",
       "react-compiler/react-compiler": "error",
-      "simple-import-sort/exports": "error",
+      "simple-import-sort/exports": "off",
       "simple-import-sort/imports": [
         "error",
         {
