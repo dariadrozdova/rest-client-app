@@ -1,0 +1,7 @@
+{
+  "localStorage": {
+    "read": "Не атрымалася прачытаць з localStorage для ключа: {key}. Памылка: {error}",
+    "write": "Не атрымалася запісаць у localStorage для ключа: {key}. Памылка: {error}",
+    "remove": "Не атрымалася выдаліць з localStorage для ключа: {key}. Памылка: {error}"
+  }
+}
