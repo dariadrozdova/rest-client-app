@@ -5,8 +5,7 @@ import { adminAuth } from "@/shared/lib/firebase/admin";
 const SECONDS_IN_MINUTE = 60;
 const MINUTES_IN_HOUR = 60;
 const HOURS_IN_DAY = 24;
-export const SECONDS_IN_DAY =
-  SECONDS_IN_MINUTE * MINUTES_IN_HOUR * HOURS_IN_DAY;
+const SECONDS_IN_DAY = SECONDS_IN_MINUTE * MINUTES_IN_HOUR * HOURS_IN_DAY;
 const DEFAULT_SESSION_DAYS = 7;
 const MILLISECONDS_IN_SECOND = 1000;
 
