@@ -11,9 +11,9 @@ export const FOOTER_SECTIONS: Section[] = [
   {
     id: "product",
     links: [
-      { href: "/#how-it-works", labelKey: "sections.product.links.howItWorks" },
-      { href: "/#clients", labelKey: "sections.product.links.clients" },
-      { href: "/pricing", labelKey: "sections.product.links.pricing" },
+      { href: "", labelKey: "sections.product.links.howItWorks" },
+      { href: "", labelKey: "sections.product.links.clients" },
+      { href: "", labelKey: "sections.product.links.pricing" },
     ],
     titleKey: "sections.product.title",
   },
