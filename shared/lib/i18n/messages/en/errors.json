@@ -3,5 +3,11 @@
     "read": "Failed to read from localStorage for key: {key}. Error: {error}",
     "write": "Failed to write to localStorage for key: {key}. Error: {error}",
     "remove": "Failed to remove from localStorage for key: {key}. Error: {error}"
+  },
+  "auth": {
+    "passwordsMustMatch": "Passwords must match",
+    "weakPassword": "Password must be at least 8 characters, include one letter, one digit and one special character",
+    "signUp": "Sign up failed: {message}",
+    "signUpUnknown": "Sign up failed: unknown error"
   }
 }

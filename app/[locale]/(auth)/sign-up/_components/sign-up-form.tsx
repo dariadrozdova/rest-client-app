@@ -3,8 +3,10 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { isStrongPassword } from "@shared/lib/validation/validate-password";
 import { logEvent } from "firebase/analytics";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useTranslations } from "use-intl";
 
 import { analytics, auth } from "@/shared/lib/firebase/firebase";
 
@@ -14,18 +16,17 @@ export default function EmailSignUpForm() {
   const [confirm, setConfirm] = useState("");
   const router = useRouter();
 
+  const t = useTranslations("errors.auth");
+
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
     if (password !== confirm) {
-      return alert("Passwords must match");
+      throw new Error(t("passwordsMustMatch"));
     }
-    if (
-      !/^(?=.*[A-Za-z\u00C0-\u024F\u0400-\u04FF])(?=.*\d)(?=.*[^\w\s]).{8,}$/u.test(
-        password,
-      )
-    ) {
-      return alert("Min 8, one letter, one digit, one special char");
+    if (!isStrongPassword(password)) {
+      throw new Error(t("weakPassword"));
     }
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       if (analytics) {
@@ -39,17 +40,23 @@ export default function EmailSignUpForm() {
           method: "password",
         });
       }
-      console.warn(error);
+      throw new Error(
+        error instanceof Error
+          ? t("signUp", { message: error.message })
+          : t("signUpUnknown"),
+      );
     }
   }
 
   return (
-    <form className="space-y-2" onSubmit={onSubmit}>
+    <form className="space-y-2" noValidate onSubmit={onSubmit}>
       <input
         autoComplete="email"
         className="w-full rounded border px-3 py-2"
         onChange={(event) => setEmail(event.target.value)}
         placeholder="Email"
+        required
+        type="email"
         value={email}
       />
       <input
@@ -57,6 +64,7 @@ export default function EmailSignUpForm() {
         className="w-full rounded border px-3 py-2"
         onChange={(event) => setPassword(event.target.value)}
         placeholder="Password"
+        required
         type="password"
         value={password}
       />
@@ -65,6 +73,7 @@ export default function EmailSignUpForm() {
         className="w-full rounded border px-3 py-2"
         onChange={(event) => setConfirm(event.target.value)}
         placeholder="Confirm password"
+        required
         type="password"
         value={confirm}
       />
