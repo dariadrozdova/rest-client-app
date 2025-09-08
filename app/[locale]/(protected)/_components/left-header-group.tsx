@@ -1,17 +1,26 @@
 "use client";
 
 import { useState } from "react";
-
-import { useTranslations } from "use-intl";
+import { useTranslations } from "next-intl";
 
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
 
-import { TABS } from "@/shared/globals";
 import { classNames } from "@/shared/styles";
 
 export default function LeftHeaderGroup() {
-  const [activeTab, setActiveTab] = useState<string>(TABS[0]);
   const t = useTranslations("protected-header");
+  const tr = useTranslations("tabs");
+
+  const tabs = [
+    { key: "headers", label: tr("headers") },
+    { key: "body", label: tr("body") },
+    { key: "variables", label: tr("variables") },
+    { key: "codegen", label: tr("codegen") },
+    { key: "requestHistory", label: tr("requestHistory") },
+  ];
+
+  const [activeTab, setActiveTab] = useState<string>(tabs[0].key);
+
   return (
     <>
       <div className="col-start-1 row-start-1 px-6 pt-8 text-base">
@@ -26,28 +35,28 @@ export default function LeftHeaderGroup() {
           </button>
         </div>
       </div>
+
       <div className="col-start-1 row-start-2 flex items-end px-6 pb-0 text-sm">
         <div
           aria-orientation="horizontal"
           className="flex flex-wrap gap-8"
           role="tablist"
         >
-          {TABS.map((tabOption) => {
-            const isActive = activeTab === tabOption;
+          {tabs.map(({ key }) => {
+            const isActive = activeTab === key;
             return (
               <button
                 aria-selected={isActive}
                 className={classNames(
                   "text-text-secondary mb-1 font-bold transition-colors focus-visible:outline",
-                  isActive
-                    ? "decoration-accent-blue font-bold underline decoration-2 underline-offset-8"
-                    : "",
+                  isActive &&
+                    "decoration-accent-blue font-bold underline decoration-2 underline-offset-8",
                 )}
-                key={tabOption}
-                onClick={() => setActiveTab(tabOption)}
+                key={key}
+                onClick={() => setActiveTab(key)}
                 role="tab"
               >
-                {tabOption}
+                {t(`tabs.${key}`)}
               </button>
             );
           })}

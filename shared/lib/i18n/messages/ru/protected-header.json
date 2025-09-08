@@ -10,7 +10,7 @@
     "headers": "Заголовки",
     "body": "Тело запроса",
     "variables": "Переменные",
-    "codegen": "Генерация кода",
-    "requestHistory": "История запросов"
+    "codegen": "Kод",
+    "requestHistory": "История"
   }
 }
