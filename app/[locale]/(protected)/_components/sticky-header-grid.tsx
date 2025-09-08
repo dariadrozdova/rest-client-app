@@ -1,4 +1,4 @@
-import LeftHeaderGroup from "@/app/[locale]/(protected)/_components/left-header-group";
+import { LeftHeaderGroup } from "@/app/[locale]/(protected)/_components/left-header-group";
 import RightHeaderGroup from "@/app/[locale]/(protected)/_components/right-header-group";
 import { classNames } from "@/shared/styles";
 

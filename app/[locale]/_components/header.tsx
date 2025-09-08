@@ -16,7 +16,7 @@ export default async function Header() {
           <LanguageSwitch />
           <button
             className={classNames(
-              "bg-bg-secondary hover:bg-border-default rounded-lg px-3 py-2",
+              "bg-bg-secondary rounded-lg px-3 py-2 hover:brightness-90",
               "font-medium transition-colors duration-300",
             )}
           >
