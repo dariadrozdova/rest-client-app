@@ -23,11 +23,11 @@ export function LanguageSwitch() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-100">
       <button
         aria-label="Select language"
         className={classNames(
-          "text-text-primary hover:bg-border-default bg-bg-primary",
+          "text-text-primary hover:bg-border-default bg-bg-primary cursor-pointer",
           "items-center rounded-lg px-3 py-2 font-medium transition-colors duration-300",
         )}
         onClick={() => setIsListOpen(!isListOpen)}

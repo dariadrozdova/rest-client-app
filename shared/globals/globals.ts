@@ -75,3 +75,21 @@ export const FOOTER_SECTIONS: Section[] = [
     titleKey: "sections.support.title",
   },
 ];
+
+export const HTTP_METHODS = [
+  "GET",
+  "POST",
+  "PATCH",
+  "DELETE",
+  "PUT",
+  "HEAD",
+  "OPTIONS",
+];
+
+export const TABS = [
+  "Headers",
+  "Body",
+  "Variables",
+  "CodeGen",
+  "Request History",
+];

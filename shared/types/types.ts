@@ -1,3 +1,6 @@
+export type HttpMethod = (typeof HTTP_METHODS)[number];
+import { HTTP_METHODS } from "@/shared/globals";
+
 export interface Language {
   code: "be" | "en" | "ru";
   name: string;
