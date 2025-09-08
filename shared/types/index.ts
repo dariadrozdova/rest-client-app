@@ -1,1 +1,1 @@
-export type { Language, Section } from "./types";
+export type { HttpMethod, Language, Section } from "./types";
