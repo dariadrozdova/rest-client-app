@@ -33,7 +33,7 @@ export function LeftHeaderGroup() {
           <button
             className={classNames(
               "bg-accent-blue border-accent-blue h-full w-28 rounded-r-md border",
-              "px-3 py-2 text-sm font-medium text-white hover:brightness-110",
+              "cursor-pointer px-3 py-2 text-sm font-medium text-white hover:brightness-110",
             )}
           >
             {t("protected-header.sendButton")}
@@ -54,9 +54,9 @@ export function LeftHeaderGroup() {
                 aria-selected={isActive}
                 className={classNames(
                   "text-text-secondary mb-1 font-bold transition-colors focus-visible:outline",
-                  "hover:text-text-primary",
+                  "hover:text-text-primary cursor-pointer",
                   isActive &&
-                    "decoration-accent-blue font-bold underline decoration-2 underline-offset-8",
+                    "decoration-accent-blue cursor-default font-bold underline decoration-2 underline-offset-8",
                 )}
                 key={key}
                 onClick={() => setActiveTab(key)}

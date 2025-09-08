@@ -29,6 +29,7 @@ export function MethodSwitch() {
         className={classNames(
           "bg-bg-secondary text-text-secondary border-border-default h-full w-28 border",
           "flex items-center justify-between rounded-l-md px-2 py-1 font-medium transition-colors duration-300",
+          "cursor-pointer",
         )}
         onClick={() => setIsOpen((s) => !s)}
         type="button"
