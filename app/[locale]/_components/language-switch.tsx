@@ -23,7 +23,7 @@ export function LanguageSwitch() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative z-100">
       <button
         aria-label="Select language"
         className={classNames(
