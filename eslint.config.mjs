@@ -105,6 +105,8 @@ export default tseslint.config(
       "unicorn/prefer-string-raw": "off",
 
       "perfectionist/sort-imports": "off",
+      "perfectionist/sort-objects": "off",
+
       "react-compiler/react-compiler": "error",
       "simple-import-sort/exports": "off",
       "simple-import-sort/imports": [
