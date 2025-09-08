@@ -6,6 +6,10 @@ import { getRequestConfig } from "next-intl/server";
 
 import { routing } from "@/shared/lib/i18n/routing";
 
+interface NestedMessages {
+  [key: string]: NestedMessages | string;
+}
+
 async function loadMessages(locale: string) {
   const directory = path.join(
     process.cwd(),
@@ -13,7 +17,7 @@ async function loadMessages(locale: string) {
     locale,
   );
   const files = await fs.readdir(directory);
-  const messages: Record<string, string> = {};
+  const messages: Record<string, NestedMessages> = {};
 
   for (const file of files) {
     if (file.endsWith(".json")) {
