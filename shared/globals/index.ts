@@ -1,1 +1,1 @@
-export { LANGUAGES } from "./globals";
+export { FOOTER_SECTIONS, LANGUAGES } from "./globals";
