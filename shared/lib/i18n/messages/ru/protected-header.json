@@ -1,11 +1,9 @@
 {
-  "protected-header": {
-    "sendButton": "Отправить",
-    "status": "Статус:",
-    "size": "Размер:",
-    "time": "Время:",
-    "response": "Ответ"
-  },
+  "sendButton": "Отправить",
+  "status": "Статус:",
+  "size": "Размер:",
+  "time": "Время:",
+  "response": "Ответ",
   "tabs": {
     "headers": "Заголовки",
     "body": "Тело запроса",

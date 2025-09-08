@@ -1,11 +1,9 @@
 {
-  "protected-header": {
-    "sendButton": "Адправіць",
-    "status": "Статус:",
-    "size": "Памер:",
-    "time": "Час:",
-    "response": "Адказ"
-  },
+  "sendButton": "Адправіць",
+  "status": "Статус:",
+  "size": "Памер:",
+  "time": "Час:",
+  "response": "Адказ",
   "tabs": {
     "headers": "Загалоўкі",
     "body": "Цела запыту",
