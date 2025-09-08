@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { useTranslations } from "use-intl";
+
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
 
 import { TABS } from "@/shared/globals";
@@ -9,7 +11,7 @@ import { classNames } from "@/shared/styles";
 
 export default function LeftHeaderGroup() {
   const [activeTab, setActiveTab] = useState<string>(TABS[0]);
-
+  const t = useTranslations("protected-header");
   return (
     <>
       <div className="col-start-1 row-start-1 px-6 pt-8 text-base">
@@ -20,7 +22,7 @@ export default function LeftHeaderGroup() {
             placeholder="https://api.example.com/path..."
           />
           <button className="bg-accent-blue border-accent-blue h-full w-28 rounded-r-md border px-3 py-2 text-sm font-medium text-white">
-            Send
+            {t("protected-header.sendButton")}
           </button>
         </div>
       </div>

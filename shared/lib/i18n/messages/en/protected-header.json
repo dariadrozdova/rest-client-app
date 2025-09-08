@@ -1,0 +1,16 @@
+{
+  "protected-header": {
+    "sendButton": "Send",
+    "status": "Status:",
+    "size": "Size:",
+    "time": "Time:",
+    "response": "Response"
+  },
+  "tabs": {
+    "headers": "Headers",
+    "body": "Body",
+    "variables": "Variables",
+    "codegen": "CodeGen",
+    "requestHistory": "Request History"
+  }
+}

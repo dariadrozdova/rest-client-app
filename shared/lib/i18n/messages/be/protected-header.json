@@ -1,0 +1,16 @@
+{
+  "protected-header": {
+    "sendButton": "Адправіць",
+    "status": "Статус:",
+    "size": "Памер:",
+    "time": "Час:",
+    "response": "Адказ"
+  },
+  "tabs": {
+    "headers": "Загалоўкі",
+    "body": "Цела запыту",
+    "variables": "Пераменныя",
+    "codegen": "Генерацыя кода",
+    "requestHistory": "Гісторыя запытаў"
+  }
+}

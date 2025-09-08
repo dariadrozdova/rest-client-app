@@ -1,0 +1,16 @@
+{
+  "protected-header": {
+    "sendButton": "Отправить",
+    "status": "Статус:",
+    "size": "Размер:",
+    "time": "Время:",
+    "response": "Ответ"
+  },
+  "tabs": {
+    "headers": "Заголовки",
+    "body": "Тело запроса",
+    "variables": "Переменные",
+    "codegen": "Генерация кода",
+    "requestHistory": "История запросов"
+  }
+}
