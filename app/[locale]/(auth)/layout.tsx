@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { getServerSession } from "@/shared/lib/auth/get-session";
@@ -6,14 +5,11 @@ import { getServerSession } from "@/shared/lib/auth/get-session";
 export default async function AuthLayout({
   children,
   params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
+}: LayoutProps<"/[locale]">) {
   const session = await getServerSession();
-  const resolvedParams = await params;
+  const { locale } = await params;
   if (session) {
-    redirect(`/${resolvedParams.locale}`);
+    redirect(`/${locale}`);
   }
   return <>{children}</>;
 }

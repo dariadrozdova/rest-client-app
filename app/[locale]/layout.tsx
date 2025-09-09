@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -17,10 +16,7 @@ export function generateStaticParams() {
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
+}: LayoutProps<"/[locale]">) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -28,19 +24,15 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale);
-  const messages = await getMessages(locale);
+  const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
-      <body className="bg-bg-primary text-base">
-        <ReduxProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            <Header />
-            {children}
-            <Footer />
-          </NextIntlClientProvider>
-        </ReduxProvider>
-      </body>
-    </html>
+    <ReduxProvider>
+      <NextIntlClientProvider locale={locale} messages={messages}>
+        <Header />
+        {children}
+        <Footer />
+      </NextIntlClientProvider>
+    </ReduxProvider>
   );
 }

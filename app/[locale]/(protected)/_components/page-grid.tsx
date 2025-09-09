@@ -1,7 +1,6 @@
-import { MOCK_RESPONSE } from "@shared/globals";
-
 import { LeftPane } from "@app/[locale]/(protected)/_components/left-pane";
 import { ResponsePane } from "@app/[locale]/(protected)/_components/response-panel";
+import { MOCK_RESPONSE } from "@shared/globals";
 
 export function PageGrid() {
   return (

@@ -3,9 +3,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { TabOpenState } from "@shared/types";
-
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
+import { TabOpenState } from "@shared/types";
 import { setActiveTab } from "@store/slices/tab-open-slice";
 import { RootState } from "@store/store";
 
