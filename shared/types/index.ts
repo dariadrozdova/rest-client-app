@@ -1,1 +1,7 @@
-export type { HttpMethod, Language, ResponsePaneProps, Section } from "./types";
+export type {
+  HttpMethod,
+  Language,
+  ResponsePaneProps,
+  Section,
+  TabOpenState,
+} from "./types";

@@ -21,3 +21,7 @@ export interface Section {
   links: LinkItem[];
   titleKey: string;
 }
+
+export interface TabOpenState {
+  activeTab: "body" | "codegen" | "headers" | "requestHistory" | "variables";
+}
