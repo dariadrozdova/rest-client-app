@@ -1,24 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
+import { TabOpenState } from "@shared/types";
+
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
+import { setActiveTab } from "@store/slices/tab-open-slice";
+import { RootState } from "@store/store";
 
 import { classNames } from "@/shared/styles";
 
+type TabKey = TabOpenState["activeTab"];
+
 export function LeftHeaderGroup() {
   const t = useTranslations("protected-header");
-
+  const dispatch = useDispatch();
+  const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
   const tabs = [
     { key: "headers", label: t("tabs.headers") },
     { key: "body", label: t("tabs.body") },
     { key: "variables", label: t("tabs.variables") },
     { key: "codegen", label: t("tabs.codegen") },
     { key: "requestHistory", label: t("tabs.requestHistory") },
-  ];
-
-  const [activeTab, setActiveTab] = useState<string>(tabs[0].key);
+  ] as const satisfies readonly { key: TabKey; label: string }[];
 
   return (
     <>
@@ -58,7 +63,7 @@ export function LeftHeaderGroup() {
                     "decoration-accent-blue font-bold underline decoration-2 underline-offset-8",
                 )}
                 key={key}
-                onClick={() => setActiveTab(key)}
+                onClick={() => dispatch(setActiveTab(key))}
                 role="tab"
               >
                 {label}

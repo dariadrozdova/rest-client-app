@@ -4,6 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { Footer, Header } from "@app/[locale]/_components";
+import { ReduxProvider } from "@store/provider";
 
 import "@/shared/styles/globals.css";
 
@@ -32,11 +33,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="bg-bg-primary text-base">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          {children}
-          <Footer />
-        </NextIntlClientProvider>
+        <ReduxProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Header />
+            {children}
+            <Footer />
+          </NextIntlClientProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

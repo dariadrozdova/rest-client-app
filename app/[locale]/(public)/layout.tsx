@@ -1,13 +1,11 @@
-import { Metadata } from "next";
-
 import { StickyHeaderGrid } from "@app/[locale]/(protected)/_components";
+import { PageGrid } from "@app/[locale]/(protected)/_components/page-grid";
 
-export const metadata: Metadata = { title: "PingPong" };
-
-export default function Layout() {
+export default function PublicLayout() {
   return (
     <div style={{}}>
       <StickyHeaderGrid />
+      <PageGrid />
     </div>
   );
 }
