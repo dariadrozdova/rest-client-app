@@ -1,21 +1,27 @@
-import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
+import { StickyHeaderGrid } from "@app/[locale]/(protected)/_components";
+import { PageGrid } from "@app/[locale]/(protected)/_components/page-grid";
 import { getServerSession } from "@shared/lib/auth/get-session";
+
+import { RequestProviderWrapper } from "@/app/[locale]/(protected)/main/_components/request-provider";
 
 export default async function ProtectedLayout({
   children,
   params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
+}: LayoutProps<"/[locale]/main">) {
   const session = await getServerSession();
-  const resolvedParams = await params;
+  const { locale } = await params;
   if (!session) {
-    redirect(
-      `/${resolvedParams.locale}/sign-in?next=/${resolvedParams.locale}${decodeURIComponent("")}`,
-    );
+    redirect(`/${locale}/sign-in?next=/${locale}${decodeURIComponent("")}`);
   }
-  return <>{children}</>;
+  return (
+    <RequestProviderWrapper>
+      <div style={{}}>
+        <StickyHeaderGrid />
+        <PageGrid />
+        {children}
+      </div>
+    </RequestProviderWrapper>
+  );
 }
