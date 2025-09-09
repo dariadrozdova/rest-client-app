@@ -12,6 +12,10 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface ResponsePaneProps {
+  response: string;
+}
+
 export interface Section {
   id: string;
   links: LinkItem[];
