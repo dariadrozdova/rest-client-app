@@ -1,0 +1,7 @@
+{
+  "prettifyButton": "Форматировать JSON",
+  "jsonError": "Ошибка JSON",
+  "placeholder": "Введите тело запроса (JSON, текст и т.д.)",
+  "charactersCount": "{count} символов",
+  "jsonDetected": "Обнаружен JSON"
+}

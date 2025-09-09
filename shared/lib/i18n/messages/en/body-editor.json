@@ -1,0 +1,7 @@
+{
+  "prettifyButton": "Prettify JSON",
+  "jsonError": "JSON Error",
+  "placeholder": "Enter request body (JSON, text, etc.)",
+  "charactersCount": "{count} characters",
+  "jsonDetected": "JSON detected"
+}
