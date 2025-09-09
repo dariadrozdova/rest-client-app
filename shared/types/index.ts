@@ -1,4 +1,6 @@
 export type {
+  HeaderItem,
+  HeadersState,
   HttpMethod,
   Language,
   ResponsePaneProps,
