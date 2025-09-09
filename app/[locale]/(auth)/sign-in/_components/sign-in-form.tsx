@@ -1,34 +1,45 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { logEvent } from "firebase/analytics";
-import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { analytics, auth } from "@/shared/lib/firebase/firebase";
+import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
+import { toErrorMessage } from "@shared/lib/errors/errors";
+import { useAuthRedirect } from "@shared/redirect/useAuthRedirect";
+
+import { analytics } from "@/shared/lib/firebase/firebase";
 
 export default function EmailSignInForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [error, setError] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
 
-  async function onSubmit(event: FormEvent) {
+  const { done, locale } = useAuthRedirect();
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setError(null);
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      setLoading(true);
+      const cred = await signInEmail(email, password);
+      const idToken = await getFreshIdToken(cred);
+      await serverLogin(locale, idToken);
+
       if (analytics) {
         logEvent(analytics, "login", { method: "password" });
       }
-      router.replace("/");
-    } catch (error: unknown) {
+      done();
+    } catch (error_: unknown) {
+      const message = toErrorMessage(error_);
       if (analytics) {
-        logEvent(analytics, "login_error", {
-          message: error instanceof Error ? error.message : "Unknown error",
-          method: "password",
-        });
+        logEvent(analytics, "login_error", { message, method: "password" });
       }
-      console.warn(error);
+      setError(message || "Login error");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -39,6 +50,7 @@ export default function EmailSignInForm() {
         className="w-full rounded border px-3 py-2"
         onChange={(event) => setEmail(event.target.value)}
         placeholder="Email"
+        type="email"
         value={email}
       />
       <input
@@ -49,9 +61,13 @@ export default function EmailSignInForm() {
         type="password"
         value={password}
       />
-      <button className="w-full rounded bg-blue-600 py-2 text-white">
-        Log in
+      <button
+        className="w-full rounded bg-blue-600 py-2 text-white disabled:opacity-60"
+        disabled={loading}
+      >
+        {loading ? "Logging in…" : "Log in"}
       </button>
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </form>
   );
 }

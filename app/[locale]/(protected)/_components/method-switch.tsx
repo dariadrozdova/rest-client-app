@@ -6,13 +6,26 @@ import { HTTP_METHODS } from "@/shared/globals";
 import { classNames } from "@/shared/styles";
 import type { HttpMethod } from "@/shared/types";
 
-export function MethodSwitch() {
+export function MethodSwitch({
+  value,
+  onChange,
+}: {
+  onChange?: (m: HttpMethod) => void;
+  value?: HttpMethod;
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [method, setMethod] = useState<HttpMethod>(HTTP_METHODS[0]);
+  const [internalMethod, setInternalMethod] = useState<HttpMethod>(
+    HTTP_METHODS[0],
+  );
+  const method = value ?? internalMethod;
   const rootReference = useRef<HTMLDivElement | null>(null);
 
   const handleSelect = (m: HttpMethod) => {
-    setMethod(m);
+    if (onChange) {
+      onChange(m);
+    } else {
+      setInternalMethod(m);
+    }
     setIsOpen(false);
   };
 

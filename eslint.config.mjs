@@ -118,7 +118,7 @@ export default tseslint.config(
             ["^react", "^next"],
             [String.raw`^@?\w`],
             [
-              "^(@api|@app|@components|@hooks|@pages|@utils|@types|@store|@context|@lib|@__test__)(/.*)?$",
+              "^(@api|@app|@components|@hooks|@shared|@pages|@utils|@types|@store|@context|@lib|@__test__)(/.*)?$",
             ],
             [String.raw`^\.\.(?!/?$)`, String.raw`^\.\./?$`],
             [

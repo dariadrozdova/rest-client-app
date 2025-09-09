@@ -21,10 +21,19 @@ export const database = getFirestore(app);
 
 let analytics: Analytics | null = null;
 
-if (typeof window !== "undefined") {
-  const supported = await isSupported();
-  if (supported) {
-    analytics = getAnalytics(app);
+const initializeAnalytics = () => {
+  if (typeof window !== "undefined") {
+    isSupported()
+      .then((supported) => {
+        if (supported) {
+          analytics = getAnalytics(app);
+        }
+      })
+      .catch((error) => {
+        console.warn("Failed to initialize analytics:", error);
+      });
   }
-}
+};
+
+initializeAnalytics();
 export { analytics };
