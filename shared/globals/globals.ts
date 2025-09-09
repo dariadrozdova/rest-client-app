@@ -93,3 +93,37 @@ export const TABS = [
   "CodeGen",
   "Request History",
 ];
+
+export const MOCK_RESPONSE = `{
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "cache-control": "no-cache",
+    "x-request-id": "abc123xyz"
+  },
+  "body": {
+    "user": {
+      "id": 42,
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "roles": ["admin", "editor"]
+    },
+    "posts": [
+      {
+        "id": 101,
+        "title": "Hello World",
+        "created_at": "2025-09-09T10:15:00Z"
+      },
+      {
+        "id": 102,
+        "title": "REST Client Example",
+        "created_at": "2025-09-09T10:20:00Z"
+      }
+    ]
+  },
+  "meta": {
+    "request_duration_ms": 123,
+    "response_size_bytes": 456
+  }
+}`;
