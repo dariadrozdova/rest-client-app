@@ -3,5 +3,8 @@
   "jsonError": "Ошибка JSON",
   "placeholder": "Введите тело запроса (JSON, текст и т.д.)",
   "charactersCount": "{count} символов",
-  "jsonDetected": "Обнаружен JSON"
+  "jsonDetected": "Обнаружен JSON",
+  "contentType": "Тип контента",
+  "jsonContent": "JSON контент",
+  "clearContent": "Очистить содержимое"
 }

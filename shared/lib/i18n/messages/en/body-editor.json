@@ -3,5 +3,8 @@
   "jsonError": "JSON Error",
   "placeholder": "Enter request body (JSON, text, etc.)",
   "charactersCount": "{count} characters",
-  "jsonDetected": "JSON detected"
+  "jsonDetected": "JSON detected",
+  "contentType": "Content Type",
+  "jsonContent": "JSON Content",
+  "clearContent": "Clear content"
 }

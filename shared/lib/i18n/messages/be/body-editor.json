@@ -3,5 +3,8 @@
   "jsonError": "Памылка JSON",
   "placeholder": "Увядзіце цела запыту (JSON, тэкст і г.д.)",
   "charactersCount": "{count} сімвалаў",
-  "jsonDetected": "Выяўлены JSON"
+  "jsonDetected": "Выяўлены JSON",
+  "contentType": "Тып кантэнту",
+  "jsonContent": "JSON кантэнт",
+  "clearContent": "Ачысціць змесціва"
 }
