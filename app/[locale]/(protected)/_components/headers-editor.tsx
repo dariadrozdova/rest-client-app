@@ -65,7 +65,7 @@ export function HeadersEditor() {
                 onChange={(event) =>
                   dispatch(updateKey({ id: row.id, key: event.target.value }))
                 }
-                placeholder={t("placeholder-header")}
+                placeholder={t("placeholderHeader")}
                 value={row.key}
               />
             </div>
@@ -83,7 +83,7 @@ export function HeadersEditor() {
                     updateValue({ id: row.id, value: event.target.value }),
                   )
                 }
-                placeholder={t("placeholder-value")}
+                placeholder={t("placeholderValue")}
                 value={row.value}
               />
             </div>
