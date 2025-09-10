@@ -1,9 +1,6 @@
 "use client";
 
-import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
-
-import { RootState } from "@store/store";
 
 import { BodyEditorToolbar } from "@/app/[locale]/(protected)/_components/body-editor/body-editor-toolbar";
 import { useBodyEditor } from "@/app/[locale]/(protected)/_components/body-editor/use-body-editor";
@@ -12,8 +9,6 @@ import { JsonViewer } from "@/shared/ui/json-viewer";
 
 export function BodyEditor() {
   const t = useTranslations("body-editor");
-  const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
-  const isBodyOpen = activeTab === "body";
 
   const {
     body,
@@ -24,10 +19,6 @@ export function BodyEditor() {
     clearBody,
     handleBodyChange,
   } = useBodyEditor();
-
-  if (!isBodyOpen) {
-    return null;
-  }
 
   const showJsonControls = isJsonLike(body);
   const isJsonMode = contentType === "application/json";

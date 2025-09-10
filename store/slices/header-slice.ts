@@ -1,4 +1,5 @@
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+
 import { HeaderItem, HeadersState } from "@shared/types";
 
 const initialState: HeadersState = {
