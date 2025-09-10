@@ -6,7 +6,9 @@ import { useTranslations } from "use-intl";
 
 export function useLocalStorage<T>(key: string, defaultValue: T) {
   const [value, setValue] = useState(defaultValue);
+  const [isInitialized, setIsInitialized] = useState(false);
   const t = useTranslations("errors.localStorage");
+
   useEffect(() => {
     try {
       if (typeof window === "undefined") {
@@ -16,12 +18,17 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
       if (raw !== null) {
         setValue(JSON.parse(raw));
       }
+      setIsInitialized(true);
     } catch (error) {
       throw new Error(t("read", { error: String(error), key }));
     }
   }, [key, t]);
 
   useEffect(() => {
+    if (!isInitialized) {
+      return;
+    }
+
     try {
       if (typeof window === "undefined") {
         return;
@@ -30,7 +37,7 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     } catch (error) {
       throw new Error(t("write", { error: String(error), key }));
     }
-  }, [key, value, t]);
+  }, [key, value, t, isInitialized]);
 
   const reset = () => {
     try {
@@ -42,5 +49,6 @@ export function useLocalStorage<T>(key: string, defaultValue: T) {
     }
     setValue(defaultValue);
   };
+
   return [value, setValue, reset] as const;
 }

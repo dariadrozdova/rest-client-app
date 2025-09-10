@@ -1,9 +1,10 @@
-import headerTab from "@shared/lib/i18n/messages/en/header-tab.json";
 import bodyEditor from "@shared/lib/i18n/messages/ru/body-editor.json";
 import errors from "@shared/lib/i18n/messages/ru/errors.json";
 import footer from "@shared/lib/i18n/messages/ru/footer.json";
 import header from "@shared/lib/i18n/messages/ru/header.json";
+import headerTab from "@shared/lib/i18n/messages/ru/header-tab.json";
 import protectedHeader from "@shared/lib/i18n/messages/ru/protected-header.json";
+import variablesEditor from "@shared/lib/i18n/messages/ru/variables-editor.json";
 
 export default {
   errors,
@@ -12,4 +13,5 @@ export default {
   "header-tab": headerTab,
   "protected-header": protectedHeader,
   "body-editor": bodyEditor,
+  "variables-editor": variablesEditor,
 } as const;
