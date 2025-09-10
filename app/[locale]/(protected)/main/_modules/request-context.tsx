@@ -8,19 +8,19 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useSelector } from "react-redux";
 import { useLocale } from "next-intl";
 
 import { HTTP_METHODS } from "@/shared/globals";
 import type { HttpMethod } from "@/shared/types";
+import { RootState } from "@/store/store";
 
 interface RequestState {
-  body: string;
   error: null | string;
   isLoading: boolean;
   method: HttpMethod;
   responseText: string;
   sendRequest: () => Promise<void>;
-  setBody: (b: string) => void;
   setMethod: (m: HttpMethod) => void;
   setUrl: (u: string) => void;
   url: string;
@@ -30,11 +30,11 @@ const RequestContext = createContext<null | RequestState>(null);
 
 export function RequestProvider({ children }: { children: ReactNode }) {
   const locale = useLocale();
+  const body = useSelector((state: RootState) => state.bodyEditor.body);
   const [method, setMethod] = useState<HttpMethod>(HTTP_METHODS[0]);
   const [url, setUrl] = useState<string>(
     "https://rickandmortyapi.com/api/character",
   );
-  const [body, setBody] = useState<string>("");
   const [responseText, setResponseText] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<null | string>(null);
@@ -74,16 +74,14 @@ export function RequestProvider({ children }: { children: ReactNode }) {
     () => ({
       method,
       url,
-      body,
       responseText,
       isLoading,
       error,
       setMethod,
       setUrl,
-      setBody,
       sendRequest,
     }),
-    [method, url, body, responseText, isLoading, error, sendRequest],
+    [method, url, responseText, isLoading, error, sendRequest],
   );
 
   return (

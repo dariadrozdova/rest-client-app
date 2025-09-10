@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import "@/shared/styles/globals.css";
 
-export const metadata = { title: "My App" };
+export const metadata = { title: "PingPong" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

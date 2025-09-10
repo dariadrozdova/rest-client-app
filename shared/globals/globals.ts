@@ -127,3 +127,7 @@ export const MOCK_RESPONSE = `{
     "response_size_bytes": 456
   }
 }`;
+
+export const LINE_HEIGHT_REM = 1.25;
+export const CHAR_WIDTH_REM = 0.5;
+export const PADDING_REM = 1;

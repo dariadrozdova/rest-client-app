@@ -64,7 +64,7 @@ export function LeftHeaderGroup() {
                 aria-selected={isActive}
                 className={classNames(
                   "text-text-secondary mb-1 font-bold transition-colors focus-visible:outline",
-                  "hover:text-text-primary",
+                  "hover:text-text-primary cursor-pointer",
                   isActive &&
                     "decoration-accent-blue font-bold underline decoration-2 underline-offset-8",
                 )}
