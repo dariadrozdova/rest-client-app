@@ -1,4 +1,11 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  clearJsonError,
+  setContentType as setContentTypeAction,
+  setJsonError as setJsonErrorAction,
+} from "@store/slices/body-editor-slice";
+import type { RootState } from "@store/store";
 
 import type {
   BodyEditorActions,
@@ -8,9 +15,20 @@ import { isJsonLike } from "@/app/[locale]/(protected)/_components/body-editor/u
 import { useRequest } from "@/app/[locale]/(protected)/main/_modules/request-context";
 
 export function useBodyEditor(): BodyEditorActions & BodyEditorState {
+  const dispatch = useDispatch();
   const { body, setBody } = useRequest();
-  const [jsonError, setJsonError] = useState<string>("");
-  const [contentType, setContentType] = useState<string>("application/json");
+
+  const { contentType, jsonError } = useSelector(
+    (state: RootState) => state.bodyEditor,
+  );
+
+  const setContentType = (type: string) => {
+    dispatch(setContentTypeAction(type));
+  };
+
+  const setJsonError = (error: string) => {
+    dispatch(setJsonErrorAction(error));
+  };
 
   const prettifyJson = () => {
     if (!body.trim()) {
@@ -21,31 +39,31 @@ export function useBodyEditor(): BodyEditorActions & BodyEditorState {
       const parsed = JSON.parse(body);
       const prettified = JSON.stringify(parsed, null, 2);
       setBody(prettified);
-      setJsonError("");
+      dispatch(clearJsonError());
     } catch (error) {
       const message = error instanceof Error ? error.message : "Invalid JSON";
-      setJsonError(message);
+      dispatch(setJsonErrorAction(message));
     }
   };
 
   const clearBody = () => {
     setBody("");
-    setJsonError("");
+    dispatch(clearJsonError());
   };
 
   const handleBodyChange = (value: string) => {
     setBody(value);
 
     if (jsonError) {
-      setJsonError("");
+      dispatch(clearJsonError());
     }
 
     const looksLikeJson = isJsonLike(value);
 
     if (looksLikeJson && contentType !== "application/json") {
-      setContentType("application/json");
+      dispatch(setContentTypeAction("application/json"));
     } else if (!looksLikeJson && contentType === "application/json") {
-      setContentType("text/plain");
+      dispatch(setContentTypeAction("text/plain"));
     }
   };
 
