@@ -1,7 +1,10 @@
 export {
+  CHAR_WIDTH_REM,
   FOOTER_SECTIONS,
   HTTP_METHODS,
   LANGUAGES,
+  LINE_HEIGHT_REM,
   MOCK_RESPONSE,
+  PADDING_REM,
   TABS,
 } from "./globals";

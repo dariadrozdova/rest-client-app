@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
+import { CHAR_WIDTH_REM, LINE_HEIGHT_REM, PADDING_REM } from "@/shared/globals";
+
 interface JsonViewerProps {
   className?: string;
   content: string;
@@ -11,10 +13,6 @@ interface JsonViewerProps {
   readOnly?: boolean;
   showLineNumbers?: boolean;
 }
-
-const LINE_HEIGHT_REM = 1.25;
-const CHAR_WIDTH_REM = 0.5;
-const PADDING_REM = 1;
 
 export function JsonViewer({
   content,

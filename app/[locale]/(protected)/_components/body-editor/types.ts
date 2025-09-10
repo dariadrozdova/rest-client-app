@@ -12,3 +12,11 @@ export interface BodyEditorState {
   contentType: string;
   jsonError: string;
 }
+
+export interface BodyEditorToolbarProps {
+  contentType: string;
+  onClearBody: () => void;
+  onContentTypeChange: (type: string) => void;
+  onPrettifyJson: () => void;
+  showJsonControls: boolean;
+}
