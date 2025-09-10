@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   clearJsonError,
+  setBody as setBodyAction,
   setContentType as setContentTypeAction,
   setJsonError as setJsonErrorAction,
 } from "@store/slices/body-editor-slice";
@@ -12,15 +13,17 @@ import type {
   BodyEditorState,
 } from "@/app/[locale]/(protected)/_components/body-editor/types";
 import { isJsonLike } from "@/app/[locale]/(protected)/_components/body-editor/utils";
-import { useRequest } from "@/app/[locale]/(protected)/main/_modules/request-context";
 
 export function useBodyEditor(): BodyEditorActions & BodyEditorState {
   const dispatch = useDispatch();
-  const { body, setBody } = useRequest();
 
-  const { contentType, jsonError } = useSelector(
+  const { body, contentType, jsonError } = useSelector(
     (state: RootState) => state.bodyEditor,
   );
+
+  const setBody = (value: string) => {
+    dispatch(setBodyAction(value));
+  };
 
   const setContentType = (type: string) => {
     dispatch(setContentTypeAction(type));
