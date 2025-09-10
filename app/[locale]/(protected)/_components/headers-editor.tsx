@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 import {
   ensureTrailingEmpty,
@@ -15,15 +16,23 @@ import {
 export function HeadersEditor() {
   const dispatch = useDispatch();
   const rows = useSelector(selectHeaders);
+  const t = useTranslations("header-tab");
 
   useEffect(() => {
     dispatch(ensureTrailingEmpty());
   }, [rows, dispatch]);
 
+  const handleBlur = (rowId: string, key: string, value: string) => {
+    dispatch(ensureTrailingEmpty());
+    if (key.trim() && value.trim()) {
+      dispatch(toggleEnabled({ id: rowId, enabled: true }));
+    }
+  };
+
   return (
     <div className="space-y-3 p-6">
       <h3 className="text-text-secondary text-sm font-semibold">
-        HTTP Headers
+        {t("title")}
       </h3>
 
       <div className="divide-border-default grid grid-cols-[1.5rem_1fr_1fr_0.5rem] gap-x-6">
@@ -32,7 +41,7 @@ export function HeadersEditor() {
             <div className="py-4">
               <input
                 checked={row.enabled}
-                className="size-4"
+                className="size-4 cursor-pointer"
                 onChange={(event) =>
                   dispatch(
                     toggleEnabled({
@@ -47,26 +56,34 @@ export function HeadersEditor() {
 
             <div className="py-2">
               <input
-                className="border-border-default hover:border-text-primary w-full border-b px-3 py-1 text-sm"
-                onBlur={() => dispatch(ensureTrailingEmpty())}
+                className={`border-border-default hover:border-text-primary w-full border-b px-3 py-1 text-sm ${
+                  row.enabled
+                    ? "text-text-primary"
+                    : "text-text-secondary font-light"
+                }`}
+                onBlur={() => handleBlur(row.id, row.key, row.value)}
                 onChange={(event) =>
                   dispatch(updateKey({ id: row.id, key: event.target.value }))
                 }
-                placeholder="header"
+                placeholder={t("placeholder-header")}
                 value={row.key}
               />
             </div>
 
             <div className="py-2">
               <input
-                className="border-border-default hover:border-text-primary w-full border-b px-3 py-1 text-sm"
-                onBlur={() => dispatch(ensureTrailingEmpty())}
+                className={`border-border-default hover:border-text-primary w-full border-b px-3 py-1 text-sm ${
+                  row.enabled
+                    ? "text-text-primary"
+                    : "text-text-secondary font-light"
+                }`}
+                onBlur={() => handleBlur(row.id, row.key, row.value)}
                 onChange={(event) =>
                   dispatch(
                     updateValue({ id: row.id, value: event.target.value }),
                   )
                 }
-                placeholder="value"
+                placeholder={t("placeholder-value")}
                 value={row.value}
               />
             </div>
