@@ -1,0 +1,11 @@
+{
+  "logoAlt": "ПингПонг",
+  "title": "Создать аккаунт",
+  "emailPlaceholder": "Введите ваш e-mail…",
+  "passwordPlaceholder": "Придумайте пароль…",
+  "confirmPlaceholder": "Подтвердите пароль…",
+  "buttonSubmit": "Зарегистрироваться",
+  "buttonLoading": "Создаем…",
+  "haveAccountQuestion": "Уже есть аккаунт?",
+  "signInLink": "Войти"
+}

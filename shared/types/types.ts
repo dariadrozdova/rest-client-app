@@ -1,9 +1,16 @@
+import { ReactNode } from "react";
+
 import {
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
 } from "@reduxjs/toolkit";
 
 import { HTTP_METHODS } from "@/shared/globals";
+
+export interface ButtonProps {
+  children: ReactNode;
+  disabled?: boolean;
+}
 
 export interface HeaderItem {
   enabled: boolean;
@@ -17,6 +24,14 @@ export interface HeadersState {
 }
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
+
+export interface InputFieldProps {
+  autoComplete?: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  type: string;
+  value: string;
+}
 
 export interface KeyValueEditorProps {
   items: KeyValueItem[];
