@@ -1,40 +1,29 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setSelectedMethod } from "@store/slices/method-slice";
+import { RootState } from "@store/store";
 
 import { HTTP_METHODS } from "@/shared/globals";
 import { classNames } from "@/shared/styles";
-import type { HttpMethod } from "@/shared/types";
+import type { Selected } from "@/shared/types";
 
-export function MethodSwitch({
-  value,
-  onChange,
-}: {
-  onChange?: (m: HttpMethod) => void;
-  value?: HttpMethod;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [internalMethod, setInternalMethod] = useState<HttpMethod>(
-    HTTP_METHODS[0],
+export function MethodSwitch() {
+  const dispatch = useDispatch();
+  const selected = useSelector(
+    (state: RootState) => state.method.selectedMethod,
   );
-  const method = value ?? internalMethod;
-  const rootReference = useRef<HTMLDivElement | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleSelect = (m: HttpMethod) => {
-    if (onChange) {
-      onChange(m);
-    } else {
-      setInternalMethod(m);
-    }
+  const handleSelect = (m: Selected) => {
+    dispatch(setSelectedMethod(m));
     setIsOpen(false);
   };
 
   return (
-    <div
-      className="relative h-full text-base"
-      data-current-method={method}
-      ref={rootReference}
-    >
+    <div className="relative h-full text-base" data-current-method={selected}>
       <button
         aria-expanded={isOpen}
         aria-haspopup="listbox"
@@ -47,7 +36,7 @@ export function MethodSwitch({
         onClick={() => setIsOpen((s) => !s)}
         type="button"
       >
-        <span className="sm:inline">{method}</span>
+        <span className="sm:inline">{selected}</span>
         <svg
           aria-hidden="true"
           className={classNames(
@@ -75,7 +64,7 @@ export function MethodSwitch({
           role="listbox"
         >
           {HTTP_METHODS.map((methodOption) => {
-            const isActive = method === methodOption;
+            const isActive = selected === methodOption;
             return (
               <button
                 aria-selected={isActive}

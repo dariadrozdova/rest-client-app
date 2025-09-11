@@ -1,4 +1,4 @@
-import type { Section } from "@/shared/types";
+import type { Section, selectedMethodState } from "@/shared/types";
 import type { Language } from "@/shared/types";
 
 export const LANGUAGES = [
@@ -79,12 +79,12 @@ export const FOOTER_SECTIONS: Section[] = [
 export const HTTP_METHODS = [
   "GET",
   "POST",
-  "PATCH",
-  "DELETE",
   "PUT",
-  "HEAD",
+  "DELETE",
+  "PATCH",
   "OPTIONS",
-];
+  "HEAD",
+] as const satisfies readonly selectedMethodState["selectedMethod"][];
 
 export const TABS = [
   "Headers",

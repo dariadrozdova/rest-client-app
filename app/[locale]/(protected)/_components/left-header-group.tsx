@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
 import { TabOpenState } from "@shared/types";
 import { setActiveTab } from "@store/slices/tab-open-slice";
+import { setUrl } from "@store/slices/url-slice";
 import { RootState } from "@store/store";
 
 import { useRequest } from "@/app/[locale]/(protected)/main/_modules/request-context";
@@ -17,8 +18,9 @@ export function LeftHeaderGroup() {
   const t = useTranslations("protected-header");
   const dispatch = useDispatch();
   const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
-  const { method, setMethod, url, setUrl, isLoading, sendRequest } =
-    useRequest();
+  const httpURL = useSelector((state: RootState) => state.httpUrl.httpUrl);
+
+  const { isLoading, sendRequest } = useRequest();
   const tabs = [
     { key: "headers", label: t("tabs.headers") },
     { key: "body", label: t("tabs.body") },
@@ -31,19 +33,19 @@ export function LeftHeaderGroup() {
     <>
       <div className="col-start-1 row-start-1 px-6 pt-8 text-base">
         <div className="flex h-9 w-full items-center">
-          <MethodSwitch onChange={setMethod} value={method} />
+          <MethodSwitch />
           <input
             className="bg-bg-secondary border-border-default h-full w-full border border-x-0 px-3 text-sm"
-            onChange={(event) => setUrl(event.target.value)}
+            onChange={(event) => dispatch(setUrl(event.target.value))}
             placeholder="https://api.example.com/path..."
-            value={url}
+            value={httpURL}
           />
           <button
             className={classNames(
               "bg-accent-blue border-accent-blue h-full w-28 rounded-r-md border",
               "px-3 py-2 text-sm font-medium text-white hover:brightness-110",
             )}
-            disabled={isLoading || !url}
+            disabled={isLoading || !httpURL}
             onClick={sendRequest}
           >
             {t("sendButton")}
