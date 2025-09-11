@@ -71,6 +71,8 @@ export interface Section {
   titleKey: string;
 }
 
+export type Selected = selectedMethodState["selectedMethod"];
+
 export interface selectedMethodState {
   selectedMethod:
     | "DELETE"
