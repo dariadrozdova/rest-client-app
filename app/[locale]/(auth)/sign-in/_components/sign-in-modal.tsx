@@ -11,10 +11,12 @@ interface SignInModalProps {
 export default function SignInModal({ onClose }: SignInModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="relative w-full max-w-md rounded-xl bg-white p-6 shadow-lg">
+      <div className="relative min-h-[420px] w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
         <button
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          aria-label="Close"
+          className="absolute top-5 right-5 text-gray-500 hover:text-gray-700"
           onClick={onClose}
+          type="button"
         >
           <X className="h-5 w-5" />
         </button>

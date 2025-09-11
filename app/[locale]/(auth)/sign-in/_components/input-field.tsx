@@ -15,7 +15,7 @@ export function InputField({
         "w-full rounded-md border border-gray-300 px-3 py-2 text-sm",
         "focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none",
       )}
-      onChange={(error) => onChange(error.target.value)}
+      onChange={(event) => onChange(event.target.value)}
       placeholder={placeholder}
       type={type}
       value={value}

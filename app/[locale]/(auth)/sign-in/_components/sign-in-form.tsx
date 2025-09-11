@@ -38,8 +38,8 @@ export default function EmailSignInForm() {
         logEvent(analytics, "login", { method: "password" });
       }
       done();
-    } catch (error_: unknown) {
-      const message = toErrorMessage(error_);
+    } catch (error: unknown) {
+      const message = toErrorMessage(error);
       if (analytics) {
         logEvent(analytics, "login_error", { message, method: "password" });
       }
@@ -50,7 +50,7 @@ export default function EmailSignInForm() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm rounded-xl bg-white p-6 shadow-lg">
+    <div className="mx-auto w-full max-w-sm bg-white p-6">
       <div className="mb-3">
         <Image alt="PingPong" className="mx-auto h-10 w-auto" src={logoSmall} />
       </div>
@@ -72,15 +72,13 @@ export default function EmailSignInForm() {
           type="password"
           value={password}
         />
-        <Button disabled={loading}>
-          {loading ? "Logging in…" : "Sign in"}
-        </Button>
-        {error && <AuthError message={error} />}
+        <Button disabled={loading}>{loading ? "Logging in…" : "Log in"}</Button>
+        <div className="h-6">{error && <AuthError message={error} />}</div>
       </form>
 
       <p className="mt-4 text-center text-xs text-gray-500">
         Don't have an account?{" "}
-        <Link className="text-blue-600 hover:underline" href="/signup">
+        <Link className="font-bold text-gray-600" href="/sign-up">
           Sign up
         </Link>
       </p>
