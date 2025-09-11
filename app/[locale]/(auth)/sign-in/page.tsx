@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useReturnableModal } from "@app/[locale]/(auth)/hooks/useReturnableModal";
 
-import SignInModal from "@app/[locale]/(auth)/sign-in/_components/sign-in-modal";
+import SignInModal from "@/app/[locale]/(auth)/sign-in/_components/sign-in-modal";
 
 export default function SignInPage() {
-  const [open, setOpen] = useState(true);
-  return <>{open && <SignInModal onClose={() => setOpen(false)} />}</>;
+  const { open, onClose } = useReturnableModal();
+  return open ? <SignInModal onClose={onClose} /> : null;
 }
