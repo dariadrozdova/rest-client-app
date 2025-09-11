@@ -36,7 +36,7 @@ export function LeftHeaderGroup() {
           <MethodSwitch />
           <input
             className="bg-bg-secondary border-border-default h-full w-full border border-x-0 px-3 text-sm"
-            onChange={(event) => setUrl(event.target.value)}
+            onChange={(event) => dispatch(setUrl(event.target.value))}
             placeholder="https://api.example.com/path..."
             value={httpURL}
           />
