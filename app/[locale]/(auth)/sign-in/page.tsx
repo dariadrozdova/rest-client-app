@@ -1,12 +1,10 @@
 "use client";
 
-import EmailSignInForm from "@app/[locale]/(auth)/sign-in/_components/sign-in-form";
+import { useReturnableModal } from "@app/[locale]/(auth)/hooks/useReturnableModal";
+
+import SignInModal from "@/app/[locale]/(auth)/sign-in/_components/sign-in-modal";
 
 export default function SignInPage() {
-  return (
-    <div className="mx-auto max-w-sm space-y-3">
-      <h1 className="text-lg font-semibold">Log in</h1>
-      <EmailSignInForm />
-    </div>
-  );
+  const { open, onClose } = useReturnableModal();
+  return open ? <SignInModal onClose={onClose} /> : null;
 }

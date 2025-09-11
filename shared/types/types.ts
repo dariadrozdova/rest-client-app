@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import {
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
@@ -71,6 +73,11 @@ export interface CodeLangState {
   selectedCodeLang: CodeLangGen;
 }
 
+export interface ButtonProps {
+  children: ReactNode;
+  disabled?: boolean;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;
@@ -90,6 +97,14 @@ export type Issue =
   | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
   | { type: "EMPTY_URL" }
   | { type: "MISSING_METHOD" };
+
+export interface InputFieldProps {
+  autoComplete?: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  type: string;
+  value: string;
+}
 
 export interface KeyValueEditorProps {
   items: KeyValueItem[];

@@ -1,16 +1,25 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { logEvent } from "firebase/analytics";
 
+import { AuthError } from "@app/[locale]/(auth)/_components/auth-error";
+import { Button } from "@app/[locale]/(auth)/_components/form-button";
+import { InputField } from "@app/[locale]/(auth)/_components/input-field";
+import { logoSmall } from "@app/[locale]/(public)/images";
 import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";
+import { Link } from "@shared/lib/i18n/navigation";
 import { useAuthRedirect } from "@shared/redirect/useAuthRedirect";
 
 import { analytics } from "@/shared/lib/firebase/firebase";
 
 export default function EmailSignInForm() {
+  const t = useTranslations("sign-in");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<null | string>(null);
@@ -32,42 +41,56 @@ export default function EmailSignInForm() {
         logEvent(analytics, "login", { method: "password" });
       }
       done();
-    } catch (error_: unknown) {
-      const message = toErrorMessage(error_);
+    } catch (error: unknown) {
+      const message = toErrorMessage(error);
       if (analytics) {
         logEvent(analytics, "login_error", { message, method: "password" });
       }
-      setError(message || "Login error");
+      setError(message || t("genericError"));
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <form className="space-y-2" onSubmit={onSubmit}>
-      <input
-        autoComplete="email"
-        className="w-full rounded border px-3 py-2"
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Email"
-        type="email"
-        value={email}
-      />
-      <input
-        autoComplete="current-password"
-        className="w-full rounded border px-3 py-2"
-        onChange={(event) => setPassword(event.target.value)}
-        placeholder="Password"
-        type="password"
-        value={password}
-      />
-      <button
-        className="w-full rounded bg-blue-600 py-2 text-white disabled:opacity-60"
-        disabled={loading}
-      >
-        {loading ? "Logging in…" : "Log in"}
-      </button>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-    </form>
+    <div className="mx-auto w-full max-w-sm bg-white p-6">
+      <div className="mb-3">
+        <Image
+          alt={t("logoAlt")}
+          className="mx-auto h-10 w-auto"
+          src={logoSmall}
+        />
+      </div>
+
+      <h2 className="text-center text-lg font-semibold">{t("title")}</h2>
+
+      <form className="mt-4 space-y-3" onSubmit={onSubmit}>
+        <InputField
+          autoComplete="email"
+          onChange={setEmail}
+          placeholder={t("emailPlaceholder")}
+          type="email"
+          value={email}
+        />
+        <InputField
+          autoComplete="current-password"
+          onChange={setPassword}
+          placeholder={t("passwordPlaceholder")}
+          type="password"
+          value={password}
+        />
+        <Button disabled={loading || !email || !password}>
+          {loading ? t("buttonLoading") : t("buttonSubmit")}
+        </Button>
+        <div className="h-6">{error && <AuthError message={error} />}</div>
+      </form>
+
+      <p className="mt-4 text-center text-xs text-gray-500">
+        {t("noAccountQuestion")}{" "}
+        <Link className="font-bold text-gray-600" href="/sign-up">
+          {t("signUpLink")}
+        </Link>
+      </p>
+    </div>
   );
 }
