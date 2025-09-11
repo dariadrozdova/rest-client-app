@@ -18,6 +18,13 @@ export interface HeadersState {
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 
+export type Issue =
+  | { detail?: string; type: "INVALID_JSON_BODY" }
+  | { detail?: string; type: "INVALID_URL" }
+  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
+  | { type: "EMPTY_URL" }
+  | { type: "MISSING_METHOD" };
+
 export interface KeyValueEditorProps {
   items: KeyValueItem[];
   keyPlaceholder: string;
@@ -66,6 +73,27 @@ export interface ResolvedHeader {
   value: string;
 }
 
+export interface ResolvedRequest {
+  body: string | undefined;
+  headers: ResolvedHeader[];
+  meta: {
+    contentType?: string;
+    jsonMode: boolean;
+  };
+  method: HttpMethod;
+  url: string;
+}
+
+export interface ResolvedSelectorOutput {
+  canGenerate: boolean;
+  debug?: {
+    substitutedFields: ("body" | "headers" | "url")[];
+    usedVariables: string[];
+  };
+  issues: Issue[];
+  resolved?: ResolvedRequest;
+}
+
 export interface ResponsePaneProps {
   response: string;
 }
@@ -106,4 +134,9 @@ export interface VariableItem {
 
 export interface VariablesState {
   items: VariableItem[];
+}
+
+interface UnresolvedField {
+  names: string[];
+  scope: "body" | "headers" | "url";
 }

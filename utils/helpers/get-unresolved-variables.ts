@@ -1,6 +1,6 @@
 import { VARIABLE_REGEX } from "@shared/globals";
 
-export function extractUnresolvedTokens(input: string): string[] {
+export function extractUnresolvedVariables(input: string): string[] {
   if (!input) {
     return [];
   }
