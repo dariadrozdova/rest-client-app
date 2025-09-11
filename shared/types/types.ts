@@ -1,16 +1,54 @@
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+} from "@reduxjs/toolkit";
+
+import { HTTP_METHODS } from "@/shared/globals";
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;
   key: string;
   value: string;
 }
-import { HTTP_METHODS } from "@/shared/globals";
 
 export interface HeadersState {
   items: HeaderItem[];
 }
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
+
+export interface KeyValueEditorProps {
+  items: KeyValueItem[];
+  keyPlaceholder: string;
+  onEnsureTrailingEmpty: ActionCreatorWithoutPayload;
+  onRemoveRow: ActionCreatorWithPayload<string>;
+  onToggleEnabled: ActionCreatorWithPayload<{ enabled: boolean; id: string }>;
+  onUpdateKey: ActionCreatorWithPayload<{ id: string; key: string }>;
+  onUpdateValue: ActionCreatorWithPayload<{ id: string; value: string }>;
+  title: string;
+  valuePlaceholder: string;
+}
+
+export interface KeyValueItem {
+  enabled: boolean;
+  id: string;
+  key: string;
+  value: string;
+}
+
+export interface KeyValueRowProps {
+  index: number;
+  items: KeyValueItem[];
+  keyPlaceholder: string;
+  onEnsureTrailingEmpty: ActionCreatorWithoutPayload;
+  onRemoveRow: ActionCreatorWithPayload<string>;
+  onToggleEnabled: ActionCreatorWithPayload<{ enabled: boolean; id: string }>;
+  onUpdateKey: ActionCreatorWithPayload<{ id: string; key: string }>;
+  onUpdateValue: ActionCreatorWithPayload<{ id: string; value: string }>;
+  row: KeyValueItem;
+  valuePlaceholder: string;
+}
 
 export interface Language {
   code: "be" | "en" | "ru";
@@ -35,4 +73,15 @@ export interface Section {
 
 export interface TabOpenState {
   activeTab: "body" | "codegen" | "headers" | "requestHistory" | "variables";
+}
+
+export interface VariableItem {
+  enabled: boolean;
+  id: string;
+  key: string;
+  value: string;
+}
+
+export interface VariablesState {
+  items: VariableItem[];
 }
