@@ -1,0 +1,13 @@
+{
+  "logoAlt": "PingPong",
+  "title": "Увайдзіце ў PingPong",
+  "emailLabel": "Электронная пошта",
+  "emailPlaceholder": "Увядзіце ваш e-mail…",
+  "passwordLabel": "Пароль",
+  "passwordPlaceholder": "Увядзіце пароль…",
+  "buttonSubmit": "Увайсці",
+  "buttonLoading": "Уваход…",
+  "noAccountQuestion": "Няма акаўнта?",
+  "signUpLink": "Зарэгістравацца",
+  "genericError": "Памылка ўваходу"
+}
