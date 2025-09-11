@@ -132,3 +132,61 @@ export const LINE_HEIGHT_REM = 1.25;
 export const CHAR_WIDTH_REM = 0.5;
 export const PADDING_REM = 1;
 export const VARIABLE_REGEX = /\{\{([A-Za-z0-9_.-]+)\}\}/g;
+export const LANG_GEN = [
+  {
+    key: "curl",
+    label: "cURL",
+    language: "curl",
+    variant: "curl",
+    highlight: "bash",
+  },
+  {
+    key: "js-fetch",
+    label: "JavaScript (Fetch)",
+    language: "javascript",
+    variant: "fetch",
+    highlight: "javascript",
+  },
+  {
+    key: "js-xhr",
+    label: "JavaScript (XHR)",
+    language: "javascript",
+    variant: "xhr",
+    highlight: "javascript",
+  },
+  {
+    key: "node",
+    label: "NodeJS",
+    language: "nodejs",
+    variant: "native",
+    highlight: "javascript",
+  },
+  {
+    key: "python",
+    label: "Python",
+    language: "python",
+    variant: "requests",
+    highlight: "python",
+  },
+  {
+    key: "java",
+    label: "Java",
+    language: "java",
+    variant: "okhttp",
+    highlight: "java",
+  },
+  {
+    key: "csharp",
+    label: "C#",
+    language: "csharp",
+    variant: "httpclient",
+    highlight: "csharp",
+  },
+  {
+    key: "go",
+    label: "Go",
+    language: "go",
+    variant: "native",
+    highlight: "go",
+  },
+] as const;
