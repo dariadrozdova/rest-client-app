@@ -61,6 +61,11 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface ResolvedHeader {
+  name: string;
+  value: string;
+}
+
 export interface ResponsePaneProps {
   response: string;
 }

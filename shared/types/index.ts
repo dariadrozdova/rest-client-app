@@ -6,6 +6,7 @@ export type {
   KeyValueItem,
   KeyValueRowProps,
   Language,
+  ResolvedHeader,
   ResponsePaneProps,
   Section,
   Selected,
