@@ -6,9 +6,9 @@ import { useTranslations } from "next-intl";
 
 import { logEvent } from "firebase/analytics";
 
-import { AuthError } from "@app/[locale]/(auth)/sign-in/_components/auth-error";
-import { Button } from "@app/[locale]/(auth)/sign-in/_components/form-button";
-import { InputField } from "@app/[locale]/(auth)/sign-in/_components/input-field";
+import { AuthError } from "@app/[locale]/(auth)/_components/auth-error";
+import { Button } from "@app/[locale]/(auth)/_components/form-button";
+import { InputField } from "@app/[locale]/(auth)/_components/input-field";
 import { logoSmall } from "@app/[locale]/(public)/images";
 import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";

@@ -1,0 +1,11 @@
+{
+  "logoAlt": "PingPong",
+  "title": "Стварыце акаўнт",
+  "emailPlaceholder": "Увядзіце ваш e-mail…",
+  "passwordPlaceholder": "Прыдумайце пароль…",
+  "confirmPlaceholder": "Пацвердзіце пароль…",
+  "buttonSubmit": "Зарэгістравацца",
+  "buttonLoading": "Ствараем…",
+  "haveAccountQuestion": "Ужо ёсць акаўнт?",
+  "signInLink": "Увайсці"
+}
