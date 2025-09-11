@@ -7,4 +7,5 @@ export {
   MOCK_RESPONSE,
   PADDING_REM,
   TABS,
+  VARIABLE_REGEX,
 } from "./globals";

@@ -131,3 +131,4 @@ export const MOCK_RESPONSE = `{
 export const LINE_HEIGHT_REM = 1.25;
 export const CHAR_WIDTH_REM = 0.5;
 export const PADDING_REM = 1;
+export const VARIABLE_REGEX = /\{\{([A-Za-z0-9_.-]+)\}\}/g;
