@@ -21,7 +21,7 @@ export default function Modal({ onClose, children }: ModalProps) {
       >
         <button
           aria-label="Close"
-          className="absolute top-5 right-5 text-gray-500 hover:text-gray-700"
+          className="absolute top-5 right-5 cursor-pointer text-gray-500 hover:text-gray-700"
           onClick={onClose}
           type="button"
         >

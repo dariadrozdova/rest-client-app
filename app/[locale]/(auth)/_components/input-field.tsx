@@ -1,5 +1,4 @@
-import classNames from "classnames";
-
+import { classNames } from "@shared/styles";
 import { InputFieldProps } from "@shared/types/types";
 export function InputField({
   type,

@@ -79,7 +79,7 @@ export default function EmailSignInForm() {
           type="password"
           value={password}
         />
-        <Button disabled={loading}>
+        <Button disabled={loading || !email || !password}>
           {loading ? t("buttonLoading") : t("buttonSubmit")}
         </Button>
         <div className="h-6">{error && <AuthError message={error} />}</div>
