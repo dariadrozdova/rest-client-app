@@ -5,7 +5,73 @@ import {
   ActionCreatorWithPayload,
 } from "@reduxjs/toolkit";
 
-import { HTTP_METHODS } from "@/shared/globals";
+import { HTTP_METHODS, LANG_GEN } from "@/shared/globals";
+
+export type CodeLangGen = (typeof LANG_GEN)[number];
+
+export interface CodeLangOption {
+  selectedMethod:
+    | {
+        highlight: "bash";
+        key: "curl";
+        label: "cURL";
+        language: "curl";
+        variant: "curl";
+      }
+    | {
+        highlight: "csharp";
+        key: "csharp";
+        label: "C#";
+        language: "csharp";
+        variant: "httpclient";
+      }
+    | {
+        highlight: "go";
+        key: "go";
+        label: "Go";
+        language: "go";
+        variant: "native";
+      }
+    | {
+        highlight: "java";
+        key: "java";
+        label: "Java";
+        language: "java";
+        variant: "okhttp";
+      }
+    | {
+        highlight: "javascript";
+        key: "js-fetch";
+        label: "JavaScript (Fetch)";
+        language: "javascript";
+        variant: "fetch";
+      }
+    | {
+        highlight: "javascript";
+        key: "js-xhr";
+        label: "JavaScript (XHR)";
+        language: "javascript";
+        variant: "xhr";
+      }
+    | {
+        highlight: "javascript";
+        key: "node";
+        label: "NodeJS";
+        language: "nodejs";
+        variant: "native";
+      }
+    | {
+        highlight: "python";
+        key: "python";
+        label: "Python";
+        language: "python";
+        variant: "requests";
+      };
+}
+
+export interface CodeLangState {
+  selectedCodeLang: CodeLangGen;
+}
 
 export interface ButtonProps {
   children: ReactNode;
@@ -24,6 +90,13 @@ export interface HeadersState {
 }
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
+
+export type Issue =
+  | { detail?: string; type: "INVALID_JSON_BODY" }
+  | { detail?: string; type: "INVALID_URL" }
+  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
+  | { type: "EMPTY_URL" }
+  | { type: "MISSING_METHOD" };
 
 export interface InputFieldProps {
   autoComplete?: string;
@@ -76,6 +149,32 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface ResolvedHeader {
+  name: string;
+  value: string;
+}
+
+export interface ResolvedRequest {
+  body: string | undefined;
+  headers: ResolvedHeader[];
+  meta: {
+    contentType?: string;
+    jsonMode: boolean;
+  };
+  method: HttpMethod;
+  url: string;
+}
+
+export interface ResolvedSelectorOutput {
+  canGenerate: boolean;
+  debug?: {
+    substitutedFields: ("body" | "headers" | "url")[];
+    usedVariables: string[];
+  };
+  issues: Issue[];
+  resolved?: ResolvedRequest;
+}
+
 export interface ResponsePaneProps {
   response: string;
 }
@@ -116,4 +215,9 @@ export interface VariableItem {
 
 export interface VariablesState {
   items: VariableItem[];
+}
+
+interface UnresolvedField {
+  names: string[];
+  scope: "body" | "headers" | "url";
 }
