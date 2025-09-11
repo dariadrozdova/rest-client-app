@@ -8,7 +8,9 @@ export type {
   Language,
   ResponsePaneProps,
   Section,
+  selectedMethodState,
   TabOpenState,
+  UrlState,
   VariableItem,
   VariablesState,
 } from "./types";

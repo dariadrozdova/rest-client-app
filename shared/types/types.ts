@@ -71,8 +71,23 @@ export interface Section {
   titleKey: string;
 }
 
+export interface selectedMethodState {
+  selectedMethod:
+    | "DELETE"
+    | "GET"
+    | "HEAD"
+    | "OPTIONS"
+    | "PATCH"
+    | "POST"
+    | "PUT";
+}
+
 export interface TabOpenState {
   activeTab: "body" | "codegen" | "headers" | "requestHistory" | "variables";
+}
+
+export interface UrlState {
+  httpUrl: string;
 }
 
 export interface VariableItem {
