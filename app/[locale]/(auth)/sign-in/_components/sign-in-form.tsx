@@ -1,11 +1,17 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Image from "next/image";
 
 import { logEvent } from "firebase/analytics";
 
+import { AuthError } from "@app/[locale]/(auth)/sign-in/_components/auth-error";
+import { Button } from "@app/[locale]/(auth)/sign-in/_components/form-button";
+import { InputField } from "@app/[locale]/(auth)/sign-in/_components/input-field";
+import { logoSmall } from "@app/[locale]/(public)/images";
 import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";
+import { Link } from "@shared/lib/i18n/navigation";
 import { useAuthRedirect } from "@shared/redirect/useAuthRedirect";
 
 import { analytics } from "@/shared/lib/firebase/firebase";
@@ -44,30 +50,40 @@ export default function EmailSignInForm() {
   }
 
   return (
-    <form className="space-y-2" onSubmit={onSubmit}>
-      <input
-        autoComplete="email"
-        className="w-full rounded border px-3 py-2"
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Email"
-        type="email"
-        value={email}
-      />
-      <input
-        autoComplete="current-password"
-        className="w-full rounded border px-3 py-2"
-        onChange={(event) => setPassword(event.target.value)}
-        placeholder="Password"
-        type="password"
-        value={password}
-      />
-      <button
-        className="w-full rounded bg-blue-600 py-2 text-white disabled:opacity-60"
-        disabled={loading}
-      >
-        {loading ? "Logging in…" : "Log in"}
-      </button>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-    </form>
+    <div className="mx-auto w-full max-w-sm rounded-xl bg-white p-6 shadow-lg">
+      <div className="mb-3">
+        <Image alt="PingPong" className="mx-auto h-10 w-auto" src={logoSmall} />
+      </div>
+
+      <h2 className="text-center text-lg font-semibold">Log in to PingPong</h2>
+
+      <form className="mt-4 space-y-3" onSubmit={onSubmit}>
+        <InputField
+          autoComplete="email"
+          onChange={setEmail}
+          placeholder="Enter your e-mail address..."
+          type="email"
+          value={email}
+        />
+        <InputField
+          autoComplete="current-password"
+          onChange={setPassword}
+          placeholder="Enter your password..."
+          type="password"
+          value={password}
+        />
+        <Button disabled={loading}>
+          {loading ? "Logging in…" : "Sign in"}
+        </Button>
+        {error && <AuthError message={error} />}
+      </form>
+
+      <p className="mt-4 text-center text-xs text-gray-500">
+        Don't have an account?{" "}
+        <Link className="text-blue-600 hover:underline" href="/signup">
+          Sign up
+        </Link>
+      </p>
+    </div>
   );
 }
