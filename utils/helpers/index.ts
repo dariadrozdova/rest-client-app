@@ -1,4 +1,5 @@
 export { collectEnabledVariables } from "./collect-variables";
+export { convertToHar } from "./convert-to-har";
 export { deriveContentType } from "./derive-content-type";
 export { extractUnresolvedVariables } from "./get-unresolved-variables";
 export { jsonDetect } from "./json-detect";
