@@ -1,6 +1,7 @@
 export { collectEnabledVariables } from "./collect-variables";
 export { convertToHar } from "./convert-to-har";
 export { deriveContentType } from "./derive-content-type";
+export { requestToGenerateCode } from "./generate-code";
 export { extractUnresolvedVariables } from "./get-unresolved-variables";
 export { jsonDetect } from "./json-detect";
 export { normalizeHeader } from "./normalize-header";
