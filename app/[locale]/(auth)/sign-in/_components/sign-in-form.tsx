@@ -28,6 +28,7 @@ export default function EmailSignInForm() {
   const { done, locale } = useAuthRedirect();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    console.warn(process.env);
     event.preventDefault();
     setError(null);
 
