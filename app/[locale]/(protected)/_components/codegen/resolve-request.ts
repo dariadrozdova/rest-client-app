@@ -18,7 +18,6 @@ import {
   validateUrlString,
 } from "@/utils/helpers";
 
-/** ----- PURE INPUT SELECTORS (no new objects/arrays created here) ----- */
 const selectMethod = (state: RootState) => state.method.selectedMethod;
 const selectUrlRaw = (state: RootState) => state.httpUrl.httpUrl ?? "";
 const selectHeaderItems = (state: RootState) => state.headers.items;
@@ -27,7 +26,6 @@ const selectContentTypeHint = (state: RootState) =>
   state.bodyEditor.contentType ?? "";
 const selectVariablesItems = (state: RootState) => state.variables.items;
 
-/** ----- RESULT SELECTOR (all computation happens here) ----- */
 export const selectResolvedRequest = createSelector(
   [
     selectMethod,
@@ -48,7 +46,7 @@ export const selectResolvedRequest = createSelector(
     const issues: Issue[] = [];
 
     if (!method) {
-      issues.push({ type: "MISSING_METHOD" });
+      issues.push({ type: "Missing request method" });
     }
 
     const headersNorm = headerItems
@@ -61,7 +59,7 @@ export const selectResolvedRequest = createSelector(
 
     const { out: urlSub } = substituteVariables(urlRaw || "", variablesMap);
     if (!urlSub.trim()) {
-      issues.push({ type: "EMPTY_URL" });
+      issues.push({ type: "Empty URL" });
     }
 
     for (const h of headersNorm) {
@@ -93,15 +91,15 @@ export const selectResolvedRequest = createSelector(
     }
 
     if (unresolved.length) {
-      issues.push({ type: "UNRESOLVED_VARIABLES", fields: unresolved });
+      issues.push({ type: "Unresolved variables:", fields: unresolved });
     }
 
     if (
-      !issues.some((issue) => issue.type === "EMPTY_URL") &&
+      !issues.some((issue) => issue.type === "Empty URL") &&
       urlLeft.length === 0 &&
       !validateUrlString(urlSub)
     ) {
-      issues.push({ type: "INVALID_URL", detail: urlSub });
+      issues.push({ type: "Invalid URL", detail: urlSub });
     }
 
     const contentType = deriveContentType(headersSub, contentTypeHint);
@@ -114,7 +112,7 @@ export const selectResolvedRequest = createSelector(
         if (pretty.ok) {
           finalBody = pretty.text;
         } else {
-          issues.push({ type: "INVALID_JSON_BODY", detail: pretty.error });
+          issues.push({ type: "Invalid JSON body", detail: pretty.error });
           finalBody = bodySub;
         }
       } else {

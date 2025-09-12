@@ -45,7 +45,7 @@ export function CodegenPanel() {
       <div className="flex items-center gap-3">
         <CodeLangSwitch />
         {!canGenerate && (
-          <div className="text-text-secondary text-sm">
+          <div className="text-accent-red text-sm">
             Unable to generate code:{" "}
             {issues.map((index) => index.type).join(", ")}
           </div>
@@ -53,9 +53,9 @@ export function CodegenPanel() {
       </div>
 
       <JsonViewer
-        className="h-[420px]"
+        className="text-text-secondary h-[420px]"
         content={
-          snippet || "// Prepare a request and pick a language to see code"
+          snippet || "// Prepare a request and select a language to see code"
         }
         mode="json"
         readOnly
