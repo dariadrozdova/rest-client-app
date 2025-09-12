@@ -1,20 +1,67 @@
 "use client";
 
-import { ResponsePaneProps } from "@shared/types";
+import { useSelector } from "react-redux";
 
-import { useRequest } from "@/app/[locale]/(protected)/main/_modules/request-context";
+import { RootState } from "@store/store";
+
 import { JsonViewer } from "@/shared/ui/json-viewer";
+import { getStatusColor } from "@/utils/helpers/get-status-color";
 
-export function ResponsePane({ response }: ResponsePaneProps) {
-  const context = useRequest();
-  const fallbackContent = response ?? "";
-  const content = context.responseText ?? fallbackContent;
+export function ResponsePane() {
+  const requestState = useSelector((state: RootState) => state.request);
+  const { isLoading, error, response } = requestState;
+
+  const getDisplayContent = (): string => {
+    if (isLoading) {
+      return "Loading...";
+    }
+
+    if (error) {
+      return `Error: ${error}`;
+    }
+
+    if (response) {
+      const fullResponse = {
+        status: response.status,
+        statusText: response.statusText,
+        headers: response.headers,
+        body: response.body ? JSON.parse(response.body) : null,
+        meta: response.meta,
+      };
+
+      return JSON.stringify(fullResponse, null, 2);
+    }
+
+    return "No request sent yet. Configure your request above and click Send.";
+  };
 
   return (
     <div className="col-start-3 max-h-[calc(100vh-12rem)] overflow-auto">
+      {response && (
+        <div className="border-border-default bg-bg-secondary border-b p-3 text-sm">
+          <div className="flex items-center gap-4">
+            <span className={`font-bold ${getStatusColor(response.status)}`}>
+              {response.status} {response.statusText}
+            </span>
+            <span className="text-text-secondary">
+              {response.meta.requestDurationMs}ms
+            </span>
+            <span className="text-text-secondary">
+              {response.meta.responseSizeBytes} bytes
+            </span>
+          </div>
+        </div>
+      )}
+
+      {error && (
+        <div className="border-b border-red-300 bg-red-50 p-3 text-sm text-red-700">
+          Request failed: {error}
+        </div>
+      )}
+
       <JsonViewer
         className="h-full"
-        content={content}
+        content={getDisplayContent()}
         readOnly
         showLineNumbers
       />

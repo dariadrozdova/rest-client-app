@@ -7,6 +7,11 @@ import {
 
 import { HTTP_METHODS, LANG_GEN } from "@/shared/globals";
 
+export interface ButtonProps {
+  children: ReactNode;
+  disabled?: boolean;
+}
+
 export type CodeLangGen = (typeof LANG_GEN)[number];
 
 export interface CodeLangOption {
@@ -73,11 +78,6 @@ export interface CodeLangState {
   selectedCodeLang: CodeLangGen;
 }
 
-export interface ButtonProps {
-  children: ReactNode;
-  disabled?: boolean;
-}
-
 export interface HeaderItem {
   enabled: boolean;
   id: string;
@@ -91,13 +91,6 @@ export interface HeadersState {
 
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 
-export type Issue =
-  | { detail?: string; type: "INVALID_JSON_BODY" }
-  | { detail?: string; type: "INVALID_URL" }
-  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
-  | { type: "EMPTY_URL" }
-  | { type: "MISSING_METHOD" };
-
 export interface InputFieldProps {
   autoComplete?: string;
   onChange: (value: string) => void;
@@ -105,6 +98,13 @@ export interface InputFieldProps {
   type: string;
   value: string;
 }
+
+export type Issue =
+  | { detail?: string; type: "INVALID_JSON_BODY" }
+  | { detail?: string; type: "INVALID_URL" }
+  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
+  | { type: "EMPTY_URL" }
+  | { type: "MISSING_METHOD" };
 
 export interface KeyValueEditorProps {
   items: KeyValueItem[];
@@ -149,6 +149,12 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface RequestState {
+  error: null | string;
+  isLoading: boolean;
+  response: null | ResponseData;
+}
+
 export interface ResolvedHeader {
   name: string;
   value: string;
@@ -173,6 +179,19 @@ export interface ResolvedSelectorOutput {
   };
   issues: Issue[];
   resolved?: ResolvedRequest;
+}
+
+export interface ResponseData {
+  body: string;
+  headers: Record<string, string>;
+  meta: {
+    requestDurationMs: number;
+    requestSizeBytes: number;
+    requestTimestamp: string;
+    responseSizeBytes: number;
+  };
+  status: number;
+  statusText: string;
 }
 
 export interface ResponsePaneProps {

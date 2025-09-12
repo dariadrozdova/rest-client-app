@@ -1,5 +1,6 @@
 {
   "sendButton": "Send",
+  "loading": "Loading...",
   "status": "Status:",
   "size": "Size:",
   "time": "Time:",

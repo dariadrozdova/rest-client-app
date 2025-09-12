@@ -4,6 +4,7 @@ import bodyEditorReducer from "@/store/slices/body-editor-slice";
 import codeLangReducer from "@/store/slices/code-lang-slice";
 import headersReducer from "@/store/slices/header-slice";
 import methodReducer from "@/store/slices/method-slice";
+import requestReducer from "@/store/slices/request-slice";
 import tabReducer from "@/store/slices/tab-open-slice";
 import httpUrlReducer from "@/store/slices/url-slice";
 import variablesReducer from "@/store/slices/variables-slice";
@@ -17,7 +18,9 @@ export const store = configureStore({
     method: methodReducer,
     httpUrl: httpUrlReducer,
     codeLang: codeLangReducer,
+    request: requestReducer,
   },
 });
 
+export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

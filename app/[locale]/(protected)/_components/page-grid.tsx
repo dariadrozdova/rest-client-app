@@ -9,7 +9,7 @@ export function PageGrid() {
         className="bg-border-default w col-start-2 row-span-2 h-full w-px"
       />
       <LeftPane />
-      <ResponsePane response={""} />
+      <ResponsePane />
     </div>
   );
 }
