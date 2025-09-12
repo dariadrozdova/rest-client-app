@@ -168,7 +168,7 @@ export const LANG_GEN: readonly CodeLangGen[] = [
     highlight: "javascript",
     snippetLang: "node",
     snippetClient: "fetch",
-  }, // or "native"
+  },
   {
     key: "python",
     label: "Python",

@@ -223,7 +223,6 @@ export type SnippetClient =
   | "requests"
   | "xhr";
 
-// types.ts
 export type SnippetLang =
   | "csharp"
   | "go"
