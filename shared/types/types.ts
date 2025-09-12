@@ -98,6 +98,25 @@ export interface CopyButtonProps {
   text: string;
 }
 
+export interface DropdownOption<T> {
+  isActive?: boolean;
+  label: string;
+  value: T;
+}
+
+export interface DropdownProps<T> {
+  activeOptionClassName?: string;
+  ariaLabel?: string;
+  buttonClassName?: string;
+  dropdownClassName?: string;
+  onSelect: (value: T) => void;
+  optionClassName?: string;
+  options: DropdownOption<T>[];
+  placeholder?: string;
+  selectedValue: T;
+  width?: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;

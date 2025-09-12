@@ -3,6 +3,8 @@ export type {
   CodeLangOption,
   CodeLangState,
   CopyButtonProps,
+  DropdownOption,
+  DropdownProps,
   HeaderItem,
   HeadersState,
   HttpMethod,
