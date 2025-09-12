@@ -30,7 +30,7 @@ export function CodeLangSwitch() {
         aria-haspopup="listbox"
         aria-label="Select code language"
         className={classNames(
-          "bg-bg-secondary text-text-secondary border-border-default h-full w-28 border",
+          "bg-bg-secondary text-text-secondary border-border-default h-full w-46 border",
           "flex items-center justify-between rounded-l-md px-2 py-1 font-medium transition-colors duration-300",
           "cursor-pointer",
         )}
@@ -61,7 +61,7 @@ export function CodeLangSwitch() {
 
       {isOpen && (
         <div
-          className="bg-bg-secondary absolute z-10 mt-1 w-40 shadow-lg"
+          className="bg-bg-secondary absolute z-10 mt-1 w-44 shadow-lg"
           role="listbox"
         >
           {LANG_GEN.map((codeLangOption) => {
