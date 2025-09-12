@@ -29,12 +29,10 @@ function logHar(request: ResolvedRequest) {
     body: hasBody ? request.body : undefined,
   });
 
-  if (!hasBody && !harRequest.postData) {
-    harRequest.postData = {
-      mimeType:
-        headers["content-type"] ?? headers["Content-Type"] ?? "text/plain",
-      text: "",
-    };
+  if (!harRequest.postData) {
+    const ct =
+      headers["content-type"] ?? headers["Content-Type"] ?? "text/plain";
+    harRequest.postData = { mimeType: ct, text: "" };
   }
 
   return {
