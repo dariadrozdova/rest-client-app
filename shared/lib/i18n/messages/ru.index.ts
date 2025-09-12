@@ -21,5 +21,5 @@ export default {
   "sign-in": signIn,
   "sign-up": signUp,
   "code-gen": codeGen,
-  "dropdown": dropdown,
+  dropdown: dropdown,
 } as const;

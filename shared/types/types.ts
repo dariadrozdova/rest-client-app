@@ -98,13 +98,14 @@ export interface CopyButtonProps {
   text: string;
 }
 
-export interface DropdownOption<T> {
+export interface DropdownOption<T = unknown> {
   isActive?: boolean;
+  key?: number | string;
   label: string;
   value: T;
 }
 
-export interface DropdownProps<T> {
+export interface DropdownProps<T = unknown> {
   activeOptionClassName?: string;
   ariaLabel?: string;
   buttonClassName?: string;
@@ -112,7 +113,6 @@ export interface DropdownProps<T> {
   onSelect: (value: T) => void;
   optionClassName?: string;
   options: DropdownOption<T>[];
-  placeholder?: string;
   selectedValue: T;
   width?: string;
 }
