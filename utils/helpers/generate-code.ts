@@ -14,12 +14,29 @@ function headerRecord(
 }
 
 function logHar(request: ResolvedRequest) {
+  const headers = headerRecord(request.headers);
+  const hasBody = request.body !== null && request.body !== "";
+
+  if (!hasBody) {
+    delete headers["content-type"];
+    delete headers["Content-Type"];
+  }
+
   const harRequest = convertToHar({
     method: request.method,
     url: request.url,
-    headers: headerRecord(request.headers),
-    body: request.body,
+    headers,
+    body: hasBody ? request.body : undefined,
   });
+
+  if (!hasBody && !harRequest.postData) {
+    harRequest.postData = {
+      mimeType:
+        headers["content-type"] ?? headers["Content-Type"] ?? "text/plain",
+      text: "",
+    };
+  }
+
   return {
     log: {
       version: "1.2",

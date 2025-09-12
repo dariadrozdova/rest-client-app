@@ -27,8 +27,10 @@ export function CodegenPanel() {
     if (!isOpen || !canGenerate || !request) {
       return;
     }
+
     try {
-      setSnippet(requestToGenerateCode(request, selected));
+      const code = requestToGenerateCode(request, selected);
+      setSnippet(code);
     } catch (error) {
       setSnippet(error instanceof Error ? error.message : String(error));
     }
