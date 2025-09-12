@@ -94,6 +94,10 @@ export interface CodeLangState {
   selectedCodeLang: CodeLangGen;
 }
 
+export interface CopyButtonProps {
+  text: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;

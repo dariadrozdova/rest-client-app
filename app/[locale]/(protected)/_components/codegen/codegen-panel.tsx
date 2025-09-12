@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import { CodeLangSwitch } from "@app/[locale]/(protected)/_components/codegen/code-lang-switch";
+import { CopyButton } from "@app/[locale]/(protected)/_components/codegen/copy-button";
+import { selectResolvedRequest } from "@app/[locale]/(protected)/_components/codegen/resolve-request"; // reselect selector
+import { JsonViewer } from "@shared/ui/json-viewer";
 import type { RootState } from "@store/store";
-
-import { CodeLangSwitch } from "@/app/[locale]/(protected)/_components//codegen/code-lang-switch";
-import { selectResolvedRequest } from "@/app/[locale]/(protected)/_components/codegen/resolve-request"; // reselect selector
-import { JsonViewer } from "@/shared/ui/json-viewer";
-import { requestToGenerateCode } from "@/utils/helpers";
+import { requestToGenerateCode } from "@utils/helpers";
 
 export function CodegenPanel() {
   const activeTab = useSelector((s: RootState) => s.tabs.activeTab);
@@ -50,6 +50,7 @@ export function CodegenPanel() {
             {issues.map((index) => index.type).join(", ")}
           </div>
         )}
+        <CopyButton text={snippet} />
       </div>
 
       <JsonViewer

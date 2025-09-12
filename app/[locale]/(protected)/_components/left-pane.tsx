@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 
 import { BodyEditor } from "@app/[locale]/(protected)/_components/body-editor";
-import { CodegenPanel } from "@app/[locale]/(protected)/_components/codegen-panel";
+import { CodegenPanel } from "@app/[locale]/(protected)/_components/codegen/codegen-panel";
 import { HeadersEditor } from "@app/[locale]/(protected)/_components/headers-editor";
 import { HistoryTable } from "@app/[locale]/(protected)/_components/history-table";
 import { VariablesEditor } from "@app/[locale]/(protected)/_components/variables-editor";
