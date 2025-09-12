@@ -10,7 +10,7 @@ import { LANG_GEN } from "@/shared/globals";
 import { classNames } from "@/shared/styles";
 import type { CodeLangGen } from "@/shared/types";
 
-export function MethodSwitch() {
+export function CodeLangSwitch() {
   const dispatch = useDispatch();
   const selected = useSelector(
     (state: RootState) => state.codeLang.selectedCodeLang,

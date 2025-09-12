@@ -10,7 +10,7 @@ import { selectResolvedRequest } from "@/app/[locale]/(protected)/_components/co
 import { JsonViewer } from "@/shared/ui/json-viewer";
 import { requestToGenerateCode } from "@/utils/helpers";
 
-export function CodegenerPanel() {
+export function CodegenPanel() {
   const activeTab = useSelector((s: RootState) => s.tabs.activeTab);
   const isOpen = activeTab === "codegen";
 

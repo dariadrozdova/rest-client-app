@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 
 import { BodyEditor } from "@app/[locale]/(protected)/_components/body-editor";
-import { CodegenerPanel } from "@app/[locale]/(protected)/_components/codegener-panel";
+import { CodegenPanel } from "@app/[locale]/(protected)/_components/codegen-panel";
 import { HeadersEditor } from "@app/[locale]/(protected)/_components/headers-editor";
 import { HistoryTable } from "@app/[locale]/(protected)/_components/history-table";
 import { VariablesEditor } from "@app/[locale]/(protected)/_components/variables-editor";
@@ -17,7 +17,7 @@ export function LeftPane() {
     <div className="col-start-1">
       {activeTab === "headers" && <HeadersEditor />}
       {activeTab === "body" && <BodyEditor />}
-      {activeTab === "codegen" && <CodegenerPanel />}
+      {activeTab === "codegen" && <CodegenPanel />}
       {activeTab === "variables" && <VariablesEditor />}
       {activeTab === "requestHistory" && <HistoryTable />}
     </div>
