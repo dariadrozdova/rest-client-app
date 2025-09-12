@@ -1,4 +1,5 @@
 import bodyEditor from "@shared/lib/i18n/messages/be/body-editor.json";
+import dropdown from "@shared/lib/i18n/messages/be/dropdown.json";
 import errors from "@shared/lib/i18n/messages/be/errors.json";
 import footer from "@shared/lib/i18n/messages/be/footer.json";
 import header from "@shared/lib/i18n/messages/be/header.json";
@@ -18,4 +19,5 @@ export default {
   "variables-editor": variablesEditor,
   "sign-in": signIn,
   "sign-up": signUp,
+  dropdown: dropdown,
 } as const;
