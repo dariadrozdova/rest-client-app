@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
     });
     return response;
-  } catch {
+  } catch (error) {
     return NextResponse.json(
-      { error: "Invalid Firebase token" },
+      { error: error, stringError: error?.toString() },
       { status: 401 },
     );
   }
