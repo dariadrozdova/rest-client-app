@@ -1,4 +1,9 @@
-import type { CodeLangGen, Section, selectedMethodState } from "@/shared/types";
+import type {
+  CodeLangGen,
+  Issue,
+  Section,
+  selectedMethodState,
+} from "@/shared/types";
 import type { Language } from "@/shared/types";
 
 export const LANGUAGES = [
@@ -206,3 +211,18 @@ export const LANG_GEN: readonly CodeLangGen[] = [
     snippetClient: "native",
   },
 ] as const;
+
+export const ISSUE_I18N_KEY: Record<
+  Issue["type"],
+  | "emptyUrl"
+  | "invalidJson"
+  | "invalidUrl"
+  | "missingMethod"
+  | "unresolvedVariables"
+> = {
+  MISSING_METHOD: "missingMethod",
+  EMPTY_URL: "emptyUrl",
+  INVALID_URL: "invalidUrl",
+  INVALID_JSON_BODY: "invalidJson",
+  UNRESOLVED_VARIABLES: "unresolvedVariables",
+};

@@ -1,11 +1,14 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Copy } from "lucide-react";
 
 import { classNames } from "@shared/styles";
 import { CopyButtonProps } from "@shared/types";
 
 export function CopyButton({ text }: CopyButtonProps) {
+  const t = useTranslations("code-gen");
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
@@ -22,7 +25,7 @@ export function CopyButton({ text }: CopyButtonProps) {
       )}
       disabled={!text}
       onClick={handleCopy}
-      title="Copy to clipboard"
+      title={t("copy")}
     >
       <Copy size={16} />
     </button>

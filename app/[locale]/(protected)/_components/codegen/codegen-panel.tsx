@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 import { CodeLangSwitch } from "@app/[locale]/(protected)/_components/codegen/code-lang-switch";
 import { CopyButton } from "@app/[locale]/(protected)/_components/codegen/copy-button";
@@ -10,15 +11,15 @@ import { JsonViewer } from "@shared/ui/json-viewer";
 import type { RootState } from "@store/store";
 import { requestToGenerateCode } from "@utils/helpers";
 
+import { ISSUE_I18N_KEY } from "@/shared/globals";
+
 export function CodegenPanel() {
+  const t = useTranslations("code-gen");
   const activeTab = useSelector((s: RootState) => s.tabs.activeTab);
   const isOpen = activeTab === "codegen";
-
   const selected = useSelector((s: RootState) => s.codeLang.selectedCodeLang);
   const resolvedOutput = useSelector(selectResolvedRequest);
-
   const [snippet, setSnippet] = useState("");
-
   const canGenerate = resolvedOutput.canGenerate && !!resolvedOutput.resolved;
   const issues = resolvedOutput.issues;
   const request = resolvedOutput.resolved;
@@ -46,8 +47,10 @@ export function CodegenPanel() {
         <CodeLangSwitch />
         {!canGenerate && (
           <div className="text-accent-red text-sm">
-            Unable to generate code:{" "}
-            {issues.map((index) => index.type).join(", ")}
+            {t("codeGenErrors.unable")}{" "}
+            {issues
+              .map((issue) => t(`codeGenErrors.${ISSUE_I18N_KEY[issue.type]}`))
+              .join(", ")}
           </div>
         )}
         <CopyButton text={snippet} />
@@ -55,9 +58,7 @@ export function CodegenPanel() {
 
       <JsonViewer
         className="text-text-secondary h-[420px]"
-        content={
-          snippet || "// Prepare a request and select a language to see code"
-        }
+        content={snippet || t("hints")}
         mode="json"
         readOnly
         showLineNumbers

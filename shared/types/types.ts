@@ -120,11 +120,11 @@ export interface InputFieldProps {
 }
 
 export type Issue =
-  | { detail?: string; type: "Invalid JSON body" }
-  | { detail?: string; type: "Invalid URL" }
-  | { fields: UnresolvedField[]; type: "Unresolved variables:" }
-  | { type: "Empty URL" }
-  | { type: "Missing request method" };
+  | { detail?: string; type: "EMPTY_URL" }
+  | { detail?: string; type: "INVALID_JSON_BODY" }
+  | { detail?: string; type: "INVALID_URL" }
+  | { detail?: string; type: "MISSING_METHOD" }
+  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" };
 
 export interface KeyValueEditorProps {
   items: KeyValueItem[];

@@ -46,7 +46,7 @@ export const selectResolvedRequest = createSelector(
     const issues: Issue[] = [];
 
     if (!method) {
-      issues.push({ type: "Missing request method" });
+      issues.push({ type: "MISSING_METHOD" });
     }
 
     const headersNorm = headerItems
@@ -59,7 +59,7 @@ export const selectResolvedRequest = createSelector(
 
     const { out: urlSub } = substituteVariables(urlRaw || "", variablesMap);
     if (!urlSub.trim()) {
-      issues.push({ type: "Empty URL" });
+      issues.push({ type: "EMPTY_URL" });
     }
 
     for (const h of headersNorm) {
@@ -91,15 +91,15 @@ export const selectResolvedRequest = createSelector(
     }
 
     if (unresolved.length) {
-      issues.push({ type: "Unresolved variables:", fields: unresolved });
+      issues.push({ type: "UNRESOLVED_VARIABLES", fields: unresolved });
     }
 
     if (
-      !issues.some((issue) => issue.type === "Empty URL") &&
+      !issues.some((issue) => issue.type === "EMPTY_URL") &&
       urlLeft.length === 0 &&
       !validateUrlString(urlSub)
     ) {
-      issues.push({ type: "Invalid URL", detail: urlSub });
+      issues.push({ type: "INVALID_URL", detail: urlSub });
     }
 
     const contentType = deriveContentType(headersSub, contentTypeHint);
@@ -112,7 +112,7 @@ export const selectResolvedRequest = createSelector(
         if (pretty.ok) {
           finalBody = pretty.text;
         } else {
-          issues.push({ type: "Invalid JSON body", detail: pretty.error });
+          issues.push({ type: "INVALID_JSON_BODY", detail: pretty.error });
           finalBody = bodySub;
         }
       } else {
