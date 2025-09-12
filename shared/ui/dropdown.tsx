@@ -2,29 +2,12 @@
 
 import { useRef, useState } from "react";
 
+import { DropdownProps } from "@shared/types";
+
 import { classNames } from "@/shared/styles";
 import { useOutsideClick } from "@/utils/hooks/use-outside-click";
 
-interface DropdownOption {
-  isActive?: boolean;
-  label: string;
-  value: string;
-}
-
-interface DropdownProps {
-  activeOptionClassName?: string;
-  ariaLabel?: string;
-  buttonClassName?: string;
-  dropdownClassName?: string;
-  onSelect: (value: string) => void;
-  optionClassName?: string;
-  options: DropdownOption[];
-  placeholder?: string;
-  selectedValue: string;
-  width?: string;
-}
-
-export function Dropdown({
+export function Dropdown<T>({
   options,
   selectedValue,
   onSelect,
@@ -32,31 +15,23 @@ export function Dropdown({
   dropdownClassName = "",
   optionClassName = "",
   activeOptionClassName = "",
-  ariaLabel = "Select option",
-  placeholder = "Select...",
   width = "w-40",
-}: DropdownProps) {
+}: DropdownProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownReference = useRef<HTMLDivElement>(null);
 
   useOutsideClick(dropdownReference, () => setIsOpen(false), isOpen);
 
-  const handleSelect = (value: string) => {
-    onSelect(value);
-    setIsOpen(false);
-  };
-
   const selectedOption = options.find(
     (option) => option.value === selectedValue,
   );
-  const displayLabel = selectedOption?.label || placeholder;
+  const displayLabel = selectedOption?.label ?? "";
 
   return (
     <div className="relative" ref={dropdownReference}>
       <button
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        aria-label={ariaLabel}
         className={classNames(
           "flex cursor-pointer items-center justify-between transition-colors duration-300",
           buttonClassName,
@@ -112,8 +87,11 @@ export function Dropdown({
                         optionClassName,
                       ),
                 )}
-                key={option.value}
-                onClick={() => handleSelect(option.value)}
+                key={String(option.value)}
+                onClick={() => {
+                  onSelect(option.value);
+                  setIsOpen(false);
+                }}
                 role="option"
               >
                 {option.label}

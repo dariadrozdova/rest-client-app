@@ -1,12 +1,13 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { LANGUAGES } from "@/shared/globals";
 import { usePathname, useRouter } from "@/shared/lib/i18n/navigation";
 import { Dropdown } from "@/shared/ui/dropdown";
 
 export function LanguageSwitch() {
+  const t = useTranslations("dropdown");
   const router = useRouter();
   const pathname = usePathname();
   const currentLocale = useLocale();
@@ -23,7 +24,7 @@ export function LanguageSwitch() {
   return (
     <div className="z-100">
       <Dropdown
-        ariaLabel="Select language"
+        ariaLabel={t("language")}
         buttonClassName="text-text-primary hover:bg-border-default bg-bg-primary rounded-lg px-3 py-2 font-medium"
         dropdownClassName="bg-bg-secondary"
         onSelect={handleLanguageChange}

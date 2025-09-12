@@ -2,6 +2,8 @@ export type {
   CodeLangGen,
   CodeLangOption,
   CodeLangState,
+  DropdownOption,
+  DropdownProps,
   HeaderItem,
   HeadersState,
   HttpMethod,
