@@ -70,8 +70,10 @@ export function Dropdown<T>({
           )}
           role="listbox"
         >
-          {options.map((option) => {
+          {options.map((option, index) => {
             const isActive = option.isActive ?? selectedValue === option.value;
+            const key = option.key ?? option.value ?? index;
+            const reactKey = String(key);
             return (
               <button
                 aria-selected={isActive}
@@ -87,7 +89,7 @@ export function Dropdown<T>({
                         optionClassName,
                       ),
                 )}
-                key={String(option.value)}
+                key={reactKey}
                 onClick={() => {
                   onSelect(option.value);
                   setIsOpen(false);

@@ -1,4 +1,5 @@
 import bodyEditor from "@shared/lib/i18n/messages/ru/body-editor.json";
+import codeGen from "@shared/lib/i18n/messages/ru/codegen.json";
 import dropdown from "@shared/lib/i18n/messages/ru/dropdown.json";
 import errors from "@shared/lib/i18n/messages/ru/errors.json";
 import footer from "@shared/lib/i18n/messages/ru/footer.json";
@@ -19,5 +20,6 @@ export default {
   "variables-editor": variablesEditor,
   "sign-in": signIn,
   "sign-up": signUp,
+  "code-gen": codeGen,
   dropdown: dropdown,
 } as const;

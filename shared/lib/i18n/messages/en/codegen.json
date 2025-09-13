@@ -1,0 +1,12 @@
+{
+  "hints": "// Prepare a request and select a language to see code",
+  "copy": "Copy to clipboard",
+  "codeGenErrors": {
+    "unable": "Unable to generate code:",
+    "missingMethod": "Missing request method",
+    "emptyUrl": "Empty URL",
+    "invalidUrl": "Invalid URL",
+    "invalidJson": "Invalid JSON body",
+    "unresolvedVariables": "Unresolved variables"
+  }
+}

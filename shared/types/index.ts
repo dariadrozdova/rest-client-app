@@ -2,6 +2,7 @@ export type {
   CodeLangGen,
   CodeLangOption,
   CodeLangState,
+  CopyButtonProps,
   DropdownOption,
   DropdownProps,
   HeaderItem,

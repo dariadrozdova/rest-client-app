@@ -18,58 +18,58 @@ import {
   validateUrlString,
 } from "@/utils/helpers";
 
-const rawRequestState = (state: RootState) => ({
-  method: state.method.selectedMethod,
-  urlRaw: state.httpUrl.httpUrl,
-  headers: state.headers.items,
-  body: {
-    bodyRaw: state.bodyEditor.body,
-    contentTypeHint: state.bodyEditor.contentType,
-  },
-  variables: state.variables.items,
-});
+const selectMethod = (state: RootState) => state.method.selectedMethod;
+const selectUrlRaw = (state: RootState) => state.httpUrl.httpUrl ?? "";
+const selectHeaderItems = (state: RootState) => state.headers.items;
+const selectBodyRaw = (state: RootState) => state.bodyEditor.body ?? "";
+const selectContentTypeHint = (state: RootState) =>
+  state.bodyEditor.contentType ?? "";
+const selectVariablesItems = (state: RootState) => state.variables.items;
 
 export const selectResolvedRequest = createSelector(
-  [rawRequestState],
-  (state): ResolvedSelectorOutput => {
+  [
+    selectMethod,
+    selectUrlRaw,
+    selectHeaderItems,
+    selectBodyRaw,
+    selectContentTypeHint,
+    selectVariablesItems,
+  ],
+  (
+    method,
+    urlRaw,
+    headerItems,
+    bodyRaw,
+    contentTypeHint,
+    variablesItems,
+  ): ResolvedSelectorOutput => {
     const issues: Issue[] = [];
 
-    const method = state.method;
     if (!method) {
       issues.push({ type: "MISSING_METHOD" });
     }
 
-    const headersNorm: ResolvedHeader[] = state.headers
-      .map((header) => normalizeHeader(header))
-      .filter((header) => header.enabled && !!header.key)
-      .map((header) => ({ name: header.key, value: header.value }));
+    const headersNorm = headerItems
+      .map((h) => normalizeHeader(h))
+      .filter((h) => h.enabled && !!h.key);
 
-    const variablesMap = collectEnabledVariables(state.variables);
+    const headersSub: ResolvedHeader[] = [];
 
-    const { out: urlSub } = substituteVariables(
-      state.urlRaw || "",
-      variablesMap,
-    );
+    const variablesMap = collectEnabledVariables(variablesItems);
+
+    const { out: urlSub } = substituteVariables(urlRaw || "", variablesMap);
     if (!urlSub.trim()) {
       issues.push({ type: "EMPTY_URL" });
     }
 
-    const headersSub = headersNorm.map((h) => {
+    for (const h of headersNorm) {
       const { out } = substituteVariables(h.value, variablesMap);
-      return { name: h.name, value: out };
-    });
-
-    const { out: bodySub } = substituteVariables(
-      state.body?.bodyRaw || "",
-      variablesMap,
-    );
-
-    const unresolved: { names: string[]; scope: "body" | "headers" | "url" }[] =
-      [];
-    if (unresolved.length) {
-      issues.push({ type: "UNRESOLVED_VARIABLES", fields: unresolved });
+      headersSub.push({ name: h.key, value: out });
     }
 
+    const { out: bodySub } = substituteVariables(bodyRaw || "", variablesMap);
+    const unresolved: { names: string[]; scope: "body" | "headers" | "url" }[] =
+      [];
     const headerLeftNames = new Set<string>();
     for (const h of headersSub) {
       for (const n of extractUnresolvedVariables(h.value)) {
@@ -95,20 +95,17 @@ export const selectResolvedRequest = createSelector(
     }
 
     if (
-      !issues.some((index) => index.type === "EMPTY_URL") &&
-      !urlLeft.length &&
+      !issues.some((issue) => issue.type === "EMPTY_URL") &&
+      urlLeft.length === 0 &&
       !validateUrlString(urlSub)
     ) {
       issues.push({ type: "INVALID_URL", detail: urlSub });
     }
 
-    const contentType = deriveContentType(
-      headersSub,
-      state.body?.contentTypeHint,
-    );
+    const contentType = deriveContentType(headersSub, contentTypeHint);
     const jsonMode = jsonDetect(contentType);
 
-    let finalBody: string | undefined = undefined;
+    let finalBody: string | undefined;
     if (bodySub && bodySub.length > 0) {
       if (jsonMode) {
         const pretty = safePrettyJson(bodySub);

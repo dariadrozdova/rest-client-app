@@ -37,6 +37,7 @@ export function CodeLangSwitch() {
       onSelect={handleSelect}
       optionClassName={classNames("px-4 py-2")}
       options={LANG_GEN.map((lang) => ({
+        key: lang.key,
         value: lang,
         label: lang.label,
       }))}

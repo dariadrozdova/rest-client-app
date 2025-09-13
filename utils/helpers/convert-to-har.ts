@@ -6,36 +6,37 @@ export function convertToHar(request: {
   method: string;
   url: string;
 }): HarRequest {
+  const hasBody =
+    request.body !== null &&
+    !(typeof request.body === "string" && request.body.length === 0);
+
   const headers = Object.entries(request.headers).map(([name, value]) => ({
     name,
     value,
   }));
-  const postData =
-    request.body === null
-      ? undefined
-      : typeof request.body === "string"
+
+  const postData = hasBody
+    ? typeof request.body === "string"
+      ? {
+          mimeType: request.headers["content-type"] ?? "text/plain",
+          text: request.body,
+        }
+      : request.body instanceof URLSearchParams
         ? {
-            mimeType: request.headers["content-type"] ?? "text/plain",
-            text: request.body,
+            mimeType: "application/x-www-form-urlencoded",
+            params: [...request.body].map(([name, value]) => ({ name, value })),
           }
-        : request.body instanceof URLSearchParams
+        : request.body instanceof FormData
           ? {
-              mimeType: "application/x-www-form-urlencoded",
-              params: [...request.body].map(([name, value]) => ({
+              mimeType: "multipart/form-data",
+              params: [...request.body.entries()].map(([name, value]) => ({
                 name,
-                value,
+                value: typeof value === "string" ? value : undefined,
+                fileName: typeof value === "string" ? undefined : value.name,
               })),
             }
-          : request.body instanceof FormData
-            ? {
-                mimeType: "multipart/form-data",
-                params: [...request.body.entries()].map(([name, value]) => ({
-                  name,
-                  value: typeof value === "string" ? value : undefined,
-                  fileName: typeof value === "string" ? undefined : value.name,
-                })),
-              }
-            : undefined;
+          : undefined
+    : undefined;
 
   return {
     method: request.method,
