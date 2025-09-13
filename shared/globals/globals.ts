@@ -1,4 +1,9 @@
-import type { Section, selectedMethodState } from "@/shared/types";
+import type {
+  CodeLangGen,
+  Issue,
+  Section,
+  selectedMethodState,
+} from "@/shared/types";
 import type { Language } from "@/shared/types";
 
 export const LANGUAGES = [
@@ -98,13 +103,15 @@ export const LINE_HEIGHT_REM = 1.25;
 export const CHAR_WIDTH_REM = 0.5;
 export const PADDING_REM = 1;
 export const VARIABLE_REGEX = /\{\{([A-Za-z0-9_.-]+)\}\}/g;
-export const LANG_GEN = [
+export const LANG_GEN: readonly CodeLangGen[] = [
   {
     key: "curl",
     label: "cURL",
     language: "curl",
     variant: "curl",
     highlight: "bash",
+    snippetLang: "shell",
+    snippetClient: "curl",
   },
   {
     key: "js-fetch",
@@ -112,6 +119,8 @@ export const LANG_GEN = [
     language: "javascript",
     variant: "fetch",
     highlight: "javascript",
+    snippetLang: "javascript",
+    snippetClient: "fetch",
   },
   {
     key: "js-xhr",
@@ -119,6 +128,8 @@ export const LANG_GEN = [
     language: "javascript",
     variant: "xhr",
     highlight: "javascript",
+    snippetLang: "javascript",
+    snippetClient: "xhr",
   },
   {
     key: "node",
@@ -126,6 +137,8 @@ export const LANG_GEN = [
     language: "nodejs",
     variant: "native",
     highlight: "javascript",
+    snippetLang: "node",
+    snippetClient: "fetch",
   },
   {
     key: "python",
@@ -133,6 +146,8 @@ export const LANG_GEN = [
     language: "python",
     variant: "requests",
     highlight: "python",
+    snippetLang: "python",
+    snippetClient: "requests",
   },
   {
     key: "java",
@@ -140,6 +155,8 @@ export const LANG_GEN = [
     language: "java",
     variant: "okhttp",
     highlight: "java",
+    snippetLang: "java",
+    snippetClient: "okhttp",
   },
   {
     key: "csharp",
@@ -147,6 +164,8 @@ export const LANG_GEN = [
     language: "csharp",
     variant: "httpclient",
     highlight: "csharp",
+    snippetLang: "csharp",
+    snippetClient: "httpclient",
   },
   {
     key: "go",
@@ -154,6 +173,8 @@ export const LANG_GEN = [
     language: "go",
     variant: "native",
     highlight: "go",
+    snippetLang: "go",
+    snippetClient: "native",
   },
 ] as const;
 
@@ -185,4 +206,19 @@ export const STATUS_INFO = {
   min: 100,
   max: 199,
   color: "text-yellow-600",
+};
+
+export const ISSUE_I18N_KEY: Record<
+  Issue["type"],
+  | "emptyUrl"
+  | "invalidJson"
+  | "invalidUrl"
+  | "missingMethod"
+  | "unresolvedVariables"
+> = {
+  MISSING_METHOD: "missingMethod",
+  EMPTY_URL: "emptyUrl",
+  INVALID_URL: "invalidUrl",
+  INVALID_JSON_BODY: "invalidJson",
+  UNRESOLVED_VARIABLES: "unresolvedVariables",
 };

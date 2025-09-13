@@ -5,14 +5,30 @@ import {
   ActionCreatorWithPayload,
 } from "@reduxjs/toolkit";
 
-import { HTTP_METHODS, LANG_GEN } from "@/shared/globals";
+import { HTTP_METHODS } from "@/shared/globals";
 
 export interface ButtonProps {
   children: ReactNode;
   disabled?: boolean;
 }
 
-export type CodeLangGen = (typeof LANG_GEN)[number];
+export interface CodeLangGen {
+  highlight: string;
+  key:
+    | "csharp"
+    | "curl"
+    | "go"
+    | "java"
+    | "js-fetch"
+    | "js-xhr"
+    | "node"
+    | "python";
+  label: string;
+  language: string;
+  snippetClient?: SnippetClient;
+  snippetLang: SnippetLang;
+  variant: string;
+}
 
 export interface CodeLangOption {
   selectedMethod:
@@ -78,6 +94,29 @@ export interface CodeLangState {
   selectedCodeLang: CodeLangGen;
 }
 
+export interface CopyButtonProps {
+  text: string;
+}
+
+export interface DropdownOption<T = unknown> {
+  isActive?: boolean;
+  key?: number | string;
+  label: string;
+  value: T;
+}
+
+export interface DropdownProps<T = unknown> {
+  activeOptionClassName?: string;
+  ariaLabel?: string;
+  buttonClassName?: string;
+  dropdownClassName?: string;
+  onSelect: (value: T) => void;
+  optionClassName?: string;
+  options: DropdownOption<T>[];
+  selectedValue: T;
+  width?: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;
@@ -100,11 +139,11 @@ export interface InputFieldProps {
 }
 
 export type Issue =
+  | { detail?: string; type: "EMPTY_URL" }
   | { detail?: string; type: "INVALID_JSON_BODY" }
   | { detail?: string; type: "INVALID_URL" }
-  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" }
-  | { type: "EMPTY_URL" }
-  | { type: "MISSING_METHOD" };
+  | { detail?: string; type: "MISSING_METHOD" }
+  | { fields: UnresolvedField[]; type: "UNRESOLVED_VARIABLES" };
 
 export interface KeyValueEditorProps {
   items: KeyValueItem[];
@@ -216,6 +255,24 @@ export interface selectedMethodState {
     | "POST"
     | "PUT";
 }
+
+export type SnippetClient =
+  | "curl"
+  | "fetch"
+  | "httpclient"
+  | "native"
+  | "okhttp"
+  | "requests"
+  | "xhr";
+
+export type SnippetLang =
+  | "csharp"
+  | "go"
+  | "java"
+  | "javascript"
+  | "node"
+  | "python"
+  | "shell";
 
 export interface TabOpenState {
   activeTab: "body" | "codegen" | "headers" | "requestHistory" | "variables";

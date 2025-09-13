@@ -45,12 +45,26 @@ export function LeftHeaderGroup() {
       <div className="col-start-1 row-start-1 px-6 pt-8 text-base">
         <div className="flex h-9 w-full items-center">
           <MethodSwitch />
-          <input
-            className="bg-bg-secondary border-border-default h-full w-full border border-x-0 px-3 text-sm"
-            onChange={(event) => dispatch(setUrl(event.target.value))}
-            placeholder="https://api.example.com/path..."
-            value={httpURL}
-          />
+          <div className="flex h-full w-full text-sm">
+            <label
+              className={classNames(
+                "bg-bg-secondary border-border-default text-text-secondary",
+                "flex items-center border border-x-0 pl-3",
+              )}
+              htmlFor="url-input"
+            >
+              https://
+            </label>
+            <input
+              className="bg-bg-secondary border-border-default h-full w-full border border-l-0 pl-px"
+              id="url-input"
+              onChange={(event) =>
+                dispatch(setUrl("https://" + event.target.value))
+              }
+              placeholder="api.example.com/path..."
+              value={httpURL.replace(/^https?:\/\//i, "")}
+            />
+          </div>
           <button
             className={classNames(
               "bg-accent-blue border-accent-blue h-full w-28 rounded-r-md border",
