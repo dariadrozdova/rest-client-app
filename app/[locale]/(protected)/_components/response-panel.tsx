@@ -1,6 +1,7 @@
 "use client";
 
 import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 import { RootState } from "@store/store";
 
@@ -8,16 +9,17 @@ import { JsonViewer } from "@/shared/ui/json-viewer";
 import { getStatusColor } from "@/utils/helpers/get-status-color";
 
 export function ResponsePane() {
+  const t = useTranslations("response-panel");
   const requestState = useSelector((state: RootState) => state.request);
   const { isLoading, error, response } = requestState;
 
   const getDisplayContent = (): string => {
     if (isLoading) {
-      return "Loading...";
+      return t("loading");
     }
 
     if (error) {
-      return `Error: ${error}`;
+      return t("error", { message: error });
     }
 
     if (response) {
@@ -32,7 +34,7 @@ export function ResponsePane() {
       return JSON.stringify(fullResponse, null, 2);
     }
 
-    return "No request sent yet. Configure your request above and click Send.";
+    return t("noRequest");
   };
 
   return (
@@ -44,10 +46,10 @@ export function ResponsePane() {
               {response.status} {response.statusText}
             </span>
             <span className="text-text-secondary">
-              {response.meta.requestDurationMs}ms
+              {t("duration", { ms: response.meta.requestDurationMs })}
             </span>
             <span className="text-text-secondary">
-              {response.meta.responseSizeBytes} bytes
+              {t("size", { bytes: response.meta.responseSizeBytes })}
             </span>
           </div>
         </div>
@@ -55,7 +57,7 @@ export function ResponsePane() {
 
       {error && (
         <div className="border-b border-red-300 bg-red-50 p-3 text-sm text-red-700">
-          Request failed: {error}
+          {t("requestFailed")}: {error}
         </div>
       )}
 

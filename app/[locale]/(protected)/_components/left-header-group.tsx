@@ -10,8 +10,9 @@ import { setActiveTab } from "@store/slices/tab-open-slice";
 import { setUrl } from "@store/slices/url-slice";
 import { AppDispatch, RootState } from "@store/store";
 
-import { selectResolvedRequest } from "@/app/[locale]/(protected)/_components/codegen/resolve-request";
 import { classNames } from "@/shared/styles";
+import { selectIsLoading } from "@/store/selectors/request-selector";
+import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 
 type TabKey = TabOpenState["activeTab"];
 
@@ -21,7 +22,8 @@ export function LeftHeaderGroup() {
 
   const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
   const httpURL = useSelector((state: RootState) => state.httpUrl.httpUrl);
-  const isLoading = useSelector((state: RootState) => state.request.isLoading);
+
+  const isLoading = useSelector(selectIsLoading);
   const resolvedOutput = useSelector(selectResolvedRequest);
 
   const canSendRequest = resolvedOutput.canGenerate && httpURL.trim() !== "";
@@ -36,7 +38,7 @@ export function LeftHeaderGroup() {
 
   const handleSendRequest = () => {
     if (canSendRequest && !isLoading) {
-      dispatch(executeRequest());
+      dispatch(executeRequest(resolvedOutput));
     }
   };
 
@@ -56,7 +58,7 @@ export function LeftHeaderGroup() {
               https://
             </label>
             <input
-              className="bg-bg-secondary border-border-default h-full w-full border border-l-0 pl-px"
+              className="bg-bg-secondary border-border-default h-full w-full border border-l-0 pl-px focus:outline-none"
               id="url-input"
               onChange={(event) =>
                 dispatch(setUrl("https://" + event.target.value))

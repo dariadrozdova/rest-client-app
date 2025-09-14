@@ -1,26 +1,43 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { v4 as uuidv4 } from "uuid";
 
-import type { RequestState, ResponseData } from "@shared/types";
-import type { RootState } from "@store/store";
+import type {
+  ResolvedRequest,
+  ResolvedSelectorOutput,
+  ResponseData,
+} from "@shared/types";
+import { addEntry } from "@store/slices/history-slice";
 
-import { selectResolvedRequest } from "@/app/[locale]/(protected)/_components/codegen/resolve-request";
-import { buildProxyUrl } from "@/utils/helpers/build-proxy-url";
-import { calculateRequestSize } from "@/utils/helpers/calculate-request-size";
+// Интерфейс состояния
+interface RequestState {
+  error: null | string;
+  isLoading: boolean;
+  response: null | ResponseData;
+}
 
 const initialState: RequestState = {
+  response: null,
   isLoading: false,
   error: null,
-  response: null,
 };
 
+// Утилита для подсчета размера запроса
+function calculateRequestSize(request: ResolvedRequest): number {
+  const bodySize = request.body ? new Blob([request.body]).size : 0;
+  const headersSize = new Blob(
+    request.headers.map((h) => `${h.name}: ${h.value}\r\n`),
+  ).size;
+  const urlSize = new Blob([request.url]).size;
+  return bodySize + headersSize + urlSize;
+}
+
+// Async thunk для выполнения запроса
+// Принимает resolvedOutput как параметр, чтобы избежать циклической зависимости
 export const executeRequest = createAsyncThunk<
   ResponseData,
-  void,
-  { rejectValue: string; state: RootState }
->("request/execute", async (_, { getState, rejectWithValue }) => {
-  const state = getState();
-  const resolvedOutput = selectResolvedRequest(state);
-
+  ResolvedSelectorOutput, // Принимаем данные как параметр
+  { rejectValue: string }
+>("request/execute", async (resolvedOutput, { rejectWithValue, dispatch }) => {
   if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
     return rejectWithValue(
       resolvedOutput.issues.map((issue) => issue.type).join(", "),
@@ -31,13 +48,17 @@ export const executeRequest = createAsyncThunk<
   const startTime = Date.now();
 
   try {
-    const proxyUrl = buildProxyUrl(resolved);
-
-    const response = await fetch(proxyUrl, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-      },
+    const response = await fetch("/api/proxy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        method: resolved.method,
+        url: resolved.url,
+        headers: Object.fromEntries(
+          resolved.headers.map((header) => [header.name, header.value]),
+        ),
+        body: resolved.body,
+      }),
     });
 
     const endTime = Date.now();
@@ -69,6 +90,15 @@ export const executeRequest = createAsyncThunk<
       },
     };
 
+    dispatch(
+      addEntry({
+        id: uuidv4(),
+        request: resolved,
+        response: responseData,
+        createdAt: new Date().toISOString(),
+      }),
+    );
+
     return responseData;
   } catch (error) {
     const errorMessage =
@@ -77,6 +107,7 @@ export const executeRequest = createAsyncThunk<
   }
 });
 
+// Redux slice
 const requestSlice = createSlice({
   name: "request",
   initialState,
@@ -84,9 +115,7 @@ const requestSlice = createSlice({
     clearResponse: (state) => {
       state.response = null;
       state.error = null;
-    },
-    clearError: (state) => {
-      state.error = null;
+      state.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -100,16 +129,14 @@ const requestSlice = createSlice({
         (state, action: PayloadAction<ResponseData>) => {
           state.isLoading = false;
           state.response = action.payload;
-          state.error = null;
         },
       )
       .addCase(executeRequest.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload ?? "Request failed";
-        state.response = null;
       });
   },
 });
 
-export const { clearResponse, clearError } = requestSlice.actions;
+export const { clearResponse } = requestSlice.actions;
 export default requestSlice.reducer;

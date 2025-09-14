@@ -6,12 +6,12 @@ import { useTranslations } from "next-intl";
 
 import { CodeLangSwitch } from "@app/[locale]/(protected)/_components/codegen/code-lang-switch";
 import { CopyButton } from "@app/[locale]/(protected)/_components/codegen/copy-button";
-import { selectResolvedRequest } from "@app/[locale]/(protected)/_components/codegen/resolve-request"; // reselect selector
 import { JsonViewer } from "@shared/ui/json-viewer";
 import type { RootState } from "@store/store";
 import { requestToGenerateCode } from "@utils/helpers";
 
 import { ISSUE_I18N_KEY } from "@/shared/globals";
+import { selectResolvedRequest } from "@/utils/helpers/resolve-request"; // reselect selector
 
 export function CodegenPanel() {
   const t = useTranslations("code-gen");

@@ -202,12 +202,14 @@ export interface ResolvedHeader {
 export interface ResolvedRequest {
   body: string | undefined;
   headers: ResolvedHeader[];
-  meta: {
-    contentType?: string;
-    jsonMode: boolean;
-  };
+  meta: ResolvedRequestMeta;
   method: HttpMethod;
   url: string;
+}
+
+export interface ResolvedRequestMeta {
+  contentType: null | string | undefined;
+  jsonMode: boolean;
 }
 
 export interface ResolvedSelectorOutput {

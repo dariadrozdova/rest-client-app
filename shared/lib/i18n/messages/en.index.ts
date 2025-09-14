@@ -6,6 +6,7 @@ import footer from "@shared/lib/i18n/messages/en/footer.json";
 import header from "@shared/lib/i18n/messages/en/header.json";
 import headerTab from "@shared/lib/i18n/messages/en/header-tab.json";
 import protectedHeader from "@shared/lib/i18n/messages/en/protected-header.json";
+import responsePanel from "@shared/lib/i18n/messages/en/response-panel.json";
 import signIn from "@shared/lib/i18n/messages/en/sign-in.json";
 import signUp from "@shared/lib/i18n/messages/en/sign-up.json";
 import variablesEditor from "@shared/lib/i18n/messages/en/variables-editor.json";
@@ -22,4 +23,5 @@ export default {
   "sign-up": signUp,
   "code-gen": codeGen,
   dropdown: dropdown,
+  "response-panel": responsePanel,
 } as const;
