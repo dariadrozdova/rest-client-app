@@ -13,6 +13,7 @@ export type {
   KeyValueItem,
   KeyValueRowProps,
   Language,
+  PublicLayoutProps,
   RequestState,
   ResolvedHeader,
   ResolvedRequest,
