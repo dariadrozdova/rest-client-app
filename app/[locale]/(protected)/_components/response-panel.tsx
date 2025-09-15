@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { RootState } from "@store/store";
 
 import { JsonViewer } from "@/shared/ui/json-viewer";
+import { normalizeResponseBody } from "@/utils/helpers/normalize-response-body";
 
 export function ResponsePanel() {
   const t = useTranslations("response-panel");
@@ -13,7 +14,7 @@ export function ResponsePanel() {
     (state: RootState) => state.request,
   );
 
-  const getDisplayContent = (): string => {
+  const getDisplayContent = () => {
     if (isLoading) {
       return t("loading");
     }
@@ -22,14 +23,8 @@ export function ResponsePanel() {
     }
 
     if (response) {
-      const fullResponse = {
-        status: response.status,
-        statusText: response.statusText,
-        headers: response.headers,
-        body: response.body ? JSON.parse(response.body) : null,
-        meta: response.meta,
-      };
-      return JSON.stringify(fullResponse, null, 2);
+      const normalizedResponse = normalizeResponseBody(response);
+      return JSON.stringify(normalizedResponse, null, 2);
     }
 
     return t("noRequest");

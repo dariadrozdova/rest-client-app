@@ -223,7 +223,7 @@ export interface ResolvedSelectorOutput {
 }
 
 export interface ResponseData {
-  body: string;
+  body: unknown;
   headers: Record<string, string>;
   meta: {
     requestDurationMs: number;

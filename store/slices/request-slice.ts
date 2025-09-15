@@ -8,7 +8,6 @@ import type {
 } from "@shared/types";
 import { addEntry } from "@store/slices/history-slice";
 
-// Интерфейс состояния
 interface RequestState {
   error: null | string;
   isLoading: boolean;
@@ -21,21 +20,18 @@ const initialState: RequestState = {
   error: null,
 };
 
-// Утилита для подсчета размера запроса
 function calculateRequestSize(request: ResolvedRequest): number {
   const bodySize = request.body ? new Blob([request.body]).size : 0;
   const headersSize = new Blob(
-    request.headers.map((h) => `${h.name}: ${h.value}\r\n`),
+    request.headers.map((header) => `${header.name}: ${header.value}\r\n`),
   ).size;
   const urlSize = new Blob([request.url]).size;
   return bodySize + headersSize + urlSize;
 }
 
-// Async thunk для выполнения запроса
-// Принимает resolvedOutput как параметр, чтобы избежать циклической зависимости
 export const executeRequest = createAsyncThunk<
   ResponseData,
-  ResolvedSelectorOutput, // Принимаем данные как параметр
+  ResolvedSelectorOutput,
   { rejectValue: string }
 >("request/execute", async (resolvedOutput, { rejectWithValue, dispatch }) => {
   if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
@@ -64,10 +60,9 @@ export const executeRequest = createAsyncThunk<
     const endTime = Date.now();
     const responseText = await response.text();
 
-    let parsedBody: string;
+    let parsedBody: unknown;
     try {
-      const jsonBody = JSON.parse(responseText);
-      parsedBody = JSON.stringify(jsonBody, null, 2);
+      parsedBody = JSON.parse(responseText);
     } catch {
       parsedBody = responseText;
     }
@@ -107,7 +102,6 @@ export const executeRequest = createAsyncThunk<
   }
 });
 
-// Redux slice
 const requestSlice = createSlice({
   name: "request",
   initialState,
