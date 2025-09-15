@@ -1,4 +1,11 @@
 export type {
+  ClientLogoProps,
+  LayerPreset,
+  SceneProps,
+  ThreeDLayerProps,
+} from "./animation-types";
+
+export type {
   CodeLangGen,
   CodeLangOption,
   CodeLangState,
