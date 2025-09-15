@@ -7,4 +7,5 @@ export { jsonDetect } from "./json-detect";
 export { normalizeHeader } from "./normalize-header";
 export { safePrettyJson } from "./prettify-json";
 export { substituteVariables } from "./substitute-variables";
+export { isValidHttpMethod } from "./validate-method";
 export { validateUrlString } from "./validate-url";
