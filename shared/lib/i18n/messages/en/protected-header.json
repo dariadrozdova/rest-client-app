@@ -2,8 +2,8 @@
   "sendButton": "Send",
   "loading": "Loading...",
   "status": "Status:",
-  "size": "Size:",
-  "time": "Time:",
+  "size": "Size: {bytes} B",
+  "time": "Time: {ms} ms",
   "response": "Response",
   "tabs": {
     "headers": "Headers",
