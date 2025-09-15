@@ -12,6 +12,24 @@ import {
   responsePanel,
   teams,
 } from "@app/[locale]/(public)/images";
+import {
+  logoBand,
+  logoCamp,
+  logoCar,
+  logoChurch,
+  logoDiner,
+  logoHotel,
+  logoMarket,
+  logoPrimary,
+  logoPub,
+  logoSchool,
+  logoTatar,
+  logoTravel,
+  logoVChoir,
+  logoVCircus,
+  logoVFishermen,
+  logoVSumo,
+} from "@app/[locale]/(public)/images";
 import { LayerPreset } from "@shared/types/animation-types";
 
 export const PERSPECTIVE_PX = 1000;
@@ -98,3 +116,45 @@ export const LAYER_PRESETS: LayerPreset[] = [
   // 11: requestTabs
   { scale: 0.5, x: -46, y: 248 },
 ];
+
+export const GROUPS = [
+  {
+    key: "group-a",
+    layout: "2x3",
+    items: [
+      { src: logoBand.src, alt: "Band" },
+      { src: logoCamp.src, alt: "Camp" },
+      { src: logoCar.src, alt: "Car" },
+      { src: logoChurch.src, alt: "Church" },
+      { src: logoTatar.src, alt: "Tatar" },
+      { src: logoTravel.src, alt: "Travel" },
+    ],
+  },
+  {
+    key: "group-b",
+    layout: "2x3",
+    items: [
+      { src: logoMarket.src, alt: "Market" },
+      { src: logoPrimary.src, alt: "Primary" },
+      { src: logoPub.src, alt: "Pub" },
+      { src: logoSchool.src, alt: "School" },
+      { src: logoDiner.src, alt: "Diner" },
+      { src: logoHotel.src, alt: "Hotel" },
+    ],
+  },
+  {
+    key: "group-c",
+    layout: "1x4",
+    items: [
+      { src: logoVChoir.src, alt: "Choir", kind: "vertical" },
+      { src: logoVCircus.src, alt: "Circus", kind: "vertical" },
+      { src: logoVFishermen.src, alt: "Fishermen", kind: "vertical" },
+      { src: logoVSumo.src, alt: "Sumo", kind: "vertical" },
+    ],
+  },
+];
+
+export const SHOWCASE_DEFAULTS = {
+  intervalMs: 5000,
+  transitionMs: 700,
+} as const;

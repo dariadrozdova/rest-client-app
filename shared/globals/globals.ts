@@ -18,7 +18,6 @@ export const FOOTER_SECTIONS: Section[] = [
     links: [
       { href: "", labelKey: "sections.product.links.howItWorks" },
       { href: "", labelKey: "sections.product.links.clients" },
-      { href: "", labelKey: "sections.product.links.pricing" },
     ],
     titleKey: "sections.product.title",
   },
