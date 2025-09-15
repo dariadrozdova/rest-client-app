@@ -1,2 +1,15 @@
+export { default as backgroundLine } from "./animation/1-background-line.png";
+export { default as browserControls } from "./animation/2-browser-controls.png";
+export { default as appControls } from "./animation/3-app-controls.png";
+export { default as favorites } from "./animation/4-favorites.png";
+export { default as teams } from "./animation/5-teams.png";
+export { default as projects } from "./animation/6-projects.png";
+export { default as inputLine } from "./animation/7-input-line.png";
+export { default as logoName } from "./animation/8-logo-name.png";
+export { default as requestHist } from "./animation/9-request-history.png";
+export { default as responsePanel } from "./animation/10-response-panel.png";
+export { default as requestTabs } from "./animation/11-request-tabs.png";
+export { default as footerElement } from "./animation/12-footer.png";
+export { default as appWindow } from "./animation/13-app-window.png";
 export { default as logoFull } from "./icons/Logo-paddle-text.svg";
 export { default as logoSmall } from "./icons/Logo-paddle.svg";
