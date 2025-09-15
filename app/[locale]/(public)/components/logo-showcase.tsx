@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
+import { classNames } from "@shared/styles";
+
 import { ClientLogo } from "@/app/[locale]/(public)/components/client-logo";
 import { GROUPS, SHOWCASE_DEFAULTS } from "@/shared/globals/globals-animation";
 
@@ -32,7 +34,12 @@ export function LogosShowcase() {
           return (
             <div
               aria-hidden={!isActive}
-              className={`absolute inset-0 grid place-content-center transition-all ${isActive ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-[10px] opacity-0"} `}
+              className={classNames(
+                "absolute inset-0 grid place-content-center transition-all",
+                isActive
+                  ? "translate-y-0 opacity-100"
+                  : "pointer-events-none translate-y-[10px] opacity-0",
+              )}
               key={group.key}
               style={{ transitionDuration: `${transitionMs}ms` }}
             >

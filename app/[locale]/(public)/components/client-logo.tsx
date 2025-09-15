@@ -3,6 +3,8 @@
 import type { HTMLAttributes } from "react";
 import Image from "next/image";
 
+import { classNames } from "@shared/styles";
+
 import type { ClientLogoProps } from "@/shared/types/animation-types";
 
 type DivProps = HTMLAttributes<HTMLDivElement>;
@@ -15,7 +17,11 @@ export function ClientLogo({
 }: ClientLogoProps & DivProps) {
   return (
     <div
-      className={`relative flex items-center justify-center ${vertical ? "h-[184px] w-[120px]" : "h-[72px]"} ${className ?? ""} `}
+      className={classNames(
+        "relative flex items-center justify-center",
+        vertical ? "h-[184px] w-[120px]" : "h-[72px]",
+        className ?? "",
+      )}
     >
       <Image
         alt={alt}

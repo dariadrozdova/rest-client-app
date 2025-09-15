@@ -1,10 +1,10 @@
 import { HTMLAttributes } from "react";
 
-export type ClientLogoProps = {
+export type ClientLogoProps = HTMLAttributes<HTMLDivElement> & {
   alt: string;
   src: string;
-  vertical?: boolean; // true для logo-v-*.png
-} & HTMLAttributes<HTMLDivElement>;
+  vertical?: boolean;
+};
 
 export interface LayerPreset {
   scale?: number;

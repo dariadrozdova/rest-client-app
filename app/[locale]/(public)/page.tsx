@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { LogosShowcase } from "@app/[locale]/(public)/components";
 import { ThreeDScene } from "@app/[locale]/(public)/components";
+import { classNames } from "@shared/styles";
 
 import { LAYERS } from "@/shared/globals";
 
@@ -16,8 +17,20 @@ export default async function PublicLayout() {
             {t("headline")}
           </h3>
         </div>
-        <div className="pointer-events-none absolute inset-0 z-0 mt-28 [height:100%] [mask-image:linear-gradient(0deg,transparent_0%,transparent_20%,white_40%,white_70%,transparent_100%)] [--h:900] [--k:calc(min(100vw/(var(--w)*1px),100dvh/(var(--h)*1px)))] [--w:1440] [perspective-origin:50%_40%] [perspective:calc(var(--k)*1000px)]">
-          <div className="absolute top-1/2 left-1/2 [height:calc(var(--h)*1px)] [width:calc(var(--w)*1px)] -translate-x-1/2 -translate-y-1/2 scale-[var(--k)] transform-gpu">
+        <div
+          className={classNames(
+            "pointer-events-none absolute inset-0 z-0 mt-28 [height:100%]",
+            "[mask-image:linear-gradient(0deg,transparent_0%,transparent_20%,white_40%,white_70%,transparent_100%)]",
+            "[--h:900] [--k:calc(min(100vw/(var(--w)*1px),100dvh/(var(--h)*1px)))] [--w:1440]",
+            "[perspective-origin:50%_40%] [perspective:calc(var(--k)*1000px)]",
+          )}
+        >
+          <div
+            className={classNames(
+              "absolute top-1/2 left-1/2 [height:calc(var(--h)*1px)] transform-gpu",
+              "[width:calc(var(--w)*1px)] -translate-x-1/2 -translate-y-1/2 scale-[var(--k)]",
+            )}
+          >
             <ThreeDScene height={700} layers={LAYERS} />
           </div>
         </div>
