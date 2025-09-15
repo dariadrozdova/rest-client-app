@@ -5,6 +5,7 @@ import errors from "@shared/lib/i18n/messages/ru/errors.json";
 import footer from "@shared/lib/i18n/messages/ru/footer.json";
 import header from "@shared/lib/i18n/messages/ru/header.json";
 import headerTab from "@shared/lib/i18n/messages/ru/header-tab.json";
+import mainPage from "@shared/lib/i18n/messages/ru/main.json";
 import protectedHeader from "@shared/lib/i18n/messages/ru/protected-header.json";
 import responsePanel from "@shared/lib/i18n/messages/ru/response-panel.json";
 import signIn from "@shared/lib/i18n/messages/ru/sign-in.json";
@@ -24,4 +25,5 @@ export default {
   "code-gen": codeGen,
   dropdown: dropdown,
   "response-panel": responsePanel,
+  "main-page": mainPage,
 } as const;
