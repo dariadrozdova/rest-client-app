@@ -182,6 +182,11 @@ export interface Language {
   name: string;
 }
 
+export interface LayoutProps {
+  children: ReactNode;
+  params: Record<string, string>;
+}
+
 export interface LinkItem {
   external?: boolean;
   href: string;
