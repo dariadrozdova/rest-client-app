@@ -10,7 +10,10 @@ export default async function PublicLayout() {
   const t = await getTranslations("main-page");
   return (
     <>
-      <section className="relative min-h-[900px] overflow-hidden">
+      <section
+        className="relative min-h-[900px] overflow-hidden"
+        id="how-it-works"
+      >
         <div className="relative z-10 mx-auto px-8 pt-20">
           <h1 className="w-4/5 text-7xl font-bold">{t("slogan")}</h1>
           <h3 className="text-text-secondary mt-4 w-1/2 text-2xl font-medium">

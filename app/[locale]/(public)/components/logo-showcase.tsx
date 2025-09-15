@@ -24,7 +24,9 @@ export function LogosShowcase() {
   return (
     <section className="relative isolate w-full overflow-hidden p-6 md:p-8">
       <header className="text-center text-2xl md:mb-8">
-        <h2 className="text-text-primary font-medium">{t("teamsTitle")} </h2>
+        <h2 className="text-text-primary font-medium" id="client-list">
+          {t("teamsTitle")}{" "}
+        </h2>
         <p className="text-text-secondary">{t("teamsSubtitle")}</p>
       </header>
 
