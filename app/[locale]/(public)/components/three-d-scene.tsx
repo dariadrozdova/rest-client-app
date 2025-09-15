@@ -1,75 +1,28 @@
 "use client";
-import { MouseEventHandler, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { SceneProps } from "@shared/types";
 
-import ThreeDLayer from "@app/[locale]/(public)/components/threeDLayeer";
+import ThreeDLayer from "@/app/[locale]/(public)/components/three-d-layer";
 import {
+  CONTAINER_ROTATE_X,
+  CONTAINER_ROTATE_Y,
+  CONTAINER_ROTATE_Z,
   DEPTH,
-  ENTRY_ROTATE_X,
-  ENTRY_ROTATE_Y,
-  ENTRY_SCALE,
-  HALF,
   INDEX_DEPTH_STEP,
-  MOUSE_RANGE,
+  LAYER_PRESETS,
   PERSPECTIVE_ORIGIN,
   PERSPECTIVE_PX,
-  ROTATE_X_RANGE,
-  ROTATE_Y_RANGE,
-  SPRING_DAMPING,
-  SPRING_STIFFNESS,
-} from "@shared/globals";
+} from "@/shared/globals/globals-animation";
 
-interface Props {
-  height?: number | string;
-  layers: string[];
-  width?: number | string;
-}
-
-// ---- Константы (одним блоком) ---// eslint-enable @typescript-eslint/no-magic-numbers
-// ---- /Константы ----
-
-export default function ThreeDScene({
+export function ThreeDScene({
   layers,
   width = "100%",
   height = 580,
-}: Props) {
-  const reference = useRef<HTMLDivElement>(null);
-
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateX = useTransform(my, MOUSE_RANGE, ROTATE_X_RANGE);
-  const rotateY = useTransform(mx, MOUSE_RANGE, ROTATE_Y_RANGE);
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-  const parallax = (index: number) => 1 - index / (layers.length * 1.2);
-
-  const onMove: MouseEventHandler<HTMLDivElement> = (event) => {
-    const r = reference.current?.getBoundingClientRect();
-    if (!r) {
-      return;
-    }
-    const nx = (event.clientX - r.left) / r.width;
-    const ny = (event.clientY - r.top) / r.height;
-    mx.set(nx - HALF);
-    my.set(ny - HALF);
-  };
-
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
+}: SceneProps) {
   return (
     <div
       className="select-none"
-      onMouseLeave={onLeave}
-      onMouseMove={onMove}
-      ref={reference}
       style={{
         width,
         height,
@@ -79,37 +32,39 @@ export default function ThreeDScene({
       }}
     >
       <motion.div
-        animate={{ scale: 1 }} // <-- убрали rotateX/rotateY отсюда
+        animate={{
+          rotateX: CONTAINER_ROTATE_X,
+          rotateY: CONTAINER_ROTATE_Y,
+          rotateZ: CONTAINER_ROTATE_Z,
+          scale: 1,
+        }}
         initial={{
-          scale: ENTRY_SCALE,
-          rotateX: ENTRY_ROTATE_X,
-          rotateY: ENTRY_ROTATE_Y,
+          rotateX: CONTAINER_ROTATE_X,
+          rotateY: CONTAINER_ROTATE_Y,
+          rotateZ: CONTAINER_ROTATE_Z,
+          scale: 1,
         }}
-        style={{
-          width: "100%",
-          height: "100%",
-          transformStyle: "preserve-3d",
-          rotateX, // MotionValue -> только в style
-          rotateY, // MotionValue -> только в style
-        }}
-        transition={{
-          type: "spring",
-          damping: SPRING_DAMPING,
-          stiffness: SPRING_STIFFNESS,
-        }}
+        style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
       >
         <AnimatePresence>
           {layers.map((source, index) => {
-            const z = DEPTH[index] ?? index * INDEX_DEPTH_STEP;
+            const baseZ = DEPTH[index] ?? index * INDEX_DEPTH_STEP;
+            const preset = LAYER_PRESETS[index] ?? {};
+            const z = baseZ + (preset.zAdjust ?? 0);
+
             return (
               <ThreeDLayer
-                k={parallax(index)}
                 key={source}
-                layerIndex={index} // ⬅ было index
-                mx={mx.get()}
-                my={my.get()}
+                layerIndex={index}
+                scaleTarget={preset.scale}
                 src={source}
-                totalLayers={layers.length} // ⬅ было total
+                startScale={preset.startScale}
+                startX={preset.startX}
+                startY={preset.startY}
+                startZAdjust={preset.startZAdjust}
+                totalLayers={layers.length}
+                x={preset.x}
+                y={preset.y}
                 z={z}
               />
             );
