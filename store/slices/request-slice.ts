@@ -48,7 +48,7 @@ export const executeRequest = createAsyncThunk<
   const startTime = Date.now();
 
   try {
-    const response = await fetch("/api/proxy", {
+    const response = await fetch("/api/request", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

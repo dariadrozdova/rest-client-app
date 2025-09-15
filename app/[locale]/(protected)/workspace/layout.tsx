@@ -7,11 +7,11 @@ import { getServerSession } from "@shared/lib/auth/get-session";
 export default async function ProtectedLayout({
   children,
   params,
-}: LayoutProps<"/[locale]/main">) {
+}: LayoutProps<"/[locale]/workspace">) {
   const session = await getServerSession();
   const { locale } = await params;
   if (!session) {
-    redirect(`/${locale}/sign-in?next=/${locale}${decodeURIComponent("")}`);
+    redirect(`/${locale}/sign-in?next=/${locale}/workspace`);
   }
   return (
     <div style={{}}>

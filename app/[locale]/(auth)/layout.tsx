@@ -9,7 +9,7 @@ export default async function AuthLayout({
   const session = await getServerSession();
   const { locale } = await params;
   if (session) {
-    redirect(`/${locale}`);
+    redirect(`/${locale}/workspace`);
   }
   return <>{children}</>;
 }
