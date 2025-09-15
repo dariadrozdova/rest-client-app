@@ -1,8 +1,9 @@
 {
   "sendButton": "Адправіць",
+  "loading": "Загрузка...",
   "status": "Статус:",
-  "size": "Памер:",
-  "time": "Час:",
+  "size": "Памер: {bytes} Б",
+  "time": "Час: {ms} мс",
   "response": "Адказ",
   "tabs": {
     "headers": "Загалоўкі",

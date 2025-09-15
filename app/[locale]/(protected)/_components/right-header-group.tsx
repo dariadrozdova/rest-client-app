@@ -1,15 +1,48 @@
-import { getTranslations } from "next-intl/server";
+"use client";
 
-export default async function RightHeaderGroup() {
-  const t = await getTranslations("protected-header");
+import { useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
+
+import { RootState } from "@store/store";
+
+import { getStatusColor } from "@/utils/helpers/get-status-color";
+
+export function RightHeaderGroup() {
+  const t = useTranslations("protected-header");
+  const { response, error, isLoading } = useSelector(
+    (state: RootState) => state.request,
+  );
 
   return (
     <>
       <div className="text-text-secondary flex min-h-full items-center justify-evenly gap-4 px-6 pt-8 text-lg font-bold">
-        <span className="px-2 py-1">{t("status")}</span>
-        <span className="px-2 py-1">{t("size")}</span>
-        <span className="px-2 py-1">{t("time")}</span>
+        <span className="px-2 py-1">
+          {response ? (
+            <span className={getStatusColor(response.status)}>
+              {response.status} {response.statusText}
+            </span>
+          ) : error ? (
+            t("status")
+          ) : isLoading ? (
+            t("loading")
+          ) : (
+            t("status")
+          )}
+        </span>
+
+        <span className="px-2 py-1">
+          {response
+            ? t("size", { bytes: response.meta.responseSizeBytes })
+            : t("size", { bytes: "—" })}
+        </span>
+
+        <span className="px-2 py-1">
+          {response
+            ? t("time", { ms: response.meta.requestDurationMs })
+            : t("time", { ms: "—" })}
+        </span>
       </div>
+
       <div className="col-start-3 row-start-2 flex items-end px-6">
         <span className="text-text-secondary decoration-accent-blue mb-1 text-sm font-bold underline decoration-2 underline-offset-8">
           {t("response")}

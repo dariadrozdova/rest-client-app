@@ -188,6 +188,12 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface RequestState {
+  error: null | string;
+  isLoading: boolean;
+  response: null | ResponseData;
+}
+
 export interface ResolvedHeader {
   name: string;
   value: string;
@@ -196,12 +202,14 @@ export interface ResolvedHeader {
 export interface ResolvedRequest {
   body: string | undefined;
   headers: ResolvedHeader[];
-  meta: {
-    contentType?: string;
-    jsonMode: boolean;
-  };
+  meta: ResolvedRequestMeta;
   method: HttpMethod;
   url: string;
+}
+
+export interface ResolvedRequestMeta {
+  contentType: null | string | undefined;
+  jsonMode: boolean;
 }
 
 export interface ResolvedSelectorOutput {
@@ -212,6 +220,19 @@ export interface ResolvedSelectorOutput {
   };
   issues: Issue[];
   resolved?: ResolvedRequest;
+}
+
+export interface ResponseData {
+  body: unknown;
+  headers: Record<string, string>;
+  meta: {
+    requestDurationMs: number;
+    requestSizeBytes: number;
+    requestTimestamp: string;
+    responseSizeBytes: number;
+  };
+  status: number;
+  statusText: string;
 }
 
 export interface ResponsePaneProps {

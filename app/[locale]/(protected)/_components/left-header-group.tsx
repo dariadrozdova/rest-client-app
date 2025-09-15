@@ -5,22 +5,29 @@ import { useTranslations } from "next-intl";
 
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
 import { TabOpenState } from "@shared/types";
+import { executeRequest } from "@store/slices/request-slice";
 import { setActiveTab } from "@store/slices/tab-open-slice";
 import { setUrl } from "@store/slices/url-slice";
-import { RootState } from "@store/store";
+import { AppDispatch, RootState } from "@store/store";
 
-import { useRequest } from "@/app/[locale]/(protected)/main/_modules/request-context";
 import { classNames } from "@/shared/styles";
+import { selectIsLoading } from "@/store/selectors/request-selector";
+import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 
 type TabKey = TabOpenState["activeTab"];
 
 export function LeftHeaderGroup() {
   const t = useTranslations("protected-header");
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
   const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
   const httpURL = useSelector((state: RootState) => state.httpUrl.httpUrl);
 
-  const { isLoading, sendRequest } = useRequest();
+  const isLoading = useSelector(selectIsLoading);
+  const resolvedOutput = useSelector(selectResolvedRequest);
+
+  const canSendRequest = resolvedOutput.canGenerate && httpURL.trim() !== "";
+
   const tabs = [
     { key: "headers", label: t("tabs.headers") },
     { key: "body", label: t("tabs.body") },
@@ -28,6 +35,12 @@ export function LeftHeaderGroup() {
     { key: "codegen", label: t("tabs.codegen") },
     { key: "requestHistory", label: t("tabs.requestHistory") },
   ] as const satisfies readonly { key: TabKey; label: string }[];
+
+  const handleSendRequest = () => {
+    if (canSendRequest && !isLoading) {
+      dispatch(executeRequest(resolvedOutput));
+    }
+  };
 
   return (
     <>
@@ -45,7 +58,7 @@ export function LeftHeaderGroup() {
               https://
             </label>
             <input
-              className="bg-bg-secondary border-border-default h-full w-full border border-l-0 pl-px"
+              className="bg-bg-secondary border-border-default h-full w-full border border-l-0 pl-px focus:outline-none"
               id="url-input"
               onChange={(event) =>
                 dispatch(setUrl("https://" + event.target.value))
@@ -57,12 +70,15 @@ export function LeftHeaderGroup() {
           <button
             className={classNames(
               "bg-accent-blue border-accent-blue h-full w-28 rounded-r-md border",
-              "px-3 py-2 text-sm font-medium text-white hover:brightness-110",
+              "px-3 py-2 text-sm font-medium text-white",
+              canSendRequest && !isLoading
+                ? "cursor-pointer hover:brightness-110"
+                : "cursor-not-allowed opacity-50",
             )}
-            disabled={isLoading || !httpURL}
-            onClick={sendRequest}
+            disabled={!canSendRequest || isLoading}
+            onClick={handleSendRequest}
           >
-            {t("sendButton")}
+            {isLoading ? t("loading") : t("sendButton")}
           </button>
         </div>
       </div>

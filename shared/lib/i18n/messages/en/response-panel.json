@@ -1,0 +1,8 @@
+{
+  "loading": "Loading...",
+  "error": "Error: {message}",
+  "noRequest": "No request sent yet. Configure your request above and click Send.",
+  "duration": "{ms}ms",
+  "size": "{bytes} bytes",
+  "requestFailed": "Request failed"
+}

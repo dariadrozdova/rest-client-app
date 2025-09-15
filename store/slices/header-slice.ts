@@ -50,7 +50,6 @@ const headersSlice = createSlice({
       }
     },
     ensureTrailingEmpty(state) {
-      // keep exactly one empty row at the end
       const hasEmpty = state.items.some((h) => !h.key && !h.value);
       if (!hasEmpty) {
         state.items.push({ id: nanoid(), key: "", value: "", enabled: false });

@@ -99,40 +99,6 @@ export const TABS = [
   "Request History",
 ];
 
-export const MOCK_RESPONSE = `{
-  "status": 200,
-  "statusText": "OK",
-  "headers": {
-    "content-type": "application/json; charset=utf-8",
-    "cache-control": "no-cache",
-    "x-request-id": "abc123xyz"
-  },
-  "body": {
-    "user": {
-      "id": 42,
-      "name": "Jane Doe",
-      "email": "jane.doe@example.com",
-      "roles": ["admin", "editor"]
-    },
-    "posts": [
-      {
-        "id": 101,
-        "title": "Hello World",
-        "created_at": "2025-09-09T10:15:00Z"
-      },
-      {
-        "id": 102,
-        "title": "REST Client Example",
-        "created_at": "2025-09-09T10:20:00Z"
-      }
-    ]
-  },
-  "meta": {
-    "request_duration_ms": 123,
-    "response_size_bytes": 456
-  }
-}`;
-
 export const LINE_HEIGHT_REM = 1.25;
 export const CHAR_WIDTH_REM = 0.5;
 export const PADDING_REM = 1;
@@ -211,6 +177,36 @@ export const LANG_GEN: readonly CodeLangGen[] = [
     snippetClient: "native",
   },
 ] as const;
+
+export const STATUS_SUCCESS = {
+  min: 200,
+  max: 299,
+  color: "text-green-600",
+};
+
+export const STATUS_CLIENT_ERROR = {
+  min: 400,
+  max: 499,
+  color: "text-red-600",
+};
+
+export const STATUS_SERVER_ERROR = {
+  min: 500,
+  max: 599,
+  color: "text-red-600",
+};
+
+export const STATUS_REDIRECT = {
+  min: 300,
+  max: 399,
+  color: "text-yellow-600",
+};
+
+export const STATUS_INFO = {
+  min: 100,
+  max: 199,
+  color: "text-yellow-600",
+};
 
 export const ISSUE_I18N_KEY: Record<
   Issue["type"],
