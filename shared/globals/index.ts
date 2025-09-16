@@ -15,3 +15,4 @@ export {
   TABS,
   VARIABLE_REGEX,
 } from "./globals";
+export * from "./globals-animation";

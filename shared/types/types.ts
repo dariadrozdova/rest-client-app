@@ -194,6 +194,10 @@ export interface RequestState {
   response: null | ResponseData;
 }
 
+export interface PublicLayoutProps {
+  children: ReactNode;
+}
+
 export interface ResolvedHeader {
   name: string;
   value: string;
