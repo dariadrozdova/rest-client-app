@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { getSessionCookieName } from "@/shared/lib/auth/cookies";
 import { adminAuth } from "@/shared/lib/firebase/admin";
 
 const SECONDS_IN_MINUTE = 60;
@@ -27,7 +28,8 @@ export async function POST(request: NextRequest) {
     });
 
     const response = NextResponse.json({ ok: true });
-    response.cookies.set(process.env.SESSION_NAME ?? "session", sessionCookie, {
+    const name = getSessionCookieName();
+    response.cookies.set(name, sessionCookie, {
       httpOnly: true,
       maxAge: sessionMaxAgeSeconds,
       path: "/",

@@ -1,16 +1,16 @@
-import { adminAuth } from "@shared/lib/firebase/admin";
-
-const ID_TOKEN_COOKIE = "session" as const;
+import { getSessionCookieName } from "@/shared/lib/auth/cookies";
+import { adminAuth } from "@/shared/lib/firebase/admin";
 
 export async function uidFromRequest(
   request: Request,
 ): Promise<string | undefined> {
   try {
     const cookieHeader = request.headers.get("cookie") ?? "";
+    const sessionCookieName = getSessionCookieName();
     const sessionCookie = cookieHeader
       .split(";")
       .map((s) => s.trim())
-      .find((s) => s.startsWith(`${ID_TOKEN_COOKIE}=`))
+      .find((s) => s.startsWith(`${sessionCookieName}=`))
       ?.split("=")[1];
 
     const authHeader = request.headers.get("authorization") ?? "";
