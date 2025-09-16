@@ -36,4 +36,4 @@ const initializeAnalytics = () => {
 };
 
 initializeAnalytics();
-export { analytics };
+export { analytics, app };

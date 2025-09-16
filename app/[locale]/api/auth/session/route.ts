@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
+import { getSessionCookieName } from "@/shared/lib/auth/cookies";
 import { adminAuth } from "@/shared/lib/firebase/admin";
 
 export const runtime = "nodejs";
 
 export async function GET() {
-  const name = process.env.SESSION_NAME ?? "session";
+  const name = getSessionCookieName();
   const cookiesStore = await cookies();
   const token = cookiesStore.get(name)?.value;
 
