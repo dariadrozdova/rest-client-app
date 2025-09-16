@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+
+import { addHistory } from "@/utils/server/history-store";
+import { uidFromRequest } from "@/utils/server/uid-from-request";
+
 export async function POST(request: Request) {
+  const startedAt = Date.now();
+
   try {
     const { method, url, headers, body } = await request.json();
 
@@ -34,6 +41,33 @@ export async function POST(request: Request) {
       status: result.status,
       timestamp: new Date().toISOString(),
     });
+
+    try {
+      const uid = await uidFromRequest(request);
+      if (uid) {
+        const requestSize = body ? Buffer.byteLength(body, "utf8") : 0;
+        const responseSize = responseText
+          ? Buffer.byteLength(responseText, "utf8")
+          : 0;
+
+        await addHistory(uid, {
+          timestamp: Date.now(),
+          url,
+          method,
+          status: result.status,
+          statusText: result.statusText,
+          duration: Date.now() - startedAt,
+          requestSize,
+          responseSize,
+          headers: responseHeaders,
+          body: body || {},
+        });
+      } else {
+        console.warn("Failed to get uid from request");
+      }
+    } catch (error) {
+      console.warn("Failed to append history:", error);
+    }
 
     return NextResponse.json(result);
   } catch (error) {

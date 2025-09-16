@@ -28,9 +28,12 @@ const historySlice = createSlice({
     clearHistory: (state) => {
       state.entries = [];
     },
+    setHistory: (state, action: PayloadAction<HistoryEntry[]>) => {
+      state.entries = action.payload;
+    },
   },
 });
 
-export const { addEntry, clearHistory } = historySlice.actions;
+export const { addEntry, clearHistory, setHistory } = historySlice.actions;
 export const selectHistory = (state: RootState) => state.history.entries;
 export default historySlice.reducer;
