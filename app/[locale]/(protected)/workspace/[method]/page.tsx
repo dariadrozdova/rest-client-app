@@ -1,14 +1,14 @@
-//http://localhost:3000/ru/main/GET?page=2&filter=name
+//http://localhost:3000/ru/workspace/GET?page=2&filter=name
 
 export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ locale: string; method: string }>;
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+  params: { locale: string; method: string };
+  searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  const { locale, method } = await params;
-  const resolvedSearchParams = (await searchParams) || {};
+  const { locale, method } = params;
+  const resolvedSearchParams = searchParams || {};
 
   return (
     <div>

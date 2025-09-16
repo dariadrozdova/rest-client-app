@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 
+import { getSessionCookieName } from "@/shared/lib/auth/cookies";
+
 export async function POST() {
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(process.env.SESSION_NAME ?? "session", "", {
+  response.cookies.set(getSessionCookieName(), "", {
     httpOnly: true,
     maxAge: 0,
     path: "/",
