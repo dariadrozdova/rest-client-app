@@ -1,12 +1,14 @@
 import { redirect } from "next/navigation";
 
+import { LayoutProps } from "@shared/types";
+
 import { getServerSession } from "@/shared/lib/auth/get-session";
 
 export default async function PublicLayout({
   children,
   params,
-}: LayoutProps<"/[locale]">) {
-  const { locale } = await params;
+}: LayoutProps<{ locale: string }>) {
+  const { locale } = params; // без await
   const session = await getServerSession();
 
   if (session) {

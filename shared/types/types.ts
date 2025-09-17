@@ -194,9 +194,11 @@ export interface Language {
   name: string;
 }
 
-export interface LayoutProps {
+export interface LayoutProps<
+  P extends Record<string, string> = { locale: string },
+> {
   children: ReactNode;
-  params: Record<string, string>;
+  params: P;
 }
 
 export interface LinkItem {
