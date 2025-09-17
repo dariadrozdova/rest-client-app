@@ -72,56 +72,58 @@ export function HistoryTable() {
       </div>
 
       <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
-        <table className="w-full border-collapse text-sm">
-          <thead className="bg-gray-50">
-            <tr className="border-b border-gray-200">
-              <th className={classNames(TABLE_STYLES.headerBase)} />
-              <th
-                className={classNames(
-                  TABLE_STYLES.headerBase,
-                  TABLE_STYLES.headerText,
-                )}
-              >
-                {t("columns.method")}
-              </th>
-              <th
-                className={classNames(
-                  TABLE_STYLES.headerBase,
-                  TABLE_STYLES.headerText,
-                )}
-              >
-                {t("columns.status")}
-              </th>
-              <th
-                className={classNames(
-                  TABLE_STYLES.headerBase,
-                  TABLE_STYLES.headerText,
-                )}
-              >
-                {t("columns.time")}
-              </th>
-              <th
-                className={classNames(
-                  TABLE_STYLES.headerBase,
-                  TABLE_STYLES.headerText,
-                )}
-              >
-                {t("columns.endpoint")}
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
-            {entries.map((entry) => (
-              <HistoryTableRow
-                entry={entry}
-                isSelected={selectedEntryId === entry.id}
-                key={entry.id}
-                onSelect={handleSelect}
-                tableStyles={TABLE_STYLES}
-              />
-            ))}
-          </tbody>
-        </table>
+        <div className="max-h-[calc(100vh-16rem)] overflow-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead className="sticky top-0 z-10 bg-gray-50">
+              <tr className="border-b border-gray-200">
+                <th className={classNames(TABLE_STYLES.headerBase)} />
+                <th
+                  className={classNames(
+                    TABLE_STYLES.headerBase,
+                    TABLE_STYLES.headerText,
+                  )}
+                >
+                  {t("columns.method")}
+                </th>
+                <th
+                  className={classNames(
+                    TABLE_STYLES.headerBase,
+                    TABLE_STYLES.headerText,
+                  )}
+                >
+                  {t("columns.status")}
+                </th>
+                <th
+                  className={classNames(
+                    TABLE_STYLES.headerBase,
+                    TABLE_STYLES.headerText,
+                  )}
+                >
+                  {t("columns.time")}
+                </th>
+                <th
+                  className={classNames(
+                    TABLE_STYLES.headerBase,
+                    TABLE_STYLES.headerText,
+                  )}
+                >
+                  {t("columns.endpoint")}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {entries.map((entry) => (
+                <HistoryTableRow
+                  entry={entry}
+                  isSelected={selectedEntryId === entry.id}
+                  key={entry.id}
+                  onSelect={handleSelect}
+                  tableStyles={TABLE_STYLES}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
