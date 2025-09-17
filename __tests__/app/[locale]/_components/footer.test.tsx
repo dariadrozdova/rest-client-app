@@ -2,7 +2,6 @@ import { ComponentProps } from "react";
 
 import { render, screen } from "@testing-library/react";
 
-// next/link → мок <a>
 vi.mock("next/link", () => ({
   default: ({ children, ...rest }: ComponentProps<"a">) => (
     <a {...rest}>{children}</a>
