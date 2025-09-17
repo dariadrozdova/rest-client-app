@@ -14,6 +14,8 @@ export type {
   DropdownProps,
   HeaderItem,
   HeadersState,
+  HistoryEntry,
+  HistoryState,
   HttpMethod,
   Issue,
   KeyValueEditorProps,

@@ -6,7 +6,7 @@ export default function StickyHeaderGrid() {
   return (
     <div
       className={classNames(
-        "bg-bg-primary border-border-default sticky top-16 z-30 grid " +
+        "bg-bg-primary border-border-default sticky top-0 z-30 grid " +
           "h-28 grid-cols-[1fr_1px_1fr] grid-rows-[5rem_2rem] items-start" +
           "gap-x-6 border-b",
       )}

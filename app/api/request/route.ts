@@ -34,7 +34,6 @@ export async function POST(request: Request) {
       body: responseText,
     };
 
-    // Analytics (пока console.log, позже - в history/DB)
     console.warn("Executed request:", {
       method,
       url,
@@ -60,7 +59,7 @@ export async function POST(request: Request) {
           requestSize,
           responseSize,
           headers: responseHeaders,
-          body: body || {},
+          body: typeof body === "string" ? body : "",
         });
       } else {
         console.warn("Failed to get uid from request");

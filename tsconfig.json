@@ -30,7 +30,8 @@
       "@store/*": ["./store/*"],
       "@api/*": ["./api/*"],
       "@configs/*": ["_configs/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@workspace-logic/*": ["app/[locale]/(protected)/workspace/_logic/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
