@@ -10,7 +10,6 @@ vi.mock("@shared/styles", () => ({
   classNames: (...cn: string[]) => cn.filter(Boolean).join(" "),
 }));
 
-// SUT
 import { ClientLogo } from "@app/[locale]/(public)/components/client-logo";
 
 describe("ClientLogo", () => {
@@ -19,7 +18,6 @@ describe("ClientLogo", () => {
     const img = screen.getByRole("img", { name: "Brand" });
     expect(img).toHaveAttribute("src", "/logo.png");
     expect(img).toHaveClass("object-contain");
-    // wrapper has non-vertical height class
     expect(img.parentElement?.className).toMatch(/h-\[72px\]/);
     expect(img.parentElement?.className).toMatch(/extra/);
   });
