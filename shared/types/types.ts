@@ -128,6 +128,18 @@ export interface HeadersState {
   items: HeaderItem[];
 }
 
+export interface HistoryEntry {
+  createdAt: string;
+  id: string;
+  request: ResolvedRequest;
+  response: ResponseData;
+}
+
+export interface HistoryState {
+  entries: HistoryEntry[];
+  selectedEntryId: null | string;
+}
+
 export type HttpMethod = (typeof HTTP_METHODS)[number];
 
 export interface InputFieldProps {

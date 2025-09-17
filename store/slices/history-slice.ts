@@ -1,21 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { ResolvedRequest, ResponseData } from "@shared/types";
+import type { HistoryEntry, HistoryState } from "@shared/types";
 import type { RootState } from "@store/store";
-
-export interface HistoryEntry {
-  createdAt: string;
-  id: string;
-  request: ResolvedRequest;
-  response: ResponseData;
-}
-
-interface HistoryState {
-  entries: HistoryEntry[];
-}
 
 const initialState: HistoryState = {
   entries: [],
+  selectedEntryId: null,
 };
 
 const historySlice = createSlice({
@@ -27,13 +17,22 @@ const historySlice = createSlice({
     },
     clearHistory: (state) => {
       state.entries = [];
+      state.selectedEntryId = null;
     },
     setHistory: (state, action: PayloadAction<HistoryEntry[]>) => {
       state.entries = action.payload;
     },
+    setSelectedEntryId: (state, action: PayloadAction<null | string>) => {
+      state.selectedEntryId = action.payload;
+    },
   },
 });
 
-export const { addEntry, clearHistory, setHistory } = historySlice.actions;
+export const { addEntry, clearHistory, setHistory, setSelectedEntryId } =
+  historySlice.actions;
+
 export const selectHistory = (state: RootState) => state.history.entries;
+export const selectSelectedEntryId = (state: RootState) =>
+  state.history.selectedEntryId;
+
 export default historySlice.reducer;
