@@ -6,6 +6,28 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     globals: true,
+    coverage: {
+      provider: "v8",
+      all: false, // не сканируй все файлы проекта
+      include: [
+        "app/**/*.{ts,tsx}",
+        "shared/**/*.{ts,tsx}",
+        "store/**/*.{ts,tsx}",
+        "components/**/*.{ts,tsx}",
+      ],
+      exclude: [
+        "**/node_modules/**",
+        "**/.next/**",
+        "**/coverage/**",
+        "**/*.d.ts",
+        "**/*.map",
+        "**/vitest.*",
+        "tests/**",
+        "**/index.ts",
+      ],
+      reporter: ["text", "html"],
+      reportsDirectory: "coverage",
+    },
   },
   esbuild: {
     jsx: "automatic",

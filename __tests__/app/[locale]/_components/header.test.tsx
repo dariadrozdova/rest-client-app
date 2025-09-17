@@ -46,7 +46,7 @@ vi.mock("next-intl/server", () => ({
 import Header from "@app/[locale]/_components/header";
 
 describe("Header", () => {
-  test("без сессии показывает Войти/Регистрация", async () => {
+  test("shows Sign in / Sign up when there is no session", async () => {
     getServerSessionMock.mockResolvedValueOnce(null);
     const ui = await Header();
     render(ui);
@@ -63,7 +63,7 @@ describe("Header", () => {
     expect(screen.queryByText("Выйти")).not.toBeInTheDocument();
   });
 
-  test("с сессией показывает Выйти", async () => {
+  test("shows Log out when session exists", async () => {
     getServerSessionMock.mockResolvedValueOnce({ user: { name: "A" } });
     const ui = await Header();
     render(ui);
