@@ -5,6 +5,7 @@ import errors from "@shared/lib/i18n/messages/ru/errors.json";
 import footer from "@shared/lib/i18n/messages/ru/footer.json";
 import header from "@shared/lib/i18n/messages/ru/header.json";
 import headerTab from "@shared/lib/i18n/messages/ru/header-tab.json";
+import historyTable from "@shared/lib/i18n/messages/ru/history-table.json";
 import mainPage from "@shared/lib/i18n/messages/ru/main.json";
 import protectedHeader from "@shared/lib/i18n/messages/ru/protected-header.json";
 import responsePanel from "@shared/lib/i18n/messages/ru/response-panel.json";
@@ -26,4 +27,5 @@ export default {
   dropdown: dropdown,
   "response-panel": responsePanel,
   "main-page": mainPage,
+  "history-table": historyTable,
 } as const;

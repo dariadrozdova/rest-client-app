@@ -1,0 +1,12 @@
+{
+  "title": "Request History",
+  "columns": {
+    "method": "Method",
+    "status": "Status",
+    "time": "Time",
+    "endpoint": "Endpoint"
+  },
+  "buttons": {
+    "rerun": "Re-run"
+  }
+}

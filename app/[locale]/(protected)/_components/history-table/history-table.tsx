@@ -1,6 +1,7 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslations } from "next-intl";
 
 import type { HistoryEntry } from "@shared/types";
 
@@ -24,6 +25,7 @@ const TABLE_STYLES = {
 } as const;
 
 export function HistoryTable() {
+  const t = useTranslations("history-table");
   const dispatch = useDispatch<AppDispatch>();
   const entries = useSelector(selectHistory);
   const selectedEntryId = useSelector(selectSelectedEntryId);
@@ -40,7 +42,9 @@ export function HistoryTable() {
   };
 
   const handleReRun = () => {
-    const selectedEntry = entries.find((event) => event.id === selectedEntryId);
+    const selectedEntry = entries.find(
+      (element) => element.id === selectedEntryId,
+    );
     if (!selectedEntry) {
       return;
     }
@@ -51,7 +55,7 @@ export function HistoryTable() {
   return (
     <div className="flex flex-col gap-4 p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-medium text-gray-700">Find Activity</h2>
+        <h2 className="text-base font-medium text-gray-700">{t("title")}</h2>
         <button
           className={classNames(
             "bg-accent-blue border-accent-blue rounded-md border",
@@ -63,7 +67,7 @@ export function HistoryTable() {
           disabled={!selectedEntryId}
           onClick={handleReRun}
         >
-          Re-run
+          {t("buttons.rerun")}
         </button>
       </div>
 
@@ -78,7 +82,7 @@ export function HistoryTable() {
                   TABLE_STYLES.headerText,
                 )}
               >
-                Method
+                {t("columns.method")}
               </th>
               <th
                 className={classNames(
@@ -86,7 +90,7 @@ export function HistoryTable() {
                   TABLE_STYLES.headerText,
                 )}
               >
-                Status
+                {t("columns.status")}
               </th>
               <th
                 className={classNames(
@@ -94,7 +98,7 @@ export function HistoryTable() {
                   TABLE_STYLES.headerText,
                 )}
               >
-                Time
+                {t("columns.time")}
               </th>
               <th
                 className={classNames(
@@ -102,7 +106,7 @@ export function HistoryTable() {
                   TABLE_STYLES.headerText,
                 )}
               >
-                Endpoint
+                {t("columns.endpoint")}
               </th>
             </tr>
           </thead>
