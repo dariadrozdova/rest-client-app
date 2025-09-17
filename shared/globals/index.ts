@@ -23,4 +23,4 @@ export {
 } from "./globals";
 export * from "./globals-animation";
 
-export { ADVANCE_MS } from "./globals-tests";
+export { ADVANCE_MS, TOTAL_LAYERS } from "./globals-tests";
