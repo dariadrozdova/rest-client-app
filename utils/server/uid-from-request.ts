@@ -1,35 +1,39 @@
 import { getSessionCookieName } from "@/shared/lib/auth/cookies";
 import { adminAuth } from "@/shared/lib/firebase/admin";
 
-export async function uidFromRequest(
+export async function getUidFromRequest(
   request: Request,
-): Promise<string | undefined> {
+): Promise<null | string> {
   try {
     const cookieHeader = request.headers.get("cookie") ?? "";
-    const sessionCookieName = getSessionCookieName();
-    const sessionCookie = cookieHeader
-      .split(";")
-      .map((s) => s.trim())
-      .find((s) => s.startsWith(`${sessionCookieName}=`))
-      ?.split("=")[1];
+    if (cookieHeader) {
+      const sessionCookieName = getSessionCookieName();
+      const sessionCookie = cookieHeader
+        .split(";")
+        .map((s) => s.trim())
+        .find((s) => s.startsWith(`${sessionCookieName}=`))
+        ?.split("=")[1];
+
+      if (sessionCookie) {
+        const decoded = await adminAuth.verifySessionCookie(
+          sessionCookie,
+          true,
+        );
+        return decoded.uid ?? null;
+      }
+    }
 
     const authHeader = request.headers.get("authorization") ?? "";
-    const bearer = authHeader.startsWith("Bearer ")
-      ? authHeader.slice("Bearer ".length)
-      : undefined;
-
-    if (sessionCookie) {
-      const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
-      return decoded.uid;
+    if (authHeader.startsWith("Bearer ")) {
+      const bearer = authHeader.slice("Bearer ".length).trim();
+      if (bearer) {
+        const decoded = await adminAuth.verifyIdToken(bearer, true);
+        return decoded.uid ?? null;
+      }
     }
 
-    if (bearer) {
-      const decoded = await adminAuth.verifyIdToken(bearer, true);
-      return decoded.uid;
-    }
-
-    return undefined;
+    return null;
   } catch {
-    return undefined;
+    return null;
   }
 }

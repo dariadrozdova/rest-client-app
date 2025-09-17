@@ -1,36 +1,30 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
+import { HistoryEmptyState } from "@app/[locale]/(protected)/_components/history-table/history-empty-state";
+import { HistoryHeader } from "@app/[locale]/(protected)/_components/history-table/history-header";
+import { HistoryTableContent } from "@app/[locale]/(protected)/_components/history-table/history-table-content";
 import type { HistoryEntry } from "@shared/types";
 
-import { HistoryTableRow } from "@/app/[locale]/(protected)/_components/history-table/history-table-row";
-import { classNames } from "@/shared/styles";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   selectHistory,
   selectSelectedEntryId,
   setSelectedEntryId,
 } from "@/store/slices/history-slice";
 import { executeRequest } from "@/store/slices/request-slice";
-import type { AppDispatch, RootState } from "@/store/store";
 import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
-import { restoreRequestFromEntry } from "@/utils/helpers/restore-request";
-
-const TABLE_STYLES = {
-  cellPadding: "px-4 py-3",
-  headerBase: "px-4 py-3 text-left",
-  headerText: "text-xs font-medium text-gray-500 uppercase tracking-wider",
-  textMedium: "font-medium text-sm",
-} as const;
+import { restoreRequest } from "@/utils/helpers/restore-request";
 
 export function HistoryTable() {
   const t = useTranslations("history-table");
-  const dispatch = useDispatch<AppDispatch>();
-  const entries = useSelector(selectHistory);
-  const selectedEntryId = useSelector(selectSelectedEntryId);
-  const activeTab = useSelector((s: RootState) => s.tabs.activeTab);
-  const resolvedOutput = useSelector(selectResolvedRequest);
+  const dispatch = useAppDispatch();
+
+  const entries = useAppSelector(selectHistory);
+  const selectedEntryId = useAppSelector(selectSelectedEntryId);
+  const activeTab = useAppSelector((s) => s.tabs.activeTab);
+  const resolvedOutput = useAppSelector(selectResolvedRequest);
 
   if (activeTab !== "requestHistory") {
     return null;
@@ -38,7 +32,7 @@ export function HistoryTable() {
 
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
-    restoreRequestFromEntry(dispatch, entry);
+    restoreRequest(entry);
   };
 
   const handleReRun = () => {
@@ -48,83 +42,32 @@ export function HistoryTable() {
     if (!selectedEntry) {
       return;
     }
-    restoreRequestFromEntry(dispatch, selectedEntry);
+    restoreRequest(selectedEntry);
     dispatch(executeRequest(resolvedOutput));
   };
 
+  if (!entries || entries.length === 0) {
+    return <HistoryEmptyState />;
+  }
+
   return (
     <div className="flex flex-col gap-4 p-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-medium text-gray-700">{t("title")}</h2>
-        <button
-          className={classNames(
-            "bg-accent-blue border-accent-blue rounded-md border",
-            "px-4 py-2 text-sm font-medium text-white",
-            selectedEntryId
-              ? "cursor-pointer hover:brightness-110"
-              : "cursor-not-allowed opacity-50",
-          )}
-          disabled={!selectedEntryId}
-          onClick={handleReRun}
-        >
-          {t("buttons.rerun")}
-        </button>
-      </div>
-
-      <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
-        <div className="max-h-[calc(100vh-16rem)] overflow-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead className="sticky top-0 z-10 bg-gray-50">
-              <tr className="border-b border-gray-200">
-                <th className={classNames(TABLE_STYLES.headerBase)} />
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.method")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.status")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.time")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.endpoint")}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {entries.map((entry) => (
-                <HistoryTableRow
-                  entry={entry}
-                  isSelected={selectedEntryId === entry.id}
-                  key={entry.id}
-                  onSelect={handleSelect}
-                  tableStyles={TABLE_STYLES}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <HistoryHeader
+        canRerun={!!selectedEntryId}
+        onRerun={handleReRun}
+        title={t("title")}
+      />
+      <HistoryTableContent
+        entries={entries}
+        labels={{
+          method: t("columns.method"),
+          status: t("columns.status"),
+          time: t("columns.time"),
+          endpoint: t("columns.endpoint"),
+        }}
+        onSelect={handleSelect}
+        selectedEntryId={selectedEntryId}
+      />
     </div>
   );
 }

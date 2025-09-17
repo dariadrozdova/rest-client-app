@@ -131,8 +131,23 @@ export interface HeadersState {
 export interface HistoryEntry {
   createdAt: string;
   id: string;
-  request: ResolvedRequest;
-  response: ResponseData;
+  request: {
+    body?: null | string;
+    headers?: Record<string, string>;
+    method: string;
+    url: string;
+  };
+  response: {
+    error?: null | string;
+    meta?: {
+      requestDurationMs?: number;
+      requestSizeBytes?: number;
+      requestTimestamp?: string;
+      responseSizeBytes?: number;
+    };
+    status: number;
+    statusText?: string;
+  };
 }
 
 export interface HistoryState {

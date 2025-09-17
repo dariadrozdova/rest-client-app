@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import type { HistoryEntry, HistoryState } from "@shared/types";
-import type { RootState } from "@store/store";
+
+import type { RootState } from "@/store/store";
 
 const initialState: HistoryState = {
   entries: [],
