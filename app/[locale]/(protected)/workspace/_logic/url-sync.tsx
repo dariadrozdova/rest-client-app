@@ -4,8 +4,7 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useParams, usePathname, useRouter } from "next/navigation";
 
-import { RootState } from "@store/store";
-
+import { RootState } from "@/store/store";
 import { toBase64Utf8 } from "@/utils/helpers/base64";
 
 const DEBOUNCE_MS = 300;

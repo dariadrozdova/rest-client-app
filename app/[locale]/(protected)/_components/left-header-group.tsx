@@ -5,13 +5,13 @@ import { useTranslations } from "next-intl";
 
 import { MethodSwitch } from "@app/[locale]/(protected)/_components/method-switch";
 import { TabOpenState } from "@shared/types";
-import { executeRequest } from "@store/slices/request-slice";
-import { setActiveTab } from "@store/slices/tab-open-slice";
-import { setUrl } from "@store/slices/url-slice";
-import { AppDispatch, RootState } from "@store/store";
 
 import { classNames } from "@/shared/styles";
 import { selectIsLoading } from "@/store/selectors/request-selector";
+import { executeRequest } from "@/store/slices/request-slice";
+import { setActiveTab } from "@/store/slices/tab-open-slice";
+import { setUrl } from "@/store/slices/url-slice";
+import { AppDispatch, RootState } from "@/store/store";
 import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 
 type TabKey = TabOpenState["activeTab"];

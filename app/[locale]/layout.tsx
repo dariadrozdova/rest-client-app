@@ -3,11 +3,11 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { Footer, Header } from "@app/[locale]/_components";
-import { ReduxProvider } from "@store/provider";
 
 import "@/shared/styles/globals.css";
 
 import { routing } from "@/shared/lib/i18n/routing";
+import { ReduxProvider } from "@/store/provider";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

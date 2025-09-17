@@ -3,9 +3,8 @@
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { RootState } from "@store/store";
-
 import { JsonViewer } from "@/shared/ui/json-viewer";
+import { RootState } from "@/store/store";
 import { normalizeResponseBody } from "@/utils/helpers/normalize-response-body";
 
 export function ResponsePanel() {

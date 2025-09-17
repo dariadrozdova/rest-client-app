@@ -3,11 +3,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { setSelectedMethod } from "@store/slices/method-slice";
-import { RootState } from "@store/store";
-
 import { HTTP_METHODS } from "@/shared/globals";
 import { Dropdown } from "@/shared/ui/dropdown";
+import { setSelectedMethod } from "@/store/slices/method-slice";
+import { RootState } from "@/store/store";
 
 export function MethodSwitch() {
   const t = useTranslations("dropdown");

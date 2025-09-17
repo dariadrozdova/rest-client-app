@@ -3,8 +3,7 @@
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { RootState } from "@store/store";
-
+import { RootState } from "@/store/store";
 import { getStatusColor } from "@/utils/helpers/get-status-color";
 
 export function RightHeaderGroup() {
