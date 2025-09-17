@@ -8,7 +8,6 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: "v8",
-      all: false, // не сканируй все файлы проекта
       include: [
         "app/**/*.{ts,tsx}",
         "shared/**/*.{ts,tsx}",
