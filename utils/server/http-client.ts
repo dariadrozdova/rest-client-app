@@ -104,7 +104,7 @@ export async function persistHistorySafe(
       duration: Date.now() - startedAt,
       requestSize: byteLength(payload.body),
       responseSize: byteLength(executed.body),
-      headers: executed.headers,
+      headers: payload.headers ?? {},
       body: payload.body ?? "",
     });
   } catch (error) {
