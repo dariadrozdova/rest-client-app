@@ -7,7 +7,7 @@ import { Link } from "@shared/lib/i18n/navigation";
 import { LanguageSwitch } from "@/app/[locale]/_components/language-switch";
 import { getServerSession } from "@/shared/lib/auth/get-session";
 import { classNames } from "@/shared/styles";
-import SignOutButton from "@/shared/ui/sign-out-button";
+import { SignOutButton } from "@/shared/ui";
 
 export default async function Header() {
   const t = await getTranslations("header");

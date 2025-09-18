@@ -25,7 +25,9 @@ vi.mock("@/app/[locale]/_components/language-switch", () => ({
 }));
 
 vi.mock("@/shared/ui/sign-out-button", () => ({
+  __esModule: true,
   default: ({ label }: { label: string }) => <button>{label}</button>,
+  SignOutButton: ({ label }: { label: string }) => <button>{label}</button>,
 }));
 
 async function mockGetTranslations() {
