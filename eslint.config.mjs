@@ -167,6 +167,7 @@ export default tseslint.config(
     rules: {
       "max-lines-per-function": "off",
       "@next/next/no-img-element": "off",
+      "react-compiler/react-compiler": "off",
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
