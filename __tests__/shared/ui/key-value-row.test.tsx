@@ -1,4 +1,3 @@
-// __tests__/shared/ui/key-value-row.test.tsx
 import { createAction } from "@reduxjs/toolkit";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -6,13 +5,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { KeyValueRow } from "@/shared/ui";
 
-// Spy on dispatch from react-redux
 const dispatchSpy = vi.fn((action: unknown) => action);
 vi.mock("react-redux", () => ({
   useDispatch: () => dispatchSpy,
 }));
 
-// Real RTK action creators to match prop types exactly
 const onEnsureTrailingEmpty = createAction("kv/ensureTrailingEmpty");
 const onToggleEnabled = createAction<{ enabled: boolean; id: string }>(
   "kv/toggleEnabled",
