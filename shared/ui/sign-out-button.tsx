@@ -10,7 +10,7 @@ interface Props {
   label?: string;
 }
 
-export default function SignOutButton({ className, label = "Log out" }: Props) {
+export function SignOutButton({ className, label = "Log out" }: Props) {
   const router = useRouter();
   const locale = useLocale();
 

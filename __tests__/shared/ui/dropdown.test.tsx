@@ -4,9 +4,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { Dropdown } from "@/shared/ui/dropdown";
+import { Dropdown } from "@/shared/ui";
 
-// Mock utilities used by the component
 vi.mock("@/shared/styles", () => ({
   classNames: (...xs: unknown[]) => xs.filter(Boolean).join(" "),
 }));
@@ -52,7 +51,6 @@ describe("Dropdown", () => {
     const expanded = true;
     expect(button).toHaveAttribute("aria-expanded", String(expanded));
 
-    // Listbox appears with options
     const list = screen.getByRole("listbox");
     expect(list.className).toContain(widthClass);
     expect(
@@ -62,16 +60,13 @@ describe("Dropdown", () => {
       screen.getByRole("option", { name: second.label }),
     ).toBeInTheDocument();
 
-    // Arrow rotates when open
     const arrow = button.querySelector("svg");
     const rotationClass = "rotate-180";
     expect(arrow?.className.baseVal ?? "").toContain(rotationClass);
 
-    // Selecting an option calls onSelect and closes the list
     await user.click(screen.getByRole("option", { name: second.label }));
     expect(onSelect).toHaveBeenCalledWith(second.value);
 
-    // menu closed
     expect(button).toHaveAttribute("aria-expanded", String(collapsed));
   });
 
@@ -83,7 +78,6 @@ describe("Dropdown", () => {
         selectedValue="unknown"
       />,
     );
-    // Button still present with empty label span
     const button = screen.getByRole("button");
     const span = button.querySelector("span");
     const empty = "";
