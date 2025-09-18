@@ -1,8 +1,6 @@
-// __tests__/app/[locale]/(protected)/_components/variables-editor.test.tsx
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// ---------- Hoisted constants for mocks (avoid TDZ with Vitest hoisting) ----------
 const H = vi.hoisted(() => {
   const NAMESPACE = "variables-editor";
 
@@ -16,7 +14,6 @@ const H = vi.hoisted(() => {
     editor: "key-value-editor",
   } as const;
 
-  // action types for identity checks
   const ACTIONS = {
     ENSURE_TRAILING_EMPTY: "variables/ensureTrailingEmpty",
     REMOVE_ROW: "variables/removeRow",
@@ -26,7 +23,6 @@ const H = vi.hoisted(() => {
     SET_VARIABLES: "variables/setVariables",
   } as const;
 
-  // sample data
   const STORED_NON_EMPTY = [
     { id: "s1", enabled: true, key: "TOKEN", value: "abc" },
   ] as const;
@@ -38,7 +34,6 @@ const H = vi.hoisted(() => {
     { id: "v4", enabled: true, key: "CITY", value: "   " }, // not valid (blank value)
   ] as const;
 
-  // Redux-like state holder used by our useSelector mock
   interface Variable {
     enabled: boolean;
     id: string;
@@ -52,7 +47,6 @@ const H = vi.hoisted(() => {
     value: { variables: [] },
   };
 
-  // indices for mock calls (avoid magic numbers)
   const LAST_CALL_INDEX = -1;
   const FIRST_ARG_INDEX = 0;
   const FIRST_CALL_INDEX = 0;
@@ -73,19 +67,16 @@ const H = vi.hoisted(() => {
   };
 });
 
-// ---------- Spies ----------
 const mockDispatch = vi.fn();
 const setStoredSpy = vi.fn();
 const captureEditorProps = vi.fn();
 
-// Local fixture storage for the storage hook mock (no imports needed)
 const UNSET = Symbol("unset");
 let fixtureStored: unknown = UNSET;
 function setStoredFixture(v: unknown): void {
   fixtureStored = v;
 }
 
-// ---------- Mocks ----------
 vi.mock("react-redux", () => {
   function useDispatch() {
     return mockDispatch;
@@ -117,11 +108,8 @@ vi.mock("next-intl", () => {
   return { useTranslations };
 });
 
-// Generic, assertion-free storage hook mock.
-// We use a type-guard helper so TS narrows without `as`.
 vi.mock("@utils/hooks", () => {
   function isSameType<T>(_sample: T, _x: unknown): _x is T {
-    // test-only helper; runtime check not needed, the predicate informs TS
     return true;
   }
 
@@ -198,7 +186,6 @@ vi.mock("@/store/slices/variables-slice", () => {
   };
 });
 
-// Import after mocks
 import { VariablesEditor } from "@/app/[locale]/(protected)/_components/variables-editor";
 import {
   ensureTrailingEmpty as ensureTrailingEmptyReference,
@@ -208,7 +195,6 @@ import {
   updateValue as updateValueReference,
 } from "@/store/slices/variables-slice";
 
-// ---------- Helpers ----------
 function getLastCall<T extends unknown[]>(calls: T[]): T {
   const call = calls.at(H.LAST_CALL_INDEX);
   if (!call) {
@@ -217,21 +203,17 @@ function getLastCall<T extends unknown[]>(calls: T[]): T {
   return call;
 }
 
-// ---------- Tests ----------
 describe("VariablesEditor", () => {
   beforeEach(() => {
     mockDispatch.mockClear();
     setStoredSpy.mockClear();
     captureEditorProps.mockClear();
 
-    // default: no stored values
     setStoredFixture([]);
-    // default selector state
     H.STATE.value = { variables: [] };
   });
 
   it("renders KeyValueEditor with items and i18n labels; passes action callbacks by reference", () => {
-    // selector returns some variables for the UI
     H.STATE.value = {
       variables: [
         { id: "1", enabled: true, key: "A", value: "1" },
@@ -244,16 +226,13 @@ describe("VariablesEditor", () => {
     const last = getLastCall(captureEditorProps.mock.calls);
     const props = last[H.FIRST_ARG_INDEX];
 
-    // items
     expect(Array.isArray(props.items)).toBe(true);
     expect(props.items).toEqual(H.STATE.value.variables);
 
-    // i18n
     expect(props.title).toBe(H.LABELS.title);
     expect(props.keyPlaceholder).toBe(H.LABELS.placeholderName);
     expect(props.valuePlaceholder).toBe(H.LABELS.placeholderValue);
 
-    // callbacks wired by reference (not wrapped)
     expect(props.onEnsureTrailingEmpty).toBe(ensureTrailingEmptyReference);
     expect(props.onRemoveRow).toBe(removeRowReference);
     expect(props.onToggleEnabled).toBe(toggleEnabledReference);
@@ -262,17 +241,14 @@ describe("VariablesEditor", () => {
   });
 
   it("on mount with empty local storage: dispatches ensureTrailingEmpty (but not setVariables)", () => {
-    // empty storage already configured in beforeEach
     render(<VariablesEditor />);
 
     const calls = mockDispatch.mock.calls;
 
-    // should dispatch ensureTrailingEmpty once (no setVariables)
     const first = calls[H.FIRST_CALL_INDEX];
     const firstAction = first?.[H.FIRST_ARG_INDEX];
     expect(firstAction?.type).toBe(H.ACTIONS.ENSURE_TRAILING_EMPTY);
 
-    // ensure setVariables not present
     const hasSetVariables = calls.some(
       (c) => c[H.FIRST_ARG_INDEX]?.type === H.ACTIONS.SET_VARIABLES,
     );
@@ -294,17 +270,14 @@ describe("VariablesEditor", () => {
   });
 
   it("persists only valid enabled variables (trimmed key/value) to local storage", () => {
-    // selector returns a list > 1, so second effect will try persisting
     H.STATE.value = { variables: H.VARS_FOR_PERSIST.map((v) => ({ ...v })) };
 
     render(<VariablesEditor />);
 
-    // compute expected filtered set
     const expected = H.VARS_FOR_PERSIST.filter(
       (v) => v.enabled && v.key.trim() && v.value.trim(),
     );
 
-    // last call to setStoredSpy should have been with expected
     const last = getLastCall(setStoredSpy.mock.calls);
     const persisted = last[H.FIRST_ARG_INDEX];
 
@@ -317,11 +290,8 @@ describe("VariablesEditor", () => {
     const last = getLastCall(captureEditorProps.mock.calls);
     const props = last[H.FIRST_ARG_INDEX];
 
-    // Peek the exact function identity
     expect(props.onEnsureTrailingEmpty).toBe(ensureTrailingEmptyReference);
 
-    // Ensure the same identity is the one used when dispatching in the first effect
-    // (we can't intercept inside the effect easily, but the identity is the same reference)
     expect(typeof ensureTrailingEmptyReference).toBe("function");
   });
 });
