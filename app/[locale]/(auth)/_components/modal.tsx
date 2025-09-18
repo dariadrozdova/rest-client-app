@@ -12,7 +12,7 @@ interface ModalProps {
 export default function Modal({ onClose, children }: ModalProps) {
   return (
     <div
-      className="absolute inset-0 z-50 flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md"
       onMouseDown={onClose}
     >
       <div
