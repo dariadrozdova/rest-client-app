@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     const dto = buildResponseDTO(payload, executed, startedAt);
 
-    await persistHistorySafe(request, startedAt, payload, executed);
+    await persistHistorySafe(startedAt, payload, executed);
 
     return NextResponse.json(dto, { status: dto.status });
   } catch (error) {

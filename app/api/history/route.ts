@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 
-import { getUserHistory } from "@/utils/server/history-store";
-import { getUidFromRequest } from "@/utils/server/uid-from-request";
+import { getUidFromCookies } from "@utils/server/uid-from-request";
 
-export async function GET(request: Request) {
+import { getUserHistory } from "@/utils/server/history-store";
+
+export async function GET() {
   try {
-    const uid = await getUidFromRequest(request);
+    const uid = await getUidFromCookies();
     if (!uid) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

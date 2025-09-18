@@ -1,73 +1,61 @@
-"use client";
-
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 import { HistoryEmptyState } from "@app/[locale]/(protected)/_components/history-table/history-empty-state";
-import { HistoryHeader } from "@app/[locale]/(protected)/_components/history-table/history-header";
-import { HistoryTableContent } from "@app/[locale]/(protected)/_components/history-table/history-table-content";
 import type { HistoryEntry } from "@shared/types";
+import { getUserHistory } from "@utils/server/history-store";
+import { getUidFromCookies } from "@utils/server/uid-from-request";
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  selectHistory,
-  selectSelectedEntryId,
-  setSelectedEntryId,
-} from "@/store/slices/history-slice";
-import { executeRequest } from "@/store/slices/request-slice";
-import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
-import { restoreRequest } from "@/utils/helpers/restore-request";
+import { HistoryTableClient } from "@/app/[locale]/(protected)/_components/history-table/history-table-client";
 
-export function HistoryTable() {
-  const t = useTranslations("history-table");
-  const dispatch = useAppDispatch();
-
-  const entries = useAppSelector(selectHistory);
-  const selectedEntryId = useAppSelector(selectSelectedEntryId);
-  const activeTab = useAppSelector((s) => s.tabs.activeTab);
-  const resolvedOutput = useAppSelector(selectResolvedRequest);
-
-  if (activeTab !== "requestHistory") {
-    return null;
+export async function HistoryTable() {
+  const t = await getTranslations("history-table");
+  const uid = await getUidFromCookies();
+  if (!uid) {
+    return <HistoryEmptyState />;
   }
 
-  const handleSelect = (entry: HistoryEntry) => {
-    dispatch(setSelectedEntryId(entry.id));
-    restoreRequest(entry);
-  };
+  let entries: HistoryEntry[] = [];
+  try {
+    const databaseItems = await getUserHistory(uid);
+    entries = databaseItems.map((entry) => ({
+      id: entry.id ?? "",
+      createdAt: entry.timestamp,
+      request: {
+        method: entry.method,
+        url: entry.url,
+        headers: entry.headers ?? {},
+        body: entry.body ?? null,
+      },
+      response: {
+        status: entry.status,
+        statusText: entry.statusText ?? "",
+        error: entry.error ?? null,
+        meta: {
+          requestDurationMs: entry.duration,
+          requestSizeBytes: entry.requestSize,
+          responseSizeBytes: entry.responseSize,
+          requestTimestamp: entry.timestamp,
+        },
+      },
+    }));
+  } catch {
+    entries = [];
+  }
 
-  const handleReRun = () => {
-    const selectedEntry = entries.find(
-      (element) => element.id === selectedEntryId,
-    );
-    if (!selectedEntry) {
-      return;
-    }
-    restoreRequest(selectedEntry);
-    dispatch(executeRequest(resolvedOutput));
-  };
-
-  if (!entries || entries.length === 0) {
+  if (entries.length === 0) {
     return <HistoryEmptyState />;
   }
 
   return (
-    <div className="flex flex-col gap-4 p-6">
-      <HistoryHeader
-        canRerun={!!selectedEntryId}
-        onRerun={handleReRun}
-        title={t("title")}
-      />
-      <HistoryTableContent
-        entries={entries}
-        labels={{
-          method: t("columns.method"),
-          status: t("columns.status"),
-          time: t("columns.time"),
-          endpoint: t("columns.endpoint"),
-        }}
-        onSelect={handleSelect}
-        selectedEntryId={selectedEntryId}
-      />
-    </div>
+    <HistoryTableClient
+      entries={entries}
+      labels={{
+        method: t("columns.method"),
+        status: t("columns.status"),
+        time: t("columns.time"),
+        endpoint: t("columns.endpoint"),
+      }}
+      title={t("title")}
+    />
   );
 }

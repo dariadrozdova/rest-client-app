@@ -1,4 +1,5 @@
 import { addHistoryEntry } from "@utils/server/history-store";
+import { getUidFromCookies } from "@utils/server/uid-from-request";
 
 import {
   byteLength,
@@ -6,7 +7,6 @@ import {
   parseMaybeJson,
   toHeadersObject,
 } from "@/utils/server/http-utils";
-import { getUidFromRequest } from "@/utils/server/uid-from-request";
 
 export interface ExecutedResponse {
   body: string;
@@ -84,13 +84,12 @@ export async function executeHttp(
 }
 
 export async function persistHistorySafe(
-  request: Request,
   startedAt: number,
   payload: RequestPayload,
   executed: ExecutedResponse,
 ) {
   try {
-    const uid = await getUidFromRequest(request);
+    const uid = await getUidFromCookies();
     if (!uid) {
       return;
     }
