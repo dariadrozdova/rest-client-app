@@ -6,13 +6,11 @@ import { describe, expect, it, vi } from "vitest";
 
 import { KeyValueEditor } from "@shared/ui";
 
-// capture dispatched actions
 const dispatchSpy = vi.fn((action: unknown) => action);
 vi.mock("react-redux", () => ({
   useDispatch: () => dispatchSpy,
 }));
 
-// --- real action creators (match the prop types) ---
 const onEnsureTrailingEmpty = createAction("kv/ensureTrailingEmpty");
 const onToggleEnabled = createAction<{ enabled: boolean; id: string }>(
   "kv/toggleEnabled",
