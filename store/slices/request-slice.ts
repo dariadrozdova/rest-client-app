@@ -52,13 +52,7 @@ export const executeRequest = createAsyncThunk<
         }),
       });
 
-      const dto = await resp.json();
-
-      if (!resp.ok && "error" in dto) {
-        return rejectWithValue(dto.error ?? "Request failed");
-      }
-
-      return dto;
+      return await resp.json();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
