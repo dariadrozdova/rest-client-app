@@ -14,7 +14,7 @@ export async function HistoryTable() {
     return <HistoryEmptyState />;
   }
 
-  let entries: HistoryEntry[] = [];
+  let entries: HistoryEntry[];
   try {
     const databaseItems = await getUserHistory(uid);
     entries = databaseItems.map((entry) => ({
