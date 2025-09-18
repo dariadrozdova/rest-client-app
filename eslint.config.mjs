@@ -164,28 +164,19 @@ export default tseslint.config(
   {
     files: ["**/*.test.ts", "**/*.test.tsx", "__tests__/**", "tests/**"],
     rules: {
-      // В моках можно рендерить <img> (мы часто эмулируем next/image)
       "@next/next/no-img-element": "off",
-
-      // Уберём ложные срабатывания на числа в тестах:
-      // - разрешаем enum-ы и числовые literal-типы
-      // - по желанию можно добавить常 используемые числа в ignore
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
           ignoreEnums: true,
           ignoreNumericLiteralTypes: true,
-          ignore: [0, 1], // добавь сюда свои «разрешённые» числа, если нужно
+          ignore: [0, 1, 2, 3],
         },
       ],
-
-      // Чтобы можно было именовать неиспользуемые переменные/аргументы с префиксом _
       "@typescript-eslint/no-unused-vars": [
         "error",
         { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
       ],
-
-      // В моках Vitest часто просит вынести функции наружу; если мешает — отключаем строгость
       "unicorn/consistent-function-scoping": "off",
     },
   },
