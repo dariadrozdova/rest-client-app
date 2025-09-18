@@ -38,6 +38,7 @@ export default defineConfig({
       "@app": fileURLToPath(new URL("./app", import.meta.url)),
       "@shared": fileURLToPath(new URL("./shared", import.meta.url)),
       "@store": fileURLToPath(new URL("./store", import.meta.url)),
+      "@utils": fileURLToPath(new URL("./utils", import.meta.url)),
     },
   },
 });
