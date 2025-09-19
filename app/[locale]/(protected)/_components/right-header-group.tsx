@@ -12,6 +12,20 @@ export function RightHeaderGroup() {
     (state: RootState) => state.request,
   );
 
+  const bytesText =
+    response &&
+    response.meta &&
+    typeof response.meta.responseSizeBytes === "number"
+      ? t("size", { bytes: response.meta.responseSizeBytes })
+      : t("size", { bytes: "-" });
+
+  const timeText =
+    response &&
+    response.meta &&
+    typeof response.meta.requestDurationMs === "number"
+      ? t("time", { ms: response.meta.requestDurationMs })
+      : t("time", { ms: "-" });
+
   return (
     <>
       <div className="text-text-secondary flex min-h-full items-center justify-evenly gap-4 px-6 pt-8 text-lg font-bold">
@@ -29,17 +43,8 @@ export function RightHeaderGroup() {
           )}
         </span>
 
-        <span className="px-2 py-1">
-          {response
-            ? t("size", { bytes: response.meta.responseSizeBytes })
-            : t("size", { bytes: "—" })}
-        </span>
-
-        <span className="px-2 py-1">
-          {response
-            ? t("time", { ms: response.meta.requestDurationMs })
-            : t("time", { ms: "—" })}
-        </span>
+        <span className="px-2 py-1">{bytesText}</span>
+        <span className="px-2 py-1">{timeText}</span>
       </div>
 
       <div className="col-start-3 row-start-2 flex items-end px-6">
