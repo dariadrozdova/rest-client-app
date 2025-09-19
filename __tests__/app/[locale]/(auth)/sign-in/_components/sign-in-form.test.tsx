@@ -36,7 +36,7 @@ vi.mock("firebase/analytics", () => ({
 }));
 
 vi.mock("@/shared/lib/firebase/firebase", () => ({
-  analytics: {}, // keep truthy
+  analytics: {},
 }));
 
 const signInEmailMock = vi.fn();
