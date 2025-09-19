@@ -5,16 +5,23 @@ import { NextResponse } from "next/server";
 import {
   buildResponseDTO,
   executeHttp,
+  persistHistoryErrorSafe,
   persistHistorySafe,
   type RequestPayload,
 } from "@/utils/server/http-client";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
+  let payload: RequestPayload = {
+    method: "",
+    url: "",
+    headers: {},
+    body: null,
+  };
 
   try {
     const raw = await request.json();
-    const payload: RequestPayload = {
+    payload = {
       method:
         typeof raw?.method === "string" ? raw.method.toUpperCase() : "GET",
       url: String(raw?.url ?? ""),
@@ -31,6 +38,7 @@ export async function POST(request: Request) {
     return NextResponse.json(dto, { status: dto.status });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    await persistHistoryErrorSafe(startedAt, payload, message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

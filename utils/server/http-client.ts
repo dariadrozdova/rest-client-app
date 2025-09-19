@@ -82,6 +82,36 @@ export async function executeHttp(
   };
 }
 
+export async function persistHistoryErrorSafe(
+  startedAt: number,
+  payload: RequestPayload,
+  errorMessage: string,
+) {
+  try {
+    const uid = await getUidFromCookies();
+    if (!uid) {
+      return;
+    }
+
+    await addHistoryEntry(uid, {
+      timestamp: new Date(startedAt).toISOString(),
+      url: payload.url,
+      method: payload.method,
+      status: 500,
+      statusText: "Internal Server Error",
+      duration: Date.now() - startedAt,
+      requestSize: byteLength(payload.body),
+      responseSize: 0,
+      headers: payload.headers ?? {},
+      headersUser: payload.headers ?? {},
+      body: payload.body ?? "",
+      error: errorMessage,
+    });
+  } catch (error) {
+    console.warn("Failed to append error history:", error);
+  }
+}
+
 export async function persistHistorySafe(
   startedAt: number,
   payload: RequestPayload,
