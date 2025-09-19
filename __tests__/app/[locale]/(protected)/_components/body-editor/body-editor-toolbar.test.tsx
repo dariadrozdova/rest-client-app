@@ -4,7 +4,6 @@ import { describe, expect, it, vi } from "vitest";
 
 import { BodyEditorToolbar } from "@/app/[locale]/(protected)/_components/body-editor/body-editor-toolbar";
 
-// Mock translations
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => {
     const map: Record<string, string> = {
@@ -34,10 +33,8 @@ describe("BodyEditorToolbar", () => {
       />,
     );
 
-    // label
     expect(screen.getByText("Content Type")).toBeInTheDocument();
 
-    // select has the current value
     const select = screen.getByDisplayValue("application/json");
     await userEvent.selectOptions(select, "text/plain");
     expect(onChange).toHaveBeenCalledTimes(N.ONE);
