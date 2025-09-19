@@ -117,6 +117,12 @@ export interface DropdownProps<T = unknown> {
   width?: string;
 }
 
+export interface ErrorProps {
+  code: string;
+  description: string;
+  title: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;
