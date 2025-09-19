@@ -1,6 +1,6 @@
 "use client";
 
-import { useReturnableModal } from "@app/[locale]/(auth)/hooks/useReturnableModal";
+import { useReturnableModal } from "@utils/hooks/use-returnable-modal";
 
 import SignUpModal from "@/app/[locale]/(auth)/sign-up/_components/sign-up-modal";
 

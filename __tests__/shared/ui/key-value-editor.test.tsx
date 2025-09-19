@@ -44,10 +44,8 @@ describe("KeyValueEditor", () => {
       />,
     );
 
-    // once on mount
     expect(dispatchSpy).toHaveBeenCalledWith(onEnsureTrailingEmpty());
 
-    // and again after items change
     const secondItems = [
       ...firstItems,
       { id: "row-2", key: "", value: "", enabled: false },
@@ -66,7 +64,6 @@ describe("KeyValueEditor", () => {
       />,
     );
 
-    // count calls using the action equality
     const ensureCalls = dispatchSpy.mock.calls.filter(
       ([a]) => typeof a === "object" && a,
     ).length;

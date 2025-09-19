@@ -5,10 +5,10 @@ export function Button({ children, disabled }: ButtonProps) {
   return (
     <button
       className={classNames(
-        "w-full rounded-md py-2 text-sm font-medium text-white shadow-sm transition-colors",
+        "text-bg-primary bg-accent-blue w-full rounded-md py-2 text-sm font-medium shadow-sm transition-colors",
         disabled
-          ? "cursor-not-allowed bg-gray-400 opacity-60"
-          : "cursor-pointer bg-blue-600 hover:bg-blue-700",
+          ? "cursor-not-allowed opacity-50"
+          : "cursor-pointer hover:brightness-110",
       )}
       disabled={disabled}
       type="submit"
