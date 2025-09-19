@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { ResolvedSelectorOutput, ResponseData } from "@shared/types";
+import type {
+  HistoryEntry,
+  ResolvedSelectorOutput,
+  ResponseData,
+} from "@shared/types";
+
+import { addEntry } from "@/store/slices/history-slice";
 
 interface RequestState {
   error: null | string;
@@ -13,53 +19,64 @@ const initialState: RequestState = {
   isLoading: false,
   error: null,
 };
-//
-// function calculateRequestSize(request: ResolvedRequest): number {
-//   const bodySize = request.body ? new Blob([request.body]).size : 0;
-//   const headersSize = new Blob(
-//     request.headers.map((header) => `${header.name}: ${header.value}\r\n`),
-//   ).size;
-//   const urlSize = new Blob([request.url]).size;
-//   return bodySize + headersSize + urlSize;
-// }
 
 export const executeRequest = createAsyncThunk<
   ResponseData,
   ResolvedSelectorOutput,
   { rejectValue: string }
->(
-  "request/execute",
-  async (resolvedOutput, { rejectWithValue, dispatch: _dispatch }) => {
-    if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
-      return rejectWithValue(
-        resolvedOutput.issues.map((issue) => issue.type).join(", "),
-      );
-    }
+>("request/execute", async (resolvedOutput, { rejectWithValue, dispatch }) => {
+  if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
+    return rejectWithValue(
+      resolvedOutput.issues.map((issue) => issue.type).join(", "),
+    );
+  }
 
-    const resolved = resolvedOutput.resolved;
+  const resolved = resolvedOutput.resolved;
 
-    try {
-      const resp = await fetch("/api/request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          method: resolved.method,
-          url: resolved.url,
-          headers: Object.fromEntries(
-            resolved.headers.map((header) => [header.name, header.value]),
-          ),
-          body: resolved.body,
-        }),
-      });
+  try {
+    const resp = await fetch("/api/request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        method: resolved.method,
+        url: resolved.url,
+        headers: Object.fromEntries(
+          resolved.headers.map((header) => [header.name, header.value]),
+        ),
+        body: resolved.body,
+      }),
+    });
 
-      return await resp.json();
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
-    }
-  },
-);
+    const data: ResponseData = await resp.json();
+
+    const newEntry: HistoryEntry = {
+      id: crypto.randomUUID(),
+      createdAt: data.meta.requestTimestamp,
+      request: {
+        method: resolved.method,
+        url: resolved.url,
+        headers: Object.fromEntries(
+          resolved.headers.map((h) => [h.name, h.value]),
+        ),
+        body: resolved.body ?? null,
+      },
+      response: {
+        status: data.status,
+        statusText: data.statusText,
+        error: null,
+        meta: data.meta,
+      },
+    };
+
+    dispatch(addEntry(newEntry));
+
+    return data;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    return rejectWithValue(errorMessage);
+  }
+});
 
 const requestSlice = createSlice({
   name: "request",

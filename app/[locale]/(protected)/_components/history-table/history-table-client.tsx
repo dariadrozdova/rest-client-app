@@ -1,12 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
+
 import type { HistoryEntry } from "@shared/types";
 
 import { HistoryHeader } from "@/app/[locale]/(protected)/_components/history-table/history-header";
 import { HistoryTableContent } from "@/app/[locale]/(protected)/_components/history-table/history-table-content";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
+  selectHistory,
   selectSelectedEntryId,
+  setHistory,
   setSelectedEntryId,
 } from "@/store/slices/history-slice";
 import { executeRequest } from "@/store/slices/request-slice";
@@ -15,16 +19,21 @@ import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 import { restoreRequest } from "@/utils/helpers/restore-request";
 
 export function HistoryTableClient({
-  entries,
+  initialEntries,
   labels,
   title,
 }: {
-  entries: HistoryEntry[];
+  initialEntries: HistoryEntry[];
   labels: { endpoint: string; method: string; status: string; time: string };
   title: string;
 }) {
   const dispatch = useAppDispatch();
+  const entries = useAppSelector(selectHistory);
   const selectedEntryId = useAppSelector(selectSelectedEntryId);
+
+  useEffect(() => {
+    dispatch(setHistory(initialEntries));
+  }, [initialEntries, dispatch]);
 
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
@@ -40,6 +49,10 @@ export function HistoryTableClient({
     const resolvedOutput = selectResolvedRequest(store.getState());
     dispatch(executeRequest(resolvedOutput));
   };
+
+  if (entries.length === 0) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col gap-4 p-6">

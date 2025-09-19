@@ -48,7 +48,7 @@ export async function HistoryTable() {
 
   return (
     <HistoryTableClient
-      entries={entries}
+      initialEntries={entries}
       labels={{
         method: t("columns.method"),
         status: t("columns.status"),
