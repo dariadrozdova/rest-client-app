@@ -16,12 +16,12 @@ export default function Modal({ onClose, children }: ModalProps) {
       onMouseDown={onClose}
     >
       <div
-        className="relative min-h-[420px] w-full max-w-md rounded-lg bg-white p-6 shadow-lg"
+        className="bg-bg-primary relative min-h-[420px] w-full max-w-md rounded-lg p-6 shadow-lg"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <button
           aria-label="Close"
-          className="absolute top-5 right-5 cursor-pointer text-gray-500 hover:text-gray-700"
+          className="text-text-secondary hover:text-text-primary absolute top-5 right-5 cursor-pointer"
           onClick={onClose}
           type="button"
         >
