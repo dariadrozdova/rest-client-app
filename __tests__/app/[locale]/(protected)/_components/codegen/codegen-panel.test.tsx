@@ -94,12 +94,8 @@ interface JsonViewerProps {
 const capturedCopyProps: CopyProps[] = [];
 const capturedJsonViewerProps: JsonViewerProps[] = [];
 
-const captureSwitch = vi.fn(() => {
-  //I'm not empty
-});
-const requestToGenerateCodeSpy = vi.fn((..._arguments: unknown[]) => {
-  //I'm not empty
-});
+const captureSwitch = vi.fn();
+const requestToGenerateCodeSpy = vi.fn();
 
 vi.mock("react-redux", () => {
   function useSelector<T>(selector: (s: unknown) => T): T {
