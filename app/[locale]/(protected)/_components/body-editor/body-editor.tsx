@@ -2,8 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
+import { useBodyEditor } from "@utils/hooks";
+
 import { BodyEditorToolbar } from "@/app/[locale]/(protected)/_components/body-editor/body-editor-toolbar";
-import { useBodyEditor } from "@/app/[locale]/(protected)/_components/body-editor/use-body-editor";
 import { isJsonLike } from "@/app/[locale]/(protected)/_components/body-editor/utils";
 import { JsonViewer } from "@/shared/ui/json-viewer";
 

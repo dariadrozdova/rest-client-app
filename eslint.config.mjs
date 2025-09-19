@@ -135,6 +135,7 @@ export default tseslint.config(
     },
     settings: {
       "import/resolver": {
+        "max-lines-per-function": "off",
         alias: {
           extensions: [".ts", ".tsx", ".js", ".jsx"],
           map: [
@@ -165,6 +166,9 @@ export default tseslint.config(
     files: ["**/*.test.ts", "**/*.test.tsx", "__tests__/**", "tests/**"],
     rules: {
       "@next/next/no-img-element": "off",
+      "max-lines-per-function": "off",
+      "@next/next/no-img-element": "off",
+      "react-compiler/react-compiler": "off",
       "@typescript-eslint/no-magic-numbers": [
         "error",
         {
