@@ -1,4 +1,3 @@
-// __tests__/app/[locale]/(protected)/_components/response-panel/response-panel.test.tsx
 import { Provider } from "react-redux";
 
 import {
@@ -11,15 +10,8 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ResponsePanel } from "@/app/[locale]/(protected)/_components/response-panel";
 
-// ───────────────────────────────────────────────────────────────────────────────
-// Constants (avoid magic numbers)
-// ───────────────────────────────────────────────────────────────────────────────
 const N = { TWO: 2 };
 
-// ───────────────────────────────────────────────────────────────────────────────
-// next-intl mock — returns last key segment; if a {message} var is passed,
-// it appends ":<message>" for predictable assertions
-// ───────────────────────────────────────────────────────────────────────────────
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string, variables?: Record<string, unknown>) => {
     const last = key.split(".").pop() ?? key;
@@ -30,26 +22,17 @@ vi.mock("next-intl", () => ({
   },
 }));
 
-// ───────────────────────────────────────────────────────────────────────────────
-// JsonViewer mock — renders a <pre aria-label="json-viewer"> with provided content
-// ───────────────────────────────────────────────────────────────────────────────
 vi.mock("@/shared/ui/json-viewer", () => ({
   JsonViewer: (props: { content: string }) => (
     <pre aria-label="json-viewer">{props.content}</pre>
   ),
 }));
 
-// ───────────────────────────────────────────────────────────────────────────────
-// normalizeResponseBody mock — lets us control the normalized payload
-// ───────────────────────────────────────────────────────────────────────────────
 const normalizeResponseBodyMock = vi.fn<(input: unknown) => unknown>();
 vi.mock("@/utils/helpers/normalize-response-body", () => ({
   normalizeResponseBody: (input: unknown) => normalizeResponseBodyMock(input),
 }));
 
-// ───────────────────────────────────────────────────────────────────────────────
-// Minimal Redux store: ResponsePanel reads state.request only
-// ───────────────────────────────────────────────────────────────────────────────
 interface RequestState {
   error: null | string;
   isLoading: boolean;
@@ -72,9 +55,6 @@ const renderWithStore = (request: RequestState) =>
     </Provider>,
   );
 
-// ───────────────────────────────────────────────────────────────────────────────
-// Tests
-// ───────────────────────────────────────────────────────────────────────────────
 describe("ResponsePanel", () => {
   it("shows loading text in the viewer when isLoading=true", () => {
     const state: RequestState = {
