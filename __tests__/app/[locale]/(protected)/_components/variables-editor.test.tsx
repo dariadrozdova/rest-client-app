@@ -28,10 +28,10 @@ const H = vi.hoisted(() => {
   ] as const;
 
   const VARS_FOR_PERSIST = [
-    { id: "v1", enabled: true, key: "USER", value: "alice" }, // valid
-    { id: "v2", enabled: false, key: "DISABLED", value: "x" }, // not valid
-    { id: "v3", enabled: true, key: "  ", value: "trimmed-out" }, // not valid (blank key)
-    { id: "v4", enabled: true, key: "CITY", value: "   " }, // not valid (blank value)
+    { id: "v1", enabled: true, key: "USER", value: "alice" },
+    { id: "v2", enabled: false, key: "DISABLED", value: "x" },
+    { id: "v3", enabled: true, key: "  ", value: "trimmed-out" },
+    { id: "v4", enabled: true, key: "CITY", value: "   " },
   ] as const;
 
   interface Variable {

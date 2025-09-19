@@ -143,7 +143,6 @@ vi.mock("@/utils/helpers", () => ({
 }));
 
 vi.mock("@/utils/helpers/resolve-request", () => {
-  // Selector returns from our hoisted control box
   function selectResolvedRequest() {
     return H.RESOLVED_BOX.current;
   }

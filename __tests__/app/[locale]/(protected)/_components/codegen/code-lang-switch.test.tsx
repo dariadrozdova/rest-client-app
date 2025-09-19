@@ -1,22 +1,18 @@
-// __tests__/app/[locale]/(protected)/_components/codegen/code-lang-switch.test.tsx
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// ---------- Hoisted constants for mocks (avoid TDZ) ----------
 const H = vi.hoisted(() => {
   const LABELS = { method: "Language" } as const;
 
-  // languages (shape matches LANG_GEN items used by the component)
   const LANG_GEN = [
     { key: "curl", label: "cURL" },
     { key: "python", label: "Python" },
     { key: "js", label: "JavaScript" },
   ] as const;
 
-  const SELECTED_INDEX = 1; // initial selection: "python"
+  const SELECTED_INDEX = 1;
 
-  // Indices for mock.calls access (avoid magic numbers)
   const DISPATCH_CALL_INDEX = 0;
   const FIRST_ARG_INDEX = 0;
 
@@ -34,10 +30,8 @@ const H = vi.hoisted(() => {
   };
 });
 
-// ---------- Spies ----------
 const mockDispatch = vi.fn();
 
-// ---------- Module Mocks ----------
 vi.mock("react-redux", () => {
   function useDispatch() {
     return mockDispatch;
@@ -77,7 +71,6 @@ vi.mock("@store/slices/code-lang-slice", () => {
   };
 });
 
-// Mock Dropdown as a simple option list; derive selected label by matching value (no type assertions)
 vi.mock("@/shared/ui/dropdown", () => {
   interface Option<T> {
     key: string;
@@ -120,7 +113,6 @@ vi.mock("@/shared/ui/dropdown", () => {
   return { Dropdown };
 });
 
-// Import after mocks
 import { CodeLangSwitch } from "@/app/[locale]/(protected)/_components/codegen/code-lang-switch";
 
 describe("CodeLangSwitch", () => {
@@ -131,16 +123,13 @@ describe("CodeLangSwitch", () => {
   it("renders all language options with i18n label and shows current selection", () => {
     render(<CodeLangSwitch />);
 
-    // Label exists
     const group = screen.getByLabelText(H.LABELS.method);
     expect(group).toBeInTheDocument();
 
-    // Options present
     for (const lg of H.LANG_GEN) {
       expect(screen.getByTestId(`opt-${lg.key}`)).toBeInTheDocument();
     }
 
-    // Selected label reflects store selection
     expect(screen.getByTestId("selected").textContent).toBe(
       H.LANG_GEN[H.SELECTED_INDEX].label,
     );
@@ -150,7 +139,6 @@ describe("CodeLangSwitch", () => {
     const user = userEvent.setup();
     render(<CodeLangSwitch />);
 
-    // pick a different option than the initial one
     const target = H.LANG_GEN[0];
     await user.click(screen.getByTestId(`opt-${target.key}`));
 

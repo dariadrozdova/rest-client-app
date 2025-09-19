@@ -154,7 +154,7 @@ function getEditorProps() {
 
 describe("HeadersEditor", () => {
   beforeEach(() => {
-    // nothing to reset right now; keep for future changes
+    //I'm not empty
   });
 
   it("renders KeyValueEditor and wires items from selectHeaders plus translated title/placeholders", () => {

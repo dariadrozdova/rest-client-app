@@ -72,7 +72,7 @@ function getDivider(container: HTMLElement): HTMLDivElement {
 
 describe("StickyHeaderGrid", () => {
   beforeEach(() => {
-    // nothing to reset right now, but keep the hook for future changes
+    // I'm not empty
   });
 
   it("renders a sticky, two-row grid with expected container classes", () => {
@@ -110,7 +110,6 @@ describe("StickyHeaderGrid", () => {
 
   it("renders LeftHeaderGroup and RightHeaderGroup", () => {
     const { getByTestId } = render(<StickyHeaderGrid />);
-    // Presence of both groups is enough; subtrees are tested in their own specs
     expect(getByTestId(H.TESTIDS.left)).toBeInTheDocument();
     expect(getByTestId(H.TESTIDS.right)).toBeInTheDocument();
   });
