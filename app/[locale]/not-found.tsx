@@ -1,9 +1,14 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-export default function NotFound() {
+import { ErrorTemplate } from "@/shared/ui";
+
+export default async function NotFound() {
+  const t = await getTranslations("error-page");
   return (
-    <div style={{ padding: 24 }}>
-      <h2>NotFound</h2>
-    </div>
+    <ErrorTemplate
+      code="404"
+      description={t("not-found-description")}
+      title={t("not-found-title")}
+    />
   );
 }

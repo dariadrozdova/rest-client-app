@@ -117,6 +117,13 @@ export interface DropdownProps<T = unknown> {
   width?: string;
 }
 
+export interface ErrorTemplateProps {
+  code: string;
+  description?: string;
+  extra?: ReactNode;
+  title: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;

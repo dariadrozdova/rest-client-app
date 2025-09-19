@@ -1,6 +1,7 @@
 import bodyEditor from "@shared/lib/i18n/messages/be/body-editor.json";
 import codeGen from "@shared/lib/i18n/messages/be/codegen.json";
 import dropdown from "@shared/lib/i18n/messages/be/dropdown.json";
+import errorPage from "@shared/lib/i18n/messages/be/error-page.json";
 import errors from "@shared/lib/i18n/messages/be/errors.json";
 import footer from "@shared/lib/i18n/messages/be/footer.json";
 import header from "@shared/lib/i18n/messages/be/header.json";
@@ -28,4 +29,5 @@ export default {
   "response-panel": responsePanel,
   "main-page": mainPage,
   "history-table": historyTable,
+  "error-page": errorPage,
 } as const;
