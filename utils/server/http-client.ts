@@ -42,7 +42,6 @@ export function buildResponseDTO(
   startedAt: number,
 ): ResponseDTO {
   const requestTimestamp = new Date(startedAt).toISOString();
-
   const readableBody = parseMaybeJson(executed.body, executed.contentType);
 
   return {
@@ -104,6 +103,7 @@ export async function persistHistorySafe(
       requestSize: byteLength(payload.body),
       responseSize: byteLength(executed.body),
       headers: payload.headers ?? {},
+      headersUser: payload.headers ?? {},
       body: payload.body ?? "",
     });
   } catch (error) {

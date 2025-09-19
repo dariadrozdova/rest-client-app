@@ -23,7 +23,7 @@ export async function HistoryTable() {
       request: {
         method: entry.method,
         url: entry.url,
-        headers: entry.headers ?? {},
+        headers: entry.headersUser ?? entry.headers ?? {},
         body: entry.body ?? null,
       },
       response: {

@@ -10,6 +10,7 @@ import {
   setSelectedEntryId,
 } from "@/store/slices/history-slice";
 import { executeRequest } from "@/store/slices/request-slice";
+import { store } from "@/store/store";
 import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 import { restoreRequest } from "@/utils/helpers/restore-request";
 
@@ -24,7 +25,6 @@ export function HistoryTableClient({
 }) {
   const dispatch = useAppDispatch();
   const selectedEntryId = useAppSelector(selectSelectedEntryId);
-  const resolvedOutput = useAppSelector(selectResolvedRequest);
 
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
@@ -32,11 +32,12 @@ export function HistoryTableClient({
   };
 
   const handleReRun = () => {
-    const selectedEntry = entries.find((error) => error.id === selectedEntryId);
+    const selectedEntry = entries.find((item) => item.id === selectedEntryId);
     if (!selectedEntry) {
       return;
     }
     restoreRequest(selectedEntry);
+    const resolvedOutput = selectResolvedRequest(store.getState());
     dispatch(executeRequest(resolvedOutput));
   };
 

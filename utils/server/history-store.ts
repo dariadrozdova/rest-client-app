@@ -5,6 +5,7 @@ export interface HistoryDatabaseEntry {
   duration: number;
   error?: null | string;
   headers?: Record<string, string>;
+  headersUser?: Record<string, string>;
   id?: string;
   method: string;
   requestSize: number;
@@ -40,6 +41,7 @@ export async function getUserHistory(
     .orderBy("timestamp", "desc")
     .limit(HISTORY_LIMIT)
     .get();
+
   return snap.docs.map((document_) => {
     const data = document_.data();
     return {
@@ -48,6 +50,7 @@ export async function getUserHistory(
       duration: data.duration,
       error: data.error,
       headers: data.headers,
+      headersUser: data.headersUser,
       method: data.method,
       requestSize: data.requestSize,
       responseSize: data.responseSize,
