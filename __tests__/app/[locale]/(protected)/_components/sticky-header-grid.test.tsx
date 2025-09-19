@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 const H = vi.hoisted(() => {
   const TESTIDS = {
@@ -71,10 +71,6 @@ function getDivider(container: HTMLElement): HTMLDivElement {
 }
 
 describe("StickyHeaderGrid", () => {
-  beforeEach(() => {
-    // I'm not empty
-  });
-
   it("renders a sticky, two-row grid with expected container classes", () => {
     const { container } = render(<StickyHeaderGrid />);
     const root = getContainerDiv(container);

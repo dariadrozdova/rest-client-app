@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 const H = vi.hoisted(() => {
   const NAMESPACE = "header-tab";
@@ -153,10 +153,6 @@ function getEditorProps() {
 }
 
 describe("HeadersEditor", () => {
-  beforeEach(() => {
-    //I'm not empty
-  });
-
   it("renders KeyValueEditor and wires items from selectHeaders plus translated title/placeholders", () => {
     const { container } = render(<HeadersEditor />);
 
