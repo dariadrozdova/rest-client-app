@@ -117,9 +117,10 @@ export interface DropdownProps<T = unknown> {
   width?: string;
 }
 
-export interface ErrorProps {
+export interface ErrorTemplateProps {
   code: string;
-  description: string;
+  description?: string;
+  extra?: ReactNode;
   title: string;
 }
 

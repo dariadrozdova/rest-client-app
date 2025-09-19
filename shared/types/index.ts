@@ -12,7 +12,7 @@ export type {
   CopyButtonProps,
   DropdownOption,
   DropdownProps,
-  ErrorProps,
+  ErrorTemplateProps,
   HeaderItem,
   HeadersState,
   HistoryEntry,
