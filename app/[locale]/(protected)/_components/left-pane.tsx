@@ -5,7 +5,6 @@ import { HistoryVisibility } from "@/app/[locale]/(protected)/_components/histor
 import { LeftPaneClient } from "@/app/[locale]/(protected)/_components/left-pane.client";
 
 export async function LeftPane() {
-  // Server Component wrapper to allow rendering server-only HistoryTable when needed
   return (
     <div className="col-start-1">
       <LeftPaneClient />

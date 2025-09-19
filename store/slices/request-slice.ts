@@ -13,15 +13,6 @@ const initialState: RequestState = {
   isLoading: false,
   error: null,
 };
-//
-// function calculateRequestSize(request: ResolvedRequest): number {
-//   const bodySize = request.body ? new Blob([request.body]).size : 0;
-//   const headersSize = new Blob(
-//     request.headers.map((header) => `${header.name}: ${header.value}\r\n`),
-//   ).size;
-//   const urlSize = new Blob([request.url]).size;
-//   return bodySize + headersSize + urlSize;
-// }
 
 export const executeRequest = createAsyncThunk<
   ResponseData,
