@@ -14,7 +14,7 @@ export default async function WorkspaceLayout({
   params,
 }: LayoutProps<{ locale: string }>) {
   const session = await getServerSession();
-  const { locale } = params;
+  const { locale } = await params;
 
   if (!session) {
     redirect(`/${locale}/sign-in?next=/${locale}/workspace`);

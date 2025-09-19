@@ -8,7 +8,7 @@ export default async function PublicLayout({
   children,
   params,
 }: LayoutProps<{ locale: string }>) {
-  const { locale } = params; // без await
+  const { locale } = await params;
   const session = await getServerSession();
 
   if (session) {

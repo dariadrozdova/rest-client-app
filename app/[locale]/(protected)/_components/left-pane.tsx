@@ -14,7 +14,7 @@ export function LeftPane() {
   const activeTab = useSelector((state: RootState) => state.tabs.activeTab);
 
   return (
-    <div className="col-start-1">
+    <div className="col-start-1 min-w-0">
       {activeTab === "headers" && <HeadersEditor />}
       {activeTab === "body" && <BodyEditor />}
       {activeTab === "codegen" && <CodegenPanel />}

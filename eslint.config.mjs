@@ -165,6 +165,7 @@ export default tseslint.config(
   {
     files: ["**/*.test.ts", "**/*.test.tsx", "__tests__/**", "tests/**"],
     rules: {
+      "@next/next/no-img-element": "off",
       "max-lines-per-function": "off",
       "@next/next/no-img-element": "off",
       "react-compiler/react-compiler": "off",
@@ -173,7 +174,7 @@ export default tseslint.config(
         {
           ignoreEnums: true,
           ignoreNumericLiteralTypes: true,
-          ignore: [0, 1],
+          ignore: [0, 1, 2, 3],
         },
       ],
       "@typescript-eslint/no-unused-vars": [

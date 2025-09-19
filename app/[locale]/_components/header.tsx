@@ -14,14 +14,14 @@ export default async function Header() {
   const session = await getServerSession();
 
   return (
-    <section className="">
+    <section className="sticky top-0 z-50">
       <div className="bg-bg-primary flex flex-row items-center justify-between px-6 py-2">
         <Image alt="logo" height={60} priority src={logoFull} />
         <div className="justify-space-between flex flex-row gap-2">
           <LanguageSwitch />
 
           {session ? (
-            <SignOutButton label={t("logoff")} />
+            <SignOutButton label={t("logout")} />
           ) : (
             <>
               <Link
