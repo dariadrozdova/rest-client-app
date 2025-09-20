@@ -7,16 +7,14 @@ interface RouteParams {
   segments?: string[];
 }
 
-// 2) Small factory that returns a correctly typed empty object
 function createRouteParams(): RouteParams {
   return {};
 }
 
-// 3) Hoisted fakes (no assertions anywhere)
 const hoisted = vi.hoisted(() => {
   return {
     dispatchSpy: vi.fn<(action: { payload?: unknown; type: string }) => void>(),
-    params: createRouteParams(), // ✅ typed via factory, no `as`
+    params: createRouteParams(),
     isValidHttpMethod: vi.fn<(m: string) => boolean>(),
     validateUrlString: vi.fn<(u: string) => boolean>(),
     safeDecodeBase64Uri: vi.fn<(s: string) => null | string>(),
@@ -32,7 +30,6 @@ const H = Object.freeze({
   SEG_BODY: "b64body",
 });
 
-// Mocks
 vi.mock("react-redux", () => ({
   useDispatch: () => hoisted.dispatchSpy,
 }));
@@ -63,7 +60,6 @@ vi.mock("@/utils/helpers/safe-decode-base64-uri", () => ({
   safeDecodeBase64Uri: hoisted.safeDecodeBase64Uri,
 }));
 
-// SUT import AFTER mocks
 import WorkspaceCatchAllPage from "@/app/[locale]/(protected)/workspace/[[...segments]]/page";
 
 describe("WorkspaceCatchAllPage (catch-all URL restore)", () => {
@@ -107,24 +103,20 @@ describe("WorkspaceCatchAllPage (catch-all URL restore)", () => {
 
     render(<WorkspaceCatchAllPage />);
 
-    // method falls back to GET
     expect(hoisted.dispatchSpy).toHaveBeenCalledWith({
       type: "method/setSelectedMethod",
       payload: H.GET,
     });
 
-    // Collect dispatched action types to assert "no-op" for url/body
     const calls = hoisted.dispatchSpy.mock.calls.map(([a]) => a);
 
-    // endpoint segment exists but invalid -> NO url/setUrl dispatch
     expect(calls.some((a) => a.type === "url/setUrl")).toBe(false);
 
-    // body segment exists but decode returned null -> NO body/setBody dispatch
     expect(calls.some((a) => a.type === "body/setBody")).toBe(false);
   });
 
   it("clears url/body when segments are missing", () => {
-    hoisted.params.segments = [H.GET]; // no endpoint/body
+    hoisted.params.segments = [H.GET];
     hoisted.isValidHttpMethod.mockReturnValue(true);
 
     render(<WorkspaceCatchAllPage />);

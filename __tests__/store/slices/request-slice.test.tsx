@@ -161,10 +161,8 @@ describe("request slice thunk (integration)", () => {
     const s = store.getState().request;
     expect(s.isLoading).toBe(false);
     expect(s.error).toBeNull();
-    // current thunk returns resp.json() directly; with our mock that's { hello: "world" }
     expect(s.response).toEqual({ hello: "world" });
 
-    // current thunk does NOT dispatch history/addEntry
     expect(addEntryMock).not.toHaveBeenCalled();
   });
 
@@ -191,7 +189,6 @@ describe("request slice thunk (integration)", () => {
     const s = store.getState().request;
     expect(s.isLoading).toBe(false);
     expect(s.response).toBeNull();
-    // default behavior: resp.json() throws SyntaxError -> rejected with message
     expect(s.error).toMatch(/Unexpected token/i);
   });
 

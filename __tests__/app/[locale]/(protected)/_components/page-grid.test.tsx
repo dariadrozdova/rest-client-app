@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 const H = vi.hoisted(() => {
   const TESTIDS = {
@@ -52,10 +52,6 @@ function getRoot(container: HTMLElement): HTMLDivElement {
 }
 
 describe("PageGrid", () => {
-  beforeEach(() => {
-    // keep for symmetry
-  });
-
   it("renders a grid container with expected classes", () => {
     const { container } = render(<PageGrid />);
     const root = getRoot(container);
