@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { Row } from "@app/[locale]/(protected)/_components/history-table/history-modal-row";
 import { logoSmall } from "@app/[locale]/(public)/images";
+import { classNames } from "@shared/styles/class-names";
 import type { HistoryEntry } from "@shared/types";
 import { formatBytes } from "@utils/helpers/format-bytes";
 import { formatDateTime } from "@utils/helpers/format-datetime";
@@ -49,7 +50,11 @@ export function ModalContent({ entry }: { entry: HistoryEntry }) {
         </Row>
 
         <Row label={t("modal.labels.endpoint")}>
-          <span className="rounded border border-gray-200 bg-gray-50 px-2 py-1 break-all text-gray-700">
+          <span
+            className={classNames(
+              "rounded border border-gray-200 bg-gray-50 px-2 py-1 break-all text-gray-700",
+            )}
+          >
             {entry.request.url}
           </span>
         </Row>
@@ -80,7 +85,6 @@ export function ModalContent({ entry }: { entry: HistoryEntry }) {
         </Row>
 
         <Row label={t("modal.labels.duration")}>
-          а
           <span className="text-gray-700">
             {durationMs === null
               ? t("modal.notAvailable")
@@ -90,7 +94,12 @@ export function ModalContent({ entry }: { entry: HistoryEntry }) {
 
         {entry.response.error && (
           <Row label={t("modal.labels.error")}>
-            <pre className="max-h-40 overflow-auto rounded border border-red-200 bg-red-50 p-2 text-xs whitespace-pre-wrap text-red-700">
+            <pre
+              className={classNames(
+                "max-h-40 w-full overflow-auto rounded p-2 text-xs whitespace-pre-wrap",
+                "border border-red-200 bg-red-50 text-red-700",
+              )}
+            >
               {entry.response.error}
             </pre>
           </Row>
