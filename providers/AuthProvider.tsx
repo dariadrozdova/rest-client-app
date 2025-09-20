@@ -5,9 +5,8 @@ import { useDispatch } from "react-redux";
 
 import { getIdToken, onAuthStateChanged } from "firebase/auth";
 
-import { setHistory } from "@store/slices/history-slice";
-
 import { auth } from "@/shared/lib/firebase/client";
+import { setHistory } from "@/store/slices/history-slice";
 
 export function AuthProvider() {
   const dispatch = useDispatch();

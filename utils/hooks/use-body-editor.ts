@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import type {
   BodyEditorActions,
   BodyEditorState,
-} from "@app/[locale]/(protected)/_components/body-editor/types";
-import { isJsonLike } from "@app/[locale]/(protected)/_components/body-editor/utils";
+} from "@/app/[locale]/(protected)/_components/body-editor/types";
+import { isJsonLike } from "@/app/[locale]/(protected)/_components/body-editor/utils";
 import {
   clearJsonError,
   setBody as setBodyAction,
   setContentType as setContentTypeAction,
   setJsonError as setJsonErrorAction,
-} from "@store/slices/body-editor-slice";
-import type { RootState } from "@store/store";
+} from "@/store/slices/body-editor-slice";
+import type { RootState } from "@/store/store";
 
 export function useBodyEditor(): BodyEditorActions & BodyEditorState {
   const dispatch = useDispatch();

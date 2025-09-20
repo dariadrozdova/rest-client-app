@@ -1,130 +1,61 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useTranslations } from "next-intl";
-
+import { HistoryEmptyState } from "@app/[locale]/(protected)/_components/history-table/history-empty-state";
 import type { HistoryEntry } from "@shared/types";
+import { getUserHistory } from "@utils/server/history-store";
+import { getUidFromCookies } from "@utils/server/uid-from-request";
 
-import { HistoryTableRow } from "@/app/[locale]/(protected)/_components/history-table/history-table-row";
-import { classNames } from "@/shared/styles";
-import {
-  selectHistory,
-  selectSelectedEntryId,
-  setSelectedEntryId,
-} from "@/store/slices/history-slice";
-import { executeRequest } from "@/store/slices/request-slice";
-import type { AppDispatch, RootState } from "@/store/store";
-import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
-import { restoreRequestFromEntry } from "@/utils/helpers/restore-request";
+import { HistoryTableClient } from "@/app/[locale]/(protected)/_components/history-table/history-table-client";
 
-const TABLE_STYLES = {
-  cellPadding: "px-4 py-3",
-  headerBase: "px-4 py-3 text-left",
-  headerText: "text-xs font-medium text-gray-500 uppercase tracking-wider",
-  textMedium: "font-medium text-sm",
-} as const;
-
-export function HistoryTable() {
-  const t = useTranslations("history-table");
-  const dispatch = useDispatch<AppDispatch>();
-  const entries = useSelector(selectHistory);
-  const selectedEntryId = useSelector(selectSelectedEntryId);
-  const activeTab = useSelector((s: RootState) => s.tabs.activeTab);
-  const resolvedOutput = useSelector(selectResolvedRequest);
-
-  if (activeTab !== "requestHistory") {
-    return null;
+export async function HistoryTable() {
+  const t = await getTranslations("history-table");
+  const uid = await getUidFromCookies();
+  if (!uid) {
+    return <HistoryEmptyState />;
   }
 
-  const handleSelect = (entry: HistoryEntry) => {
-    dispatch(setSelectedEntryId(entry.id));
-    restoreRequestFromEntry(dispatch, entry);
-  };
+  let entries: HistoryEntry[];
+  try {
+    const databaseItems = await getUserHistory(uid);
+    entries = databaseItems.map((entry) => ({
+      id: entry.id ?? "",
+      createdAt: entry.timestamp,
+      request: {
+        method: entry.method,
+        url: entry.url,
+        headers: entry.headersUser ?? entry.headers ?? {},
+        body: entry.body ?? null,
+      },
+      response: {
+        status: entry.status,
+        statusText: entry.statusText ?? "",
+        error: entry.error ?? null,
+        meta: {
+          requestDurationMs: entry.duration,
+          requestSizeBytes: entry.requestSize,
+          responseSizeBytes: entry.responseSize,
+          requestTimestamp: entry.timestamp,
+        },
+      },
+    }));
+  } catch {
+    entries = [];
+  }
 
-  const handleReRun = () => {
-    const selectedEntry = entries.find(
-      (element) => element.id === selectedEntryId,
-    );
-    if (!selectedEntry) {
-      return;
-    }
-    restoreRequestFromEntry(dispatch, selectedEntry);
-    dispatch(executeRequest(resolvedOutput));
-  };
+  if (entries.length === 0) {
+    return <HistoryEmptyState />;
+  }
 
   return (
-    <div className="flex flex-col gap-4 p-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-base font-medium text-gray-700">{t("title")}</h2>
-        <button
-          className={classNames(
-            "bg-accent-blue border-accent-blue rounded-md border",
-            "px-4 py-2 text-sm font-medium text-white",
-            selectedEntryId
-              ? "cursor-pointer hover:brightness-110"
-              : "cursor-not-allowed opacity-50",
-          )}
-          disabled={!selectedEntryId}
-          onClick={handleReRun}
-        >
-          {t("buttons.rerun")}
-        </button>
-      </div>
-
-      <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
-        <div className="max-h-[calc(100vh-16rem)] overflow-auto">
-          <table className="w-full border-collapse text-sm">
-            <thead className="sticky top-0 z-10 bg-gray-50">
-              <tr className="border-b border-gray-200">
-                <th className={classNames(TABLE_STYLES.headerBase)} />
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.method")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.status")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.time")}
-                </th>
-                <th
-                  className={classNames(
-                    TABLE_STYLES.headerBase,
-                    TABLE_STYLES.headerText,
-                  )}
-                >
-                  {t("columns.endpoint")}
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {entries.map((entry) => (
-                <HistoryTableRow
-                  entry={entry}
-                  isSelected={selectedEntryId === entry.id}
-                  key={entry.id}
-                  onSelect={handleSelect}
-                  tableStyles={TABLE_STYLES}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    <HistoryTableClient
+      entries={entries}
+      labels={{
+        method: t("columns.method"),
+        status: t("columns.status"),
+        time: t("columns.time"),
+        endpoint: t("columns.endpoint"),
+      }}
+      title={t("title")}
+    />
   );
 }

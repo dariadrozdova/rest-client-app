@@ -3,13 +3,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { setSelectedCodeLang } from "@store/slices/code-lang-slice";
-import { RootState } from "@store/store";
-
 import { LANG_GEN } from "@/shared/globals";
 import { classNames } from "@/shared/styles";
 import type { CodeLangGen } from "@/shared/types";
 import { Dropdown } from "@/shared/ui/dropdown";
+import { setSelectedCodeLang } from "@/store/slices/code-lang-slice";
+import { RootState } from "@/store/store";
 
 export function CodeLangSwitch() {
   const t = useTranslations("dropdown");

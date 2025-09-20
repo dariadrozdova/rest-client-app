@@ -3,8 +3,7 @@
 import { useSelector } from "react-redux";
 import { useTranslations } from "next-intl";
 
-import { RootState } from "@store/store";
-
+import { RootState } from "@/store/store";
 import { getStatusColor } from "@/utils/helpers/get-status-color";
 
 export function RightHeaderGroup() {
@@ -12,6 +11,20 @@ export function RightHeaderGroup() {
   const { response, error, isLoading } = useSelector(
     (state: RootState) => state.request,
   );
+
+  const bytesText =
+    response &&
+    response.meta &&
+    typeof response.meta.responseSizeBytes === "number"
+      ? t("size", { bytes: response.meta.responseSizeBytes })
+      : t("size", { bytes: "-" });
+
+  const timeText =
+    response &&
+    response.meta &&
+    typeof response.meta.requestDurationMs === "number"
+      ? t("time", { ms: response.meta.requestDurationMs })
+      : t("time", { ms: "-" });
 
   return (
     <>
@@ -30,17 +43,8 @@ export function RightHeaderGroup() {
           )}
         </span>
 
-        <span className="px-2 py-1">
-          {response
-            ? t("size", { bytes: response.meta.responseSizeBytes })
-            : t("size", { bytes: "—" })}
-        </span>
-
-        <span className="px-2 py-1">
-          {response
-            ? t("time", { ms: response.meta.requestDurationMs })
-            : t("time", { ms: "—" })}
-        </span>
+        <span className="px-2 py-1">{bytesText}</span>
+        <span className="px-2 py-1">{timeText}</span>
       </div>
 
       <div className="col-start-3 row-start-2 flex items-end px-6">

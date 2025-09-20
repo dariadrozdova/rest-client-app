@@ -1,35 +1,21 @@
+import { cookies } from "next/headers";
+
 import { getSessionCookieName } from "@/shared/lib/auth/cookies";
 import { adminAuth } from "@/shared/lib/firebase/admin";
 
-export async function uidFromRequest(
-  request: Request,
-): Promise<string | undefined> {
+export async function getUidFromCookies(): Promise<null | string> {
   try {
-    const cookieHeader = request.headers.get("cookie") ?? "";
+    const store = await cookies();
     const sessionCookieName = getSessionCookieName();
-    const sessionCookie = cookieHeader
-      .split(";")
-      .map((s) => s.trim())
-      .find((s) => s.startsWith(`${sessionCookieName}=`))
-      ?.split("=")[1];
-
-    const authHeader = request.headers.get("authorization") ?? "";
-    const bearer = authHeader.startsWith("Bearer ")
-      ? authHeader.slice("Bearer ".length)
-      : undefined;
+    const sessionCookie = store.get(sessionCookieName)?.value;
 
     if (sessionCookie) {
       const decoded = await adminAuth.verifySessionCookie(sessionCookie, true);
-      return decoded.uid;
+      return decoded.uid ?? null;
     }
 
-    if (bearer) {
-      const decoded = await adminAuth.verifyIdToken(bearer, true);
-      return decoded.uid;
-    }
-
-    return undefined;
+    return null;
   } catch {
-    return undefined;
+    return null;
   }
 }

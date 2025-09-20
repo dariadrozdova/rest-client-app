@@ -4,10 +4,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "next/navigation";
 
-import { setBody } from "@store/slices/body-editor-slice";
-import { setSelectedMethod } from "@store/slices/method-slice";
-import { setUrl } from "@store/slices/url-slice";
-
+import { setBody } from "@/store/slices/body-editor-slice";
+import { setSelectedMethod } from "@/store/slices/method-slice";
+import { setUrl } from "@/store/slices/url-slice";
 import { isValidHttpMethod, validateUrlString } from "@/utils/helpers";
 import { safeDecodeBase64Uri } from "@/utils/helpers/safe-decode-base64-uri";
 

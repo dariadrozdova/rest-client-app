@@ -1,38 +1,43 @@
-export const runtime = "nodejs";
-
 import { NextResponse } from "next/server";
 
-import { getHistory } from "@/utils/server/history-store";
-import { uidFromRequest } from "@/utils/server/uid-from-request";
+import { getUidFromCookies } from "@utils/server/uid-from-request";
 
-export async function GET(request: Request) {
-  const uid = await uidFromRequest(request);
-  if (!uid) {
-    return Response.json({ items: [] }, { status: 200 });
-  }
-  const raw = await getHistory(uid);
-  const items = raw.map((it) => ({
-    id: it.id,
-    createdAt: new Date(it.timestamp).toISOString(),
-    request: {
-      method: it.method,
-      url: it.url,
-      body: typeof it.body === "string" ? it.body : undefined,
-      headers: [],
-      meta: { contentType: null, jsonMode: false },
-    },
-    response: {
-      status: it.status,
-      statusText: it.statusText,
-      headers: it.headers ?? {},
-      body: null,
-      meta: {
-        requestDurationMs: it.duration,
-        requestSizeBytes: it.requestSize,
-        responseSizeBytes: it.responseSize,
-        requestTimestamp: new Date(it.timestamp).toISOString(),
+import { getUserHistory } from "@/utils/server/history-store";
+
+export async function GET() {
+  try {
+    const uid = await getUidFromCookies();
+    if (!uid) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const entries = await getUserHistory(uid);
+
+    const data = entries.map((entry) => ({
+      id: entry.id,
+      createdAt: entry.timestamp,
+      request: {
+        method: entry.method,
+        url: entry.url,
+        headers: entry.headers ?? {},
+        body: entry.body ?? null,
       },
-    },
-  }));
-  return NextResponse.json({ items });
+      response: {
+        status: entry.status,
+        statusText: entry.statusText ?? "",
+        error: entry.error ?? null,
+        meta: {
+          requestDurationMs: entry.duration,
+          requestSizeBytes: entry.requestSize,
+          responseSizeBytes: entry.responseSize,
+          requestTimestamp: entry.timestamp,
+        },
+      },
+    }));
+
+    return NextResponse.json({ items: data });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal error";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

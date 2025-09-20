@@ -4,9 +4,9 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { TabOpenState } from "@shared/types";
-import { setActiveTab } from "@store/slices/tab-open-slice";
-import { RootState } from "@store/store";
 
+import { setActiveTab } from "@/store/slices/tab-open-slice";
+import { RootState } from "@/store/store";
 import { useLocalStorage } from "@/utils/hooks/use-storage";
 
 export function TabStatePersistence() {

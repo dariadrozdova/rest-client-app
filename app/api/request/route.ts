@@ -1,76 +1,44 @@
-import { NextResponse } from "next/server";
-
 export const runtime = "nodejs";
 
-import { addHistory } from "@/utils/server/history-store";
-import { uidFromRequest } from "@/utils/server/uid-from-request";
+import { NextResponse } from "next/server";
+
+import {
+  buildResponseDTO,
+  executeHttp,
+  persistHistoryErrorSafe,
+  persistHistorySafe,
+  type RequestPayload,
+} from "@/utils/server/http-client";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
+  let payload: RequestPayload = {
+    method: "",
+    url: "",
+    headers: {},
+    body: null,
+  };
 
   try {
-    const { method, url, headers, body } = await request.json();
-
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const response = await fetch(url, {
-      method,
-      headers,
-      body: method !== "GET" && method !== "HEAD" ? body : undefined,
-      signal,
-    });
-
-    const responseText = await response.text();
-    const responseHeaders: Record<string, string> = {};
-    for (const [key, value] of response.headers.entries()) {
-      responseHeaders[key] = value;
-    }
-
-    const result = {
-      status: response.status,
-      statusText: response.statusText,
-      headers: responseHeaders,
-      body: responseText,
+    const raw = await request.json();
+    payload = {
+      method:
+        typeof raw?.method === "string" ? raw.method.toUpperCase() : "GET",
+      url: String(raw?.url ?? ""),
+      headers: raw?.headers ?? {},
+      body: typeof raw?.body === "string" ? raw.body : null,
     };
 
-    console.warn("Executed request:", {
-      method,
-      url,
-      status: result.status,
-      timestamp: new Date().toISOString(),
-    });
+    const executed = await executeHttp(payload);
 
-    try {
-      const uid = await uidFromRequest(request);
-      if (uid) {
-        const requestSize = body ? Buffer.byteLength(body, "utf8") : 0;
-        const responseSize = responseText
-          ? Buffer.byteLength(responseText, "utf8")
-          : 0;
+    const dto = buildResponseDTO(payload, executed, startedAt);
 
-        await addHistory(uid, {
-          timestamp: Date.now(),
-          url,
-          method,
-          status: result.status,
-          statusText: result.statusText,
-          duration: Date.now() - startedAt,
-          requestSize,
-          responseSize,
-          headers: responseHeaders,
-          body: typeof body === "string" ? body : "",
-        });
-      } else {
-        console.warn("Failed to get uid from request");
-      }
-    } catch (error) {
-      console.warn("Failed to append history:", error);
-    }
+    await persistHistorySafe(startedAt, payload, executed);
 
-    return NextResponse.json(result);
+    return NextResponse.json(dto, { status: dto.status });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
+    await persistHistoryErrorSafe(startedAt, payload, message);
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

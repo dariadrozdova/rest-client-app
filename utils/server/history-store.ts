@@ -1,41 +1,47 @@
-import { adminDatabase } from "@/shared/lib/firebase/admin";
+import { firestoreAdmin } from "@/shared/lib/firebase/admin";
 
-export interface HistoryEntry {
-  body?: string;
+export interface HistoryDatabaseEntry {
+  body?: null | string;
   duration: number;
-  error?: string;
+  error?: null | string;
   headers?: Record<string, string>;
+  headersUser?: Record<string, string>;
+  id?: string;
   method: string;
   requestSize: number;
   responseSize: number;
   status: number;
-  statusText: string;
-  timestamp: number;
+  statusText?: string;
+  timestamp: string;
   url: string;
 }
 
-export type HistoryWithId = HistoryEntry & { id: string };
+const ROOT_COLLECTION = "history";
+const HISTORY_LIMIT = 200;
 
-export async function addHistory(
+export async function addHistoryEntry(
   uid: string,
-  entry: HistoryEntry,
-): Promise<string> {
-  const reference = adminDatabase
-    .collection("users")
+  entry: Omit<HistoryDatabaseEntry, "id">,
+) {
+  const documentReference = await firestoreAdmin
+    .collection(ROOT_COLLECTION)
     .doc(uid)
-    .collection("history")
-    .doc();
-  await reference.set(entry);
-  return reference.id;
+    .collection("entries")
+    .add(entry);
+  return documentReference.id;
 }
 
-export async function getHistory(uid: string): Promise<HistoryWithId[]> {
-  const snap = await adminDatabase
-    .collection("users")
+export async function getUserHistory(
+  uid: string,
+): Promise<HistoryDatabaseEntry[]> {
+  const snap = await firestoreAdmin
+    .collection(ROOT_COLLECTION)
     .doc(uid)
-    .collection("history")
+    .collection("entries")
     .orderBy("timestamp", "desc")
+    .limit(HISTORY_LIMIT)
     .get();
+
   return snap.docs.map((document_) => {
     const data = document_.data();
     return {
@@ -44,6 +50,7 @@ export async function getHistory(uid: string): Promise<HistoryWithId[]> {
       duration: data.duration,
       error: data.error,
       headers: data.headers,
+      headersUser: data.headersUser,
       method: data.method,
       requestSize: data.requestSize,
       responseSize: data.responseSize,

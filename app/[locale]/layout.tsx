@@ -4,7 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { Footer, Header } from "@app/[locale]/_components";
 import type { LayoutProps } from "@shared/types";
-import { ReduxProvider } from "@store/provider";
+import { ReduxProvider } from "@/store/provider";
 
 import "@/shared/styles/globals.css";
 
