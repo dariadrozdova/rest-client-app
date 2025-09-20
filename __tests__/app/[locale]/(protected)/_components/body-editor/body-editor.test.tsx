@@ -31,14 +31,13 @@ vi.mock("next-intl", () => ({
 vi.mock("@/shared/ui/json-viewer", () => ({
   JsonViewer: (props: {
     content: string;
-    mode: "json" | "text";
     onChange: (value: string) => void;
     placeholder?: string;
     readOnly?: boolean;
     showLineNumbers?: boolean;
   }) => (
     <textarea
-      aria-label={`json-viewer-${props.mode}`}
+      aria-label="json-viewer"
       onChange={(event) => props.onChange(event.currentTarget.value)}
       placeholder={props.placeholder}
       value={props.content}
@@ -95,16 +94,14 @@ describe("BodyEditor", () => {
 
     expect(screen.getByText("contentType")).toBeInTheDocument();
     expect(screen.getByDisplayValue("application/json")).toBeInTheDocument();
-
-    expect(screen.getByLabelText("json-viewer-json")).toBeInTheDocument();
-
+    expect(screen.getByLabelText("json-viewer")).toBeInTheDocument();
     expect(screen.getByText(/charactersCount/)).toBeInTheDocument();
   });
 
-  it("appends 'jsonDetected' marker when body is JSON-like in JSON mode", () => {
+  it("appends 'jsonDetected' marker when body is valid JSON", () => {
     isJsonLikeMock.mockReturnValue(true);
     hookState.contentType = "application/json";
-    hookState.body = "{}";
+    hookState.body = '{"a":1}';
     renderWithStore(<BodyEditor />);
 
     const counter = screen.getByText(/charactersCount/);
@@ -112,10 +109,10 @@ describe("BodyEditor", () => {
     expect(screen.getByText(/jsonDetected/)).toBeInTheDocument();
   });
 
-  it("does not append 'jsonDetected' when content is not JSON-like", () => {
+  it("does not append 'jsonDetected' when body is not JSON-like", () => {
     isJsonLikeMock.mockReturnValue(false);
     hookState.contentType = "application/json";
-    hookState.body = "not json";
+    hookState.body = "{ invalid json }";
     renderWithStore(<BodyEditor />);
 
     expect(screen.getByText(/charactersCount/)).toBeInTheDocument();
@@ -144,7 +141,7 @@ describe("BodyEditor", () => {
     expect(hookState.prettifyJson).toHaveBeenCalledTimes(N.ONE);
     expect(hookState.clearBody).toHaveBeenCalledTimes(N.ONE);
 
-    const viewer = screen.getByLabelText("json-viewer-json");
+    const viewer = screen.getByLabelText("json-viewer");
     await userEvent.clear(viewer);
     await userEvent.type(viewer, "new content");
     expect(hookState.handleBodyChange).toHaveBeenCalled();
@@ -153,7 +150,7 @@ describe("BodyEditor", () => {
   it("disables prettify when body is not JSON-like (even in JSON mode)", () => {
     isJsonLikeMock.mockReturnValue(false);
     hookState.contentType = "application/json";
-    hookState.body = "hello";
+    hookState.body = "{ invalid json }";
     renderWithStore(<BodyEditor />);
 
     const prettify = screen.getByTitle("prettifyButton");

@@ -21,8 +21,8 @@ export function BodyEditor() {
     handleBodyChange,
   } = useBodyEditor();
 
-  const showJsonControls = isJsonLike(body);
   const isJsonMode = contentType === "application/json";
+  const jsonValid = isJsonMode ? isJsonLike(body) : false;
 
   return (
     <div className="space-y-4 p-6">
@@ -31,7 +31,7 @@ export function BodyEditor() {
         onClearBody={clearBody}
         onContentTypeChange={setContentType}
         onPrettifyJson={prettifyJson}
-        showJsonControls={showJsonControls}
+        showJsonControls={jsonValid}
       />
 
       <div className="space-y-2">
@@ -46,8 +46,8 @@ export function BodyEditor() {
         )}
 
         <JsonViewer
+          compactLineNumbers
           content={body}
-          mode={isJsonMode ? "json" : "text"}
           onChange={handleBodyChange}
           placeholder={t("placeholder")}
           readOnly={false}
@@ -56,7 +56,7 @@ export function BodyEditor() {
 
         <div className="text-xs text-gray-500">
           {t("charactersCount", { count: body.length })}
-          {isJsonMode && showJsonControls && ` • ${t("jsonDetected")}`}
+          {jsonValid && ` • ${t("jsonDetected")}`}
         </div>
       </div>
     </div>

@@ -59,7 +59,6 @@ export function CodegenPanel() {
       <JsonViewer
         className="text-text-secondary h-[420px]"
         content={snippet || t("hints")}
-        mode="json"
         readOnly
         showLineNumbers
       />

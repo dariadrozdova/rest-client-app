@@ -3,13 +3,15 @@ import { describe, expect, it } from "vitest";
 import { isJsonLike } from "@/app/[locale]/(protected)/_components/body-editor/utils";
 
 describe("isJsonLike", () => {
-  it("returns true for strings wrapped by {} or [] after trimming", () => {
+  it("returns true for valid JSON strings wrapped by {} or [] after trimming", () => {
     const truthySamples = [
       "{}",
       "[]",
       " { } ",
       "\n[1,2]\n",
       '\t{\n  "a": 1\n}\t',
+      '{"nested": {"key": "value"}}',
+      '[{"id": 1}, {"id": 2}]',
     ];
 
     for (const sample of truthySamples) {
@@ -32,23 +34,15 @@ describe("isJsonLike", () => {
       '"[1]"',
       " {] ",
       " [} ",
+      "{ trailing ]",
+      "[ leading }",
+      "{not: 'valid'}",
+      "[not, valid]",
+      "[][]]]]",
     ];
 
     for (const sample of falsySamples) {
       expect(isJsonLike(sample)).toBe(false);
-    }
-  });
-
-  it("does not validate JSON content; only first/last non-space characters matter", () => {
-    const cases: { expected: boolean; input: string }[] = [
-      { input: "{not: 'valid'}", expected: true },
-      { input: "[not, valid]", expected: true },
-      { input: "{ trailing ]", expected: false },
-      { input: "[ leading }", expected: false },
-    ];
-
-    for (const { input, expected } of cases) {
-      expect(isJsonLike(input)).toBe(expected);
     }
   });
 });
