@@ -11,6 +11,10 @@
     "rerun": "Re-run",
     "show": "Show"
   },
+  "empty": {
+    "message": "No requests yet. You can create a new request directly here.",
+    "goToHeaders": "Go to headers"
+  },
   "modal": {
     "title": "Request Details",
     "labels": {
