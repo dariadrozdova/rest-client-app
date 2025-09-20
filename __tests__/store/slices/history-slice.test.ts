@@ -29,6 +29,30 @@ const DEFAULT_RESPONSE_HEADERS: Record<string, string> = {
   "content-type": "text/plain",
 };
 
+function headersArrayToRecord(
+  array: readonly { name: string; value: string }[],
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const h of array) {
+    out[h.name] = h.value;
+  }
+  return out;
+}
+
+function HistoryRequest(r: ResolvedRequest): {
+  body?: null | string;
+  headers: Record<string, string>;
+  method: string;
+  url: string;
+} {
+  return {
+    method: r.method,
+    url: r.url,
+    headers: headersArrayToRecord(r.headers),
+    body: r.body ?? null,
+  };
+}
+
 function initialState(): HistoryState {
   return reducer(undefined, { type: "@@INIT" });
 }
@@ -66,18 +90,22 @@ function makeAResponseData(overrides?: Partial<ResponseData>): ResponseData {
 }
 
 function makeHistoryEntry(
-  overrides?: Partial<HistoryEntry> & {
+  overrides?: Omit<Partial<HistoryEntry>, "request" | "response"> & {
     request?: Partial<ResolvedRequest>;
     response?: Partial<ResponseData>;
   },
 ): HistoryEntry {
+  const resolved = makeAResolvedRequest(overrides?.request);
+
   const base: HistoryEntry = {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
-    request: makeAResolvedRequest(overrides?.request),
+    request: HistoryRequest(resolved),
     response: makeAResponseData(overrides?.response),
   };
-  return { ...base, ...overrides };
+
+  const { request: _rq, response: _rs, ...rest } = overrides ?? {};
+  return { ...base, ...rest };
 }
 
 describe("history slice", () => {

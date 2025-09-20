@@ -16,7 +16,7 @@ const H = vi.hoisted(() => {
   const DIVIDER_CLASSES = {
     bg: "bg-border-default",
     colStart: "col-start-2",
-    rowSpan: "row-span-2",
+    rowSpan: "row-span-full", // ← was "row-span-2"
     h: "h-full",
     wpx: "w-px",
   } as const;
@@ -53,7 +53,7 @@ function getRoot(container: HTMLElement): HTMLDivElement {
 
 describe("PageGrid", () => {
   beforeEach(() => {
-    //for function not to be empty
+    // keep for symmetry
   });
 
   it("renders a grid container with expected classes", () => {

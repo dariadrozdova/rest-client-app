@@ -58,8 +58,6 @@ const H = {
   JOINED_ISSUES: "MISSING_METHOD, EMPTY_URL",
 } as const;
 
-const DURATION = { MS: H.END_MS - H.START_MS } as const;
-
 function canGenerateArgument(
   resolved: ResolvedRequest,
 ): ResolvedSelectorOutput {
@@ -146,7 +144,7 @@ describe("request slice thunk (integration)", () => {
     vi.unstubAllGlobals();
   });
 
-  it("success (JSON): parses body, maps headers (lowercased), computes meta, dispatches addEntry", async () => {
+  it("success (JSON): stores parsed backend JSON in response (no meta/status shaping, no history entry)", async () => {
     const store = makeStore();
 
     const resolved = makeResolved();
@@ -163,36 +161,14 @@ describe("request slice thunk (integration)", () => {
     const s = store.getState().request;
     expect(s.isLoading).toBe(false);
     expect(s.error).toBeNull();
-    expect(s.response).not.toBeNull();
+    // current thunk returns resp.json() directly; with our mock that's { hello: "world" }
+    expect(s.response).toEqual({ hello: "world" });
 
-    const resp = store.getState().request.response!;
-    expect(resp.status).toBe(H.TWO_HUNDRED);
-    expect(resp.statusText).toBe(H.STATUS_TEXT_OK);
-    expect(resp.headers[H.HDR_CT_LC]).toBe(H.HDR_CT_JSON);
-    expect(resp.headers[H.HDR_X_LC]).toBe(H.HDR_X_VAL);
-    expect(resp.body).toEqual({ hello: "world" });
-
-    expect(resp.meta.requestTimestamp).toBe(H.ISO_TS);
-    expect(resp.meta.requestDurationMs).toBe(DURATION.MS);
-
-    const expectedResponseSize = new Blob([H.JSON_TEXT]).size;
-    expect(resp.meta.responseSizeBytes).toBe(expectedResponseSize);
-
-    const expectedRequestSize =
-      (resolved.body ? new Blob([resolved.body]).size : 0) +
-      new Blob(resolved.headers.map((h) => `${h.name}: ${h.value}\r\n`)).size +
-      new Blob([resolved.url]).size;
-    expect(resp.meta.requestSizeBytes).toBe(expectedRequestSize);
-
-    expect(addEntryMock).toHaveBeenCalledTimes(H.ONE);
-    const payload = addEntryMock.mock.calls[H.ZERO][H.ZERO];
-    expect(payload.id).toBe("uuid-1");
-    expect(payload.createdAt).toBe(H.ISO_TS);
-    expect(payload.request.method).toBe(H.METHOD_POST);
-    expect(payload.request.url).toBe(H.URL);
+    // current thunk does NOT dispatch history/addEntry
+    expect(addEntryMock).not.toHaveBeenCalled();
   });
 
-  it("success (text): falls back to raw text when JSON.parse fails", async () => {
+  it("success (text): sets error when backend returns non-JSON (resp.json() throws)", async () => {
     const fetchMock = vi.fn(async () => {
       const headers = new Headers();
       headers.set(H.HDR_CT, "text/plain");
@@ -213,11 +189,10 @@ describe("request slice thunk (integration)", () => {
     await store.dispatch(executeRequest(canGenerateArgument(resolved)));
 
     const s = store.getState().request;
-    expect(s.error).toBeNull();
-    if (!s.response) {
-      throw new Error("response missing");
-    }
-    expect(s.response.body).toBe(H.PLAIN_TEXT);
+    expect(s.isLoading).toBe(false);
+    expect(s.response).toBeNull();
+    // default behavior: resp.json() throws SyntaxError -> rejected with message
+    expect(s.error).toMatch(/Unexpected token/i);
   });
 
   it("cannot generate: joins issue types and rejects with joined string; does not dispatch addEntry", async () => {

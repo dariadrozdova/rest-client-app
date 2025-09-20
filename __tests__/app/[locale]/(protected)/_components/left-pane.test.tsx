@@ -1,3 +1,5 @@
+import React from "react";
+
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -36,18 +38,39 @@ vi.mock("react-redux", () => {
   return { useSelector };
 });
 
-vi.mock("@app/[locale]/(protected)/_components/body-editor", () => ({
-  BodyEditor: () => <div data-testid={H.TESTIDS.body} />,
+vi.mock("@/app/[locale]/(protected)/_components/left-pane.client", () => ({
+  LeftPaneClient: () => {
+    const active = (
+      { tabs: { activeTab: H.STATE.value.tabs.activeTab } } as const
+    ).tabs.activeTab;
+
+    if (active === "headers") {
+      return <div data-testid={H.TESTIDS.headers} />;
+    }
+    if (active === "body") {
+      return <div data-testid={H.TESTIDS.body} />;
+    }
+    if (active === "codegen") {
+      return <div data-testid={H.TESTIDS.codegen} />;
+    }
+    if (active === "variables") {
+      return <div data-testid={H.TESTIDS.variables} />;
+    }
+
+    return null;
+  },
 }));
-vi.mock("@app/[locale]/(protected)/_components/codegen/codegen-panel", () => ({
-  CodegenPanel: () => <div data-testid={H.TESTIDS.codegen} />,
-}));
-vi.mock("@app/[locale]/(protected)/_components/headers-editor", () => ({
-  HeadersEditor: () => <div data-testid={H.TESTIDS.headers} />,
-}));
-vi.mock("@app/[locale]/(protected)/_components/variables-editor", () => ({
-  VariablesEditor: () => <div data-testid={H.TESTIDS.variables} />,
-}));
+
+vi.mock(
+  "@/app/[locale]/(protected)/_components/history-table/history-visibility",
+  () => ({
+    HistoryVisibility: ({ children }: { children: React.ReactNode }) => {
+      const isHistory = H.STATE.value.tabs.activeTab === "requestHistory";
+      return isHistory ? <>{children}</> : null;
+    },
+  }),
+);
+
 vi.mock(
   "@/app/[locale]/(protected)/_components/history-table/history-table",
   () => ({ HistoryTable: () => <div data-testid={H.TESTIDS.history} /> }),
@@ -63,32 +86,39 @@ function getRoot(container: HTMLElement): HTMLDivElement {
   return element;
 }
 
+async function renderLeftPane() {
+  const ui = await LeftPane();
+  if (!React.isValidElement(ui)) {
+    throw new TypeError("LeftPane did not return a valid React element.");
+  }
+  return render(ui);
+}
+
 describe("LeftPane", () => {
   beforeEach(() => {
     H.STATE.value = { tabs: { activeTab: "headers" } };
   });
 
-  it("applies the expected container class", () => {
-    const { container } = render(<LeftPane />);
+  it("applies the expected container class", async () => {
+    const { container } = await renderLeftPane();
     const root = getRoot(container);
     expect(root.className.split(" ")).toContain(H.CONTAINER_CLASS);
   });
 
-  it("renders the correct editor/panel based on activeTab", () => {
+  it("renders the correct editor/panel based on activeTab", async () => {
     for (const { key, testId } of H.TABS) {
       H.STATE.value = { tabs: { activeTab: key } };
-      const { unmount } = render(<LeftPane />);
+      const { unmount } = await renderLeftPane();
       expect(screen.getByTestId(testId)).toBeInTheDocument();
       unmount();
     }
   });
 
-  it("renders only the selected tab's component at a time", () => {
+  it("renders only the selected tab's component at a time", async () => {
     H.STATE.value = { tabs: { activeTab: "variables" } };
-    render(<LeftPane />);
+    await renderLeftPane();
 
     expect(screen.getByTestId(H.TESTIDS.variables)).toBeInTheDocument();
-
     expect(screen.queryByTestId(H.TESTIDS.headers)).toBeNull();
     expect(screen.queryByTestId(H.TESTIDS.body)).toBeNull();
     expect(screen.queryByTestId(H.TESTIDS.codegen)).toBeNull();
