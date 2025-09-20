@@ -18,8 +18,8 @@ vi.mock("next/link", () => ({
 
 vi.mock("next/image", () => ({
   __esModule: true,
-  default: (props: React.ComponentProps<"img">) => (
-    <img {...props} alt="image" />
+  default: ({ alt, ...rest }: React.ComponentProps<"img">) => (
+    <img alt={alt ?? ""} {...rest} />
   ),
 }));
 
