@@ -129,7 +129,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   isStrongPasswordMock.mockReturnValue(true);
 });
-// eslint-disable-next-line max-lines-per-function
+
 describe("EmailSignUpForm", () => {
   it("renders title, inputs and disabled submit initially", () => {
     render(<EmailSignUpForm />);
