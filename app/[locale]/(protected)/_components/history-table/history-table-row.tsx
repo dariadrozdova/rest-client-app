@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "use-intl";
+
 import type { HistoryEntry } from "@shared/types";
 
 import { mapHistoryEntryToRowView } from "@/features/history/history-row";
@@ -12,6 +14,7 @@ interface HistoryTableRowProps {
   entry: HistoryEntry;
   isSelected: boolean;
   onSelect: (entry: HistoryEntry) => void;
+  onShowDetails: () => void;
   tableStyles: {
     cellPadding: string;
     headerBase: string;
@@ -25,8 +28,10 @@ export function HistoryTableRow({
   isSelected,
   onSelect,
   tableStyles,
+  onShowDetails,
 }: HistoryTableRowProps) {
   const rowView = mapHistoryEntryToRowView(entry);
+  const t = useTranslations("history-table");
 
   return (
     <tr
@@ -95,6 +100,25 @@ export function HistoryTableRow({
             ))}
           </div>
         )}
+      </td>
+
+      <td className={classNames(tableStyles.cellPadding)}>
+        <button
+          className={classNames(
+            "rounded-md border border-gray-300 px-2 py-1 text-xs font-medium",
+            "bg-gray-100 text-gray-700",
+            "hover:bg-gray-200 hover:text-gray-900",
+            "cursor-pointer focus:ring-2 focus:ring-blue-500/80 focus:ring-offset-1 focus:outline-none",
+            "transition-colors",
+          )}
+          onClick={(event) => {
+            event.stopPropagation();
+            onShowDetails();
+          }}
+          type="button"
+        >
+          {t("buttons.show")}
+        </button>
       </td>
     </tr>
   );

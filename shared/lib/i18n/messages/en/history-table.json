@@ -4,9 +4,26 @@
     "method": "Method",
     "status": "Status",
     "time": "Time",
-    "endpoint": "Endpoint"
+    "endpoint": "Endpoint",
+    "details": "Details"
   },
   "buttons": {
-    "rerun": "Re-run"
+    "rerun": "Re-run",
+    "show": "Show"
+  },
+  "modal": {
+    "title": "Request Details",
+    "labels": {
+      "datetime": "Request Date & Time",
+      "endpoint": "Endpoint / URL",
+      "method": "Request Method",
+      "status": "Request Status",
+      "requestSize": "Request Size",
+      "responseSize": "Response Size",
+      "duration": "Request Duration",
+      "error": "Error"
+    },
+    "units": { "ms": "ms" },
+    "notAvailable": "-"
   }
 }

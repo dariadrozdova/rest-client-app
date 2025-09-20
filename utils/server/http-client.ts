@@ -8,6 +8,8 @@ import {
   toHeadersObject,
 } from "@/utils/server/http-utils";
 
+const HTTP_ERROR_THRESHOLD = 400;
+
 export interface ExecutedResponse {
   body: string;
   contentType?: string;
@@ -122,7 +124,6 @@ export async function persistHistorySafe(
     if (!uid) {
       return;
     }
-
     await addHistoryEntry(uid, {
       timestamp: new Date(startedAt).toISOString(),
       url: payload.url,
@@ -135,6 +136,7 @@ export async function persistHistorySafe(
       headers: payload.headers ?? {},
       headersUser: payload.headers ?? {},
       body: payload.body ?? "",
+      error: executed.status >= HTTP_ERROR_THRESHOLD ? executed.body : null,
     });
   } catch (error) {
     console.warn("Failed to append history:", error);

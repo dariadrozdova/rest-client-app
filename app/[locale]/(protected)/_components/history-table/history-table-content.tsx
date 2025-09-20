@@ -1,3 +1,5 @@
+"use client";
+
 import { HistoryTableRow } from "@app/[locale]/(protected)/_components/history-table/history-table-row";
 import { classNames } from "@shared/styles";
 import type { HistoryEntry } from "@shared/types";
@@ -14,11 +16,15 @@ export function HistoryTableContent({
   labels,
   onSelect,
   selectedEntryId,
+  onShowDetails,
+  detailsLabel,
 }: {
+  detailsLabel: string;
   entries: HistoryEntry[];
   labels: { endpoint: string; method: string; status: string; time: string };
-  onSelect: (entry: HistoryEntry) => void;
-  selectedEntryId: null | string;
+  onSelect: (event_: HistoryEntry) => void;
+  onShowDetails: (event_: HistoryEntry) => void;
+  selectedEntryId?: null | string;
 }) {
   return (
     <div className="overflow-hidden rounded-md border border-gray-200 bg-white">
@@ -59,15 +65,25 @@ export function HistoryTableContent({
               >
                 {labels.endpoint}
               </th>
+
+              <th
+                className={classNames(
+                  TABLE_STYLES.headerBase,
+                  TABLE_STYLES.headerText,
+                )}
+              >
+                {detailsLabel}
+              </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody>
             {entries.map((entry) => (
               <HistoryTableRow
                 entry={entry}
-                isSelected={selectedEntryId === entry.id}
+                isSelected={entry.id === selectedEntryId}
                 key={entry.id}
-                onSelect={onSelect}
+                onSelect={() => onSelect(entry)}
+                onShowDetails={() => onShowDetails(entry)}
                 tableStyles={TABLE_STYLES}
               />
             ))}

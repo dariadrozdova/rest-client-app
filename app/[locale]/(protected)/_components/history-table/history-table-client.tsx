@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+
+import RequestDetailsModal from "@app/[locale]/(protected)/_components/history-table/request-details-modal";
 import type { HistoryEntry } from "@shared/types";
 
 import { HistoryHeader } from "@/app/[locale]/(protected)/_components/history-table/history-header";
@@ -26,6 +30,11 @@ export function HistoryTableClient({
   const dispatch = useAppDispatch();
   const selectedEntryId = useAppSelector(selectSelectedEntryId);
 
+  const [open, setOpen] = useState(false);
+  const [modalEntry, setModalEntry] = useState<HistoryEntry | null>(null);
+
+  const t = useTranslations("history-table");
+
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
     restoreRequest(entry);
@@ -41,6 +50,11 @@ export function HistoryTableClient({
     dispatch(executeRequest(resolvedOutput));
   };
 
+  const handleShowDetails = (entry: HistoryEntry) => {
+    setModalEntry(entry);
+    setOpen(true);
+  };
+
   return (
     <div className="flex flex-col gap-4 p-6">
       <HistoryHeader
@@ -49,10 +63,17 @@ export function HistoryTableClient({
         title={title}
       />
       <HistoryTableContent
+        detailsLabel={t("columns.details")}
         entries={entries}
         labels={labels}
         onSelect={handleSelect}
+        onShowDetails={handleShowDetails}
         selectedEntryId={selectedEntryId}
+      />
+      <RequestDetailsModal
+        entry={modalEntry}
+        onCloseAction={() => setOpen(false)}
+        open={open}
       />
     </div>
   );
