@@ -4,9 +4,11 @@
     "method": "Method",
     "status": "Status",
     "time": "Time",
-    "endpoint": "Endpoint"
+    "endpoint": "Endpoint",
+    "details": "Details"
   },
   "buttons": {
-    "rerun": "Re-run"
+    "rerun": "Re-run",
+    "show": "Show"
   }
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "use-intl";
+
 import type { HistoryEntry } from "@shared/types";
 
 import { mapHistoryEntryToRowView } from "@/features/history/history-row";
@@ -29,6 +31,7 @@ export function HistoryTableRow({
   onShowDetails,
 }: HistoryTableRowProps) {
   const rowView = mapHistoryEntryToRowView(entry);
+  const t = useTranslations("history-table");
 
   return (
     <tr
@@ -108,7 +111,7 @@ export function HistoryTableRow({
           }}
           type="button"
         >
-          Show
+          {t("buttons.show")}
         </button>
       </td>
     </tr>

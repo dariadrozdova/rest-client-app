@@ -1,3 +1,5 @@
+"use client";
+
 import { HistoryTableRow } from "@app/[locale]/(protected)/_components/history-table/history-table-row";
 import { classNames } from "@shared/styles";
 import type { HistoryEntry } from "@shared/types";
@@ -15,7 +17,9 @@ export function HistoryTableContent({
   onSelect,
   selectedEntryId,
   onShowDetails,
+  detailsLabel,
 }: {
+  detailsLabel: string;
   entries: HistoryEntry[];
   labels: { endpoint: string; method: string; status: string; time: string };
   onSelect: (event_: HistoryEntry) => void;
@@ -68,7 +72,7 @@ export function HistoryTableContent({
                   TABLE_STYLES.headerText,
                 )}
               >
-                Details
+                {detailsLabel}
               </th>
             </tr>
           </thead>
