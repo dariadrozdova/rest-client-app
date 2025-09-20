@@ -13,7 +13,7 @@ import { logoSmall } from "@app/[locale]/(public)/images";
 import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";
 import { Link } from "@shared/lib/i18n/navigation";
-import { useAuthRedirect } from "@shared/redirect/useAuthRedirect";
+import { useAuthRedirect } from "@utils/hooks";
 
 import { analytics } from "@/shared/lib/firebase/firebase";
 

@@ -29,6 +29,7 @@ export default defineConfig({
         "app/\\[locale\\]/\\[...not-found\\]/page.tsx",
         "**/app/manifest.ts",
         "app/\\[locale\\]/(protected)/_components/body-editor/types.ts",
+        "shared/lib/**/*.ts",
       ],
       reporter: ["text", "html"],
       reportsDirectory: "coverage",
@@ -40,6 +41,9 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "server-only": fileURLToPath(
+        new URL("./test/shims/server-only.ts", import.meta.url),
+      ),
       "@": fileURLToPath(new URL("./", import.meta.url)),
       "@app": fileURLToPath(new URL("./app", import.meta.url)),
       "@shared": fileURLToPath(new URL("./shared", import.meta.url)),

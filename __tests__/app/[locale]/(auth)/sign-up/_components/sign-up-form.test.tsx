@@ -1,9 +1,11 @@
+// __tests__/app/[locale]/(auth)/sign-up/sign-up-form.test.tsx
 import type React from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+// ----------------- i18n -----------------
 const DICT_SIGN_UP: Record<string, string> = {
   logoAlt: "App logo",
   title: "Create your account",
@@ -36,16 +38,30 @@ vi.mock("next-intl", () => ({
     },
 }));
 
+// ----------------- Next router (App Router) -----------------
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => "/",
+  useSearchParams: () => new URLSearchParams(""),
+}));
+
+// ----------------- next/image -----------------
 vi.mock("next/image", () => ({
   default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
     const { src, alt, ...rest } = props;
-
     return (
       <img alt={alt ?? ""} src={typeof src === "string" ? src : ""} {...rest} />
     );
   },
 }));
 
+// ----------------- Firebase analytics -----------------
 const logEventMock = vi.fn();
 vi.mock("firebase/analytics", () => ({
   logEvent: (...arguments_: unknown[]) => logEventMock(...arguments_),
@@ -55,29 +71,33 @@ vi.mock("@/shared/lib/firebase/firebase", () => ({
   analytics: {},
 }));
 
+// ----------------- Auth helpers -----------------
 const signUpEmailMock = vi.fn();
 const getFreshIdTokenMock = vi.fn();
 const serverLoginMock = vi.fn();
-vi.mock("@shared/auth/auth", () => ({
+vi.mock("@/shared/auth/auth", () => ({
   signUpEmail: (...arguments_: unknown[]) => signUpEmailMock(...arguments_),
   getFreshIdToken: (...arguments_: unknown[]) =>
     getFreshIdTokenMock(...arguments_),
   serverLogin: (...arguments_: unknown[]) => serverLoginMock(...arguments_),
 }));
 
+// ----------------- Error mapping -----------------
 const toErrorMessageMock = vi.fn();
-vi.mock("@shared/lib/errors/errors", () => ({
+vi.mock("@/shared/lib/errors/errors", () => ({
   toErrorMessage: (...arguments_: unknown[]) =>
     toErrorMessageMock(...arguments_),
 }));
 
+// ----------------- Password validation -----------------
 const isStrongPasswordMock = vi.fn();
-vi.mock("@shared/lib/validation/validate-password", () => ({
+vi.mock("@/shared/lib/validation/validate-password", () => ({
   isStrongPassword: (...arguments_: unknown[]) =>
     isStrongPasswordMock(...arguments_),
 }));
 
-vi.mock("@shared/lib/i18n/navigation", () => ({
+// ----------------- Link component used in the form -----------------
+vi.mock("@/shared/lib/i18n/navigation", () => ({
   Link: (
     props: React.PropsWithChildren<{ className?: string; href: string }>,
   ) => (
@@ -87,17 +107,21 @@ vi.mock("@shared/lib/i18n/navigation", () => ({
   ),
 }));
 
+// ----------------- Auth redirect hook (correct path) -----------------
 const doneMock = vi.fn();
-vi.mock("@shared/redirect/useAuthRedirect", () => ({
+vi.mock("@/utils/hooks/use-auth-redirect", () => ({
   useAuthRedirect: () => ({ locale: "en", done: doneMock }),
 }));
 
+// ----------------- Images -----------------
 vi.mock("@app/[locale]/(public)/images", () => ({
   logoSmall: "/logo-small.png",
 }));
 
+// ----------------- SUT -----------------
 import EmailSignUpForm from "@/app/[locale]/(auth)/sign-up/_components/sign-up-form";
 
+// ----------------- Constants -----------------
 const TEXT = {
   title: DICT_SIGN_UP.title,
   email: DICT_SIGN_UP.emailPlaceholder,
@@ -125,11 +149,13 @@ const INPUT = {
   confirmWrong: "StrongPassword2!",
 };
 
+// ----------------- Setup -----------------
 beforeEach(() => {
   vi.clearAllMocks();
   isStrongPasswordMock.mockReturnValue(true);
 });
 
+// ----------------- Tests -----------------
 describe("EmailSignUpForm", () => {
   it("renders title, inputs and disabled submit initially", () => {
     render(<EmailSignUpForm />);
@@ -245,7 +271,10 @@ describe("EmailSignUpForm", () => {
     expect(logEventMock).toHaveBeenCalledWith(
       expect.any(Object),
       "sign_up_error",
-      { message: MAPPED, method: "password" },
+      {
+        message: MAPPED,
+        method: "password",
+      },
     );
 
     expect(doneMock).not.toHaveBeenCalled();
