@@ -41,6 +41,20 @@ function mockHistoryDepsWithUidEmpty() {
   }));
 }
 
+function mockHistoryEmptyState() {
+  vi.doMock(
+    "@/app/[locale]/(protected)/_components/history-table/history-empty-state",
+    () => ({
+      HistoryEmptyState: () => (
+        <div>
+          <p>History is empty.</p>
+          <button>Create new request</button>
+        </div>
+      ),
+    }),
+  );
+}
+
 /* ---------- i18n / navigation mocks ---------- */
 
 /**
@@ -119,6 +133,7 @@ describe("HistoryTable (server)", () => {
     mockServerI18n();
     mockHistoryDepsEmpty();
     mockHistoryTableClient();
+    mockHistoryEmptyState();
 
     const module_ = await import(
       "@/app/[locale]/(protected)/_components/history-table/history-table"
@@ -138,6 +153,7 @@ describe("HistoryTable (server)", () => {
     mockServerI18n();
     mockHistoryDepsWithUidEmpty();
     mockHistoryTableClient();
+    mockHistoryEmptyState();
 
     const module_ = await import(
       "@/app/[locale]/(protected)/_components/history-table/history-table"
