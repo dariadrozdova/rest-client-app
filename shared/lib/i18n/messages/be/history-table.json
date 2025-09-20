@@ -10,5 +10,20 @@
   "buttons": {
     "rerun": "Паўтарыць",
     "show": "Паказаць"
+  },
+  "modal": {
+    "title": "Падрабязнасці запыту",
+    "labels": {
+      "datetime": "Дата і час запыту",
+      "endpoint": "Эндпоінт / URL",
+      "method": "Метад запыту",
+      "status": "Статус адказу",
+      "requestSize": "Памер запыту",
+      "responseSize": "Памер адказу",
+      "duration": "Працягласць запыту",
+      "error": "Памылка"
+    },
+    "units": { "ms": "мс" },
+    "notAvailable": "-"
   }
 }

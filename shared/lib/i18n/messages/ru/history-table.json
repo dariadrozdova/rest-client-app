@@ -10,5 +10,20 @@
   "buttons": {
     "rerun": "Повторить",
     "show": "Показать"
+  },
+  "modal": {
+    "title": "Детали запроса",
+    "labels": {
+      "datetime": "Дата и время запроса",
+      "endpoint": "Эндпоинт / URL",
+      "method": "Метод запроса",
+      "status": "Статус ответа",
+      "requestSize": "Размер запроса",
+      "responseSize": "Размер ответа",
+      "duration": "Длительность запроса",
+      "error": "Ошибка"
+    },
+    "units": { "ms": "мс" },
+    "notAvailable": "-"
   }
 }

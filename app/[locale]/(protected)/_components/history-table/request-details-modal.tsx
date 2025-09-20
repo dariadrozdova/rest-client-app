@@ -1,5 +1,8 @@
 "use client";
 
+import { X } from "lucide-react";
+
+import { ModalContent } from "@app/[locale]/(protected)/_components/history-table/modal-content";
 import type { HistoryEntry } from "@shared/types";
 
 export default function RequestDetailsModal({
@@ -16,66 +19,23 @@ export default function RequestDetailsModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-      <div className="w-full max-w-lg rounded-lg bg-white p-4 shadow-xl">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold">Request Details</h2>
-          <button
-            className="text-gray-500 hover:text-black"
-            onClick={onCloseAction}
-          >
-            ✕
-          </button>
-        </div>
+    <div
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      role="dialog"
+    >
+      <div className="absolute inset-0 bg-black/30" onClick={onCloseAction} />
 
-        <div className="space-y-2 text-sm">
-          <p>
-            <b>Time:</b> {entry.createdAt}
-          </p>
-          <p className="break-all">
-            <b>URL:</b> {entry.request.url}
-          </p>
-          <p>
-            <b>Method:</b> {entry.request.method}
-          </p>
-          <p>
-            <b>Status:</b> {entry.response.status}{" "}
-            {entry.response.statusText ?? ""}
-          </p>
-          {entry.response.meta?.requestDurationMs !== null &&
-            entry.response.meta?.requestDurationMs !== undefined && (
-              <p>
-                <b>Duration:</b> {entry.response.meta.requestDurationMs} ms
-              </p>
-            )}
-          {entry.response.meta?.requestSizeBytes !== null &&
-            entry.response.meta?.requestSizeBytes !== undefined && (
-              <p>
-                <b>Request Size:</b> {entry.response.meta.requestSizeBytes} B
-              </p>
-            )}
-          {entry.response.meta?.responseSizeBytes !== null &&
-            entry.response.meta?.responseSizeBytes !== undefined && (
-              <p>
-                <b>Response Size:</b> {entry.response.meta.responseSizeBytes} B
-              </p>
-            )}
-          {entry.response.error && (
-            <div>
-              <b>Error:</b>
-              <pre className="mt-1 max-h-56 overflow-auto rounded bg-gray-100 p-2 text-xs whitespace-pre-wrap">
-                {entry.response.error}
-              </pre>
-            </div>
-          )}
-        </div>
-
+      <div className="relative z-10 w-[560px] max-w-[92vw] rounded-xl bg-white p-6 shadow-2xl">
         <button
-          className="mt-4 rounded bg-blue-600 px-4 py-1 text-white"
+          aria-label="Close"
+          className="absolute top-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
           onClick={onCloseAction}
+          type="button"
         >
-          Close
+          <X className="h-5 w-5" />
         </button>
+        <ModalContent entry={entry} />
       </div>
     </div>
   );
