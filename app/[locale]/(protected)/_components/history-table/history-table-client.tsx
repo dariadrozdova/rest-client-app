@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 
 import RequestDetailsModal from "@app/[locale]/(protected)/_components/history-table/request-details-modal";
 import type { HistoryEntry } from "@shared/types";
@@ -21,8 +20,10 @@ import { restoreRequest } from "@/utils/helpers/restore-request";
 export function HistoryTableClient({
   entries,
   labels,
+  detailsLabel,
   title,
 }: {
+  detailsLabel: string;
   entries: HistoryEntry[];
   labels: { endpoint: string; method: string; status: string; time: string };
   title: string;
@@ -32,8 +33,6 @@ export function HistoryTableClient({
 
   const [open, setOpen] = useState(false);
   const [modalEntry, setModalEntry] = useState<HistoryEntry | null>(null);
-
-  const t = useTranslations("history-table");
 
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
@@ -63,7 +62,7 @@ export function HistoryTableClient({
         title={title}
       />
       <HistoryTableContent
-        detailsLabel={t("columns.details")}
+        detailsLabel={detailsLabel}
         entries={entries}
         labels={labels}
         onSelect={handleSelect}
