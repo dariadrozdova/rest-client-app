@@ -6,7 +6,7 @@ import { LeftPaneClient } from "@/app/[locale]/(protected)/_components/left-pane
 
 export async function LeftPane() {
   return (
-    <div className="col-start-1">
+    <div className="col-start-1 min-w-0">
       <LeftPaneClient />
       <Suspense fallback={null}>
         <HistoryVisibility>

@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { VariableItem } from "@shared/types";
 import { KeyValueEditor } from "@shared/ui/key-value-editor";
-import { useLocalStorage } from "@utils/hooks/use-storage";
+import { useLocalStorage } from "@utils/hooks";
 
 import {
   ensureTrailingEmpty,

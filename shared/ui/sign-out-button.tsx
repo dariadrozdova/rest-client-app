@@ -10,7 +10,7 @@ interface Props {
   label?: string;
 }
 
-export default function SignOutButton({ className, label = "Log out" }: Props) {
+export function SignOutButton({ className, label = "Log out" }: Props) {
   const router = useRouter();
   const locale = useLocale();
 
@@ -23,7 +23,7 @@ export default function SignOutButton({ className, label = "Log out" }: Props) {
   return (
     <button
       className={classNames(
-        "bg-bg-secondary hover:bg-border-default rounded-lg px-3 py-2 font-medium transition-colors duration-300",
+        "bg-bg-secondary hover:bg-border-default cursor-pointer rounded-lg px-3 py-2 font-medium transition-colors duration-300",
         className,
       )}
       onClick={handleClick}

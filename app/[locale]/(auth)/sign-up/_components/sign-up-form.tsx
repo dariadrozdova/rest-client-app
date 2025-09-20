@@ -63,7 +63,7 @@ export default function EmailSignUpForm() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm bg-white p-6">
+    <div className="bg-bg-primary mx-auto w-full max-w-sm p-6">
       <div className="mb-3">
         <Image
           alt={t("logoAlt")}
@@ -101,9 +101,9 @@ export default function EmailSignUpForm() {
         <div className="h-6">{error && <AuthError message={error} />}</div>
       </form>
 
-      <p className="mt-4 text-center text-xs text-gray-500">
+      <p className="text-text-secondary mt-4 text-center text-xs">
         {t("haveAccountQuestion")}{" "}
-        <Link className="font-bold text-gray-600" href="/sign-in">
+        <Link className="text-text-secondary font-bold" href="/sign-in">
           {t("signInLink")}
         </Link>
       </p>

@@ -28,5 +28,6 @@ export { default as logoVCircus } from "./clients/logo-v-circus.png";
 
 export { default as logoVFishermen } from "./clients/logo-v-fishermen.png";
 export { default as logoVSumo } from "./clients/logo-v-sumo.png";
+export { default as errorImage } from "./icons/error-paddle.png";
 export { default as logoFull } from "./icons/Logo-paddle-text.svg";
 export { default as logoSmall } from "./icons/Logo-paddle.svg";

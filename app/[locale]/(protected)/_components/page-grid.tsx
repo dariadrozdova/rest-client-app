@@ -3,10 +3,10 @@ import { ResponsePanel } from "@app/[locale]/(protected)/_components/response-pa
 
 export function PageGrid() {
   return (
-    <div className="grid grid-cols-[1fr_1px_1fr] gap-x-6">
+    <div className="grid min-h-[calc(50vh)] grid-cols-[1fr_1px_1fr] gap-x-6">
       <div
         aria-hidden
-        className="bg-border-default w col-start-2 row-span-2 h-full w-px"
+        className="bg-border-default col-start-2 row-span-full h-full w-px"
       />
       <LeftPane />
       <ResponsePanel />

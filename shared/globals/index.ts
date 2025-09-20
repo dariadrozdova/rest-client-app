@@ -22,3 +22,5 @@ export {
   VARIABLE_REGEX,
 } from "./globals";
 export * from "./globals-animation";
+
+export { ADVANCE_MS, TOTAL_LAYERS } from "./globals-tests";

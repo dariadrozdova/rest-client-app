@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -24,9 +25,8 @@
       "@app/*": ["./app/*"],
       "@components/*": ["./components/*"],
       "@lib/*": ["./lib/*"],
-      "@utils/*": ["./utils/*"],
+      "@utils/*": ["utils/*"],
       "@types/*": ["./types/*"],
-      "@hooks/*": ["./hooks/*"],
       "@store/*": ["./store/*"],
       "@api/*": ["./api/*"],
       "@configs/*": ["_configs/*"],

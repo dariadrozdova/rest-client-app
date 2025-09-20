@@ -68,6 +68,7 @@ export default tseslint.config(
       },
       sourceType: "module",
     },
+
     plugins: {
       "@next/next": nextPlugin,
       import: eslintPluginImport,
@@ -134,6 +135,7 @@ export default tseslint.config(
     },
     settings: {
       "import/resolver": {
+        "max-lines-per-function": "off",
         alias: {
           extensions: [".ts", ".tsx", ".js", ".jsx"],
           map: [
@@ -160,6 +162,29 @@ export default tseslint.config(
       },
     },
   },
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx", "__tests__/**", "tests/**"],
+    rules: {
+      "@next/next/no-img-element": "off",
+      "max-lines-per-function": "off",
+      "@next/next/no-img-element": "off",
+      "react-compiler/react-compiler": "off",
+      "@typescript-eslint/no-magic-numbers": [
+        "error",
+        {
+          ignoreEnums: true,
+          ignoreNumericLiteralTypes: true,
+          ignore: [0, 1, 2, 3],
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
+      ],
+      "unicorn/consistent-function-scoping": "off",
+    },
+  },
+
   {
     files: ["**/eslint.config.{js,cjs,mjs}"],
     rules: {

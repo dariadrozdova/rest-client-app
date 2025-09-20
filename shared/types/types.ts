@@ -117,6 +117,13 @@ export interface DropdownProps<T = unknown> {
   width?: string;
 }
 
+export interface ErrorTemplateProps {
+  code: string;
+  description?: string;
+  extra?: ReactNode;
+  title: string;
+}
+
 export interface HeaderItem {
   enabled: boolean;
   id: string;
@@ -209,9 +216,11 @@ export interface Language {
   name: string;
 }
 
-export interface LayoutProps {
+export interface LayoutProps<
+  P extends Record<string, string> = { locale: string },
+> {
   children: ReactNode;
-  params: Record<string, string>;
+  params: P;
 }
 
 export interface LinkItem {
