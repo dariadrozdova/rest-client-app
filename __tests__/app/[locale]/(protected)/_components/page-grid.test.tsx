@@ -16,7 +16,7 @@ const H = vi.hoisted(() => {
   const DIVIDER_CLASSES = {
     bg: "bg-border-default",
     colStart: "col-start-2",
-    rowSpan: "row-span-full", // ← was "row-span-2"
+    rowSpan: "row-span-full",
     h: "h-full",
     wpx: "w-px",
   } as const;
