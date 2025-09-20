@@ -18,7 +18,7 @@ export function HistoryEmptyState() {
       <button
         className={classNames(
           "rounded-md border px-3 py-2 text-sm font-medium text-white",
-          "bg-accent-blue border-accent-blue hover:brightness-110",
+          "bg-accent-blue border-accent-blue cursor-pointer hover:brightness-110",
         )}
         onClick={() => dispatch(setActiveTab("headers"))}
         type="button"
