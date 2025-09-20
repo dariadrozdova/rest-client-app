@@ -12,6 +12,7 @@ interface HistoryTableRowProps {
   entry: HistoryEntry;
   isSelected: boolean;
   onSelect: (entry: HistoryEntry) => void;
+  onShowDetails: () => void;
   tableStyles: {
     cellPadding: string;
     headerBase: string;
@@ -25,6 +26,7 @@ export function HistoryTableRow({
   isSelected,
   onSelect,
   tableStyles,
+  onShowDetails,
 }: HistoryTableRowProps) {
   const rowView = mapHistoryEntryToRowView(entry);
 
@@ -95,6 +97,19 @@ export function HistoryTableRow({
             ))}
           </div>
         )}
+      </td>
+
+      <td className={classNames(tableStyles.cellPadding)}>
+        <button
+          className="rounded border border-gray-300 px-2 py-1 text-xs hover:bg-gray-50"
+          onClick={(event) => {
+            event.stopPropagation();
+            onShowDetails();
+          }}
+          type="button"
+        >
+          Show
+        </button>
       </td>
     </tr>
   );
