@@ -4,7 +4,7 @@ import * as React from "react";
 
 export type SimpleTableProps = React.TableHTMLAttributes<HTMLTableElement>;
 
-const SimpleTable = React.forwardRef<HTMLTableElement, SimpleTableProps>(
+export const SimpleTable = React.forwardRef<HTMLTableElement, SimpleTableProps>(
   ({ className = "", children, ...props }, reference) => {
     return (
       <div className="overflow-x-auto">

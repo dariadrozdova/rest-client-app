@@ -14,7 +14,7 @@ import { getFreshIdToken, serverLogin, signUpEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";
 import { Link } from "@shared/lib/i18n/navigation";
 import { isStrongPassword } from "@shared/lib/validation/validate-password";
-import { useAuthRedirect } from "@shared/redirect/useAuthRedirect";
+import { useAuthRedirect } from "@utils/hooks/use-auth-redirect";
 
 import { analytics } from "@/shared/lib/firebase/firebase";
 

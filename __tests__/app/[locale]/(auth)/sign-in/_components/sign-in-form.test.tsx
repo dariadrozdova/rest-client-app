@@ -66,7 +66,7 @@ vi.mock("@shared/lib/i18n/navigation", () => ({
 }));
 
 const doneMock = vi.fn();
-vi.mock("@shared/redirect/useAuthRedirect", () => ({
+vi.mock("@utils/hooks", () => ({
   useAuthRedirect: () => ({ locale: "en", done: doneMock }),
 }));
 

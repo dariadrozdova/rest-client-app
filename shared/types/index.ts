@@ -28,6 +28,7 @@ export type {
   RequestState,
   ResolvedHeader,
   ResolvedRequest,
+  ResolvedRequestMeta,
   ResolvedSelectorOutput,
   ResponseData,
   ResponsePaneProps,

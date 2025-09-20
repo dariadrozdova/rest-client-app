@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 const H = vi.hoisted(() => {
   const TESTIDS = {
@@ -16,7 +16,7 @@ const H = vi.hoisted(() => {
   const DIVIDER_CLASSES = {
     bg: "bg-border-default",
     colStart: "col-start-2",
-    rowSpan: "row-span-2",
+    rowSpan: "row-span-full",
     h: "h-full",
     wpx: "w-px",
   } as const;
@@ -52,10 +52,6 @@ function getRoot(container: HTMLElement): HTMLDivElement {
 }
 
 describe("PageGrid", () => {
-  beforeEach(() => {
-    //for function not to be empty
-  });
-
   it("renders a grid container with expected classes", () => {
     const { container } = render(<PageGrid />);
     const root = getRoot(container);

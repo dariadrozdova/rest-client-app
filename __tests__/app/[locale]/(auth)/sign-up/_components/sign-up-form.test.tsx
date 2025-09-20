@@ -36,10 +36,21 @@ vi.mock("next-intl", () => ({
     },
 }));
 
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => "/",
+  useSearchParams: () => new URLSearchParams(""),
+}));
+
 vi.mock("next/image", () => ({
   default: (props: React.ImgHTMLAttributes<HTMLImageElement>) => {
     const { src, alt, ...rest } = props;
-
     return (
       <img alt={alt ?? ""} src={typeof src === "string" ? src : ""} {...rest} />
     );
@@ -58,7 +69,7 @@ vi.mock("@/shared/lib/firebase/firebase", () => ({
 const signUpEmailMock = vi.fn();
 const getFreshIdTokenMock = vi.fn();
 const serverLoginMock = vi.fn();
-vi.mock("@shared/auth/auth", () => ({
+vi.mock("@/shared/auth/auth", () => ({
   signUpEmail: (...arguments_: unknown[]) => signUpEmailMock(...arguments_),
   getFreshIdToken: (...arguments_: unknown[]) =>
     getFreshIdTokenMock(...arguments_),
@@ -66,18 +77,18 @@ vi.mock("@shared/auth/auth", () => ({
 }));
 
 const toErrorMessageMock = vi.fn();
-vi.mock("@shared/lib/errors/errors", () => ({
+vi.mock("@/shared/lib/errors/errors", () => ({
   toErrorMessage: (...arguments_: unknown[]) =>
     toErrorMessageMock(...arguments_),
 }));
 
 const isStrongPasswordMock = vi.fn();
-vi.mock("@shared/lib/validation/validate-password", () => ({
+vi.mock("@/shared/lib/validation/validate-password", () => ({
   isStrongPassword: (...arguments_: unknown[]) =>
     isStrongPasswordMock(...arguments_),
 }));
 
-vi.mock("@shared/lib/i18n/navigation", () => ({
+vi.mock("@/shared/lib/i18n/navigation", () => ({
   Link: (
     props: React.PropsWithChildren<{ className?: string; href: string }>,
   ) => (
@@ -88,7 +99,7 @@ vi.mock("@shared/lib/i18n/navigation", () => ({
 }));
 
 const doneMock = vi.fn();
-vi.mock("@shared/redirect/useAuthRedirect", () => ({
+vi.mock("@/utils/hooks/use-auth-redirect", () => ({
   useAuthRedirect: () => ({ locale: "en", done: doneMock }),
 }));
 
@@ -245,7 +256,10 @@ describe("EmailSignUpForm", () => {
     expect(logEventMock).toHaveBeenCalledWith(
       expect.any(Object),
       "sign_up_error",
-      { message: MAPPED, method: "password" },
+      {
+        message: MAPPED,
+        method: "password",
+      },
     );
 
     expect(doneMock).not.toHaveBeenCalled();
