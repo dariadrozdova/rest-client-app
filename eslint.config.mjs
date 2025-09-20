@@ -135,10 +135,12 @@ export default tseslint.config(
     },
     settings: {
       "import/resolver": {
+        node: { extensions: [".ts", ".tsx", ".js", ".jsx"] },
+        typescript: { project: "./tsconfig.json" },
         alias: {
           extensions: [".ts", ".tsx", ".js", ".jsx"],
           map: [
-            ["@", "."],
+            ["@", "./"],
             ["@app", "./app"],
             ["@components", "./components"],
             ["@lib", "./lib"],
@@ -147,10 +149,8 @@ export default tseslint.config(
             ["@hooks", "./hooks"],
             ["@store", "./store"],
             ["@api", "./api"],
+            ["@shared", "./shared"],
           ],
-        },
-        typescript: {
-          project: "./tsconfig.json",
         },
       },
       next: {
