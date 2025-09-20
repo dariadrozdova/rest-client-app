@@ -1,40 +1,34 @@
-// __tests__/app/[locale]/(protected)/workspace/_logic/restore-request-from-url.test.tsx
 import React from "react";
 
 import { render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// Hoisted mock fns (exist before vi.mock runs)
-// Types for the route params your component reads
 interface RouteParams {
   bodyBase64?: string;
   endpointBase64?: string;
   method?: string;
 }
 
-// Small factory so we can get a properly typed empty object without assertions
 function createParams(): RouteParams {
   return {};
 }
 
-// Hoisted fakes (exist before vi.mock runs)
 const hoisted = vi.hoisted(() => {
   return {
     isValidHttpMethod: vi.fn<(m: string) => boolean>(),
     validateUrlString: vi.fn<(u: string) => boolean>(),
     fromBase64Utf8: vi.fn<(v: string) => null | string>(),
     dispatchSpy: vi.fn(),
-    params: createParams(), // ✅ typed, no assertions
+    params: createParams(),
   };
 });
 
-// Mocks
 vi.mock("react-redux", () => ({
   useDispatch: () => hoisted.dispatchSpy,
 }));
 
 vi.mock("next/navigation", () => ({
-  useParams: () => hoisted.params, // returns RouteParams
+  useParams: () => hoisted.params,
 }));
 
 vi.mock("@store/slices/method-slice", () => ({
@@ -58,7 +52,6 @@ vi.mock("@/utils/helpers/base64", () => ({
   fromBase64Utf8: hoisted.fromBase64Utf8,
 }));
 
-// SUT import AFTER mocks
 import { RestoreRequestFromUrl } from "@/app/[locale]/(protected)/workspace/_logic/restore-request-from-url";
 
 const H = Object.freeze({
@@ -77,7 +70,6 @@ describe("RestoreRequestFromUrl", () => {
     hoisted.validateUrlString.mockReset();
     hoisted.fromBase64Utf8.mockReset();
 
-    // clear params
     hoisted.params.method = undefined;
     hoisted.params.endpointBase64 = undefined;
     hoisted.params.bodyBase64 = undefined;
