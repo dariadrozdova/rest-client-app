@@ -1,14 +1,19 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 
 import { Footer, Header } from "@app/[locale]/_components";
 import type { LayoutProps } from "@shared/types";
-import { ReduxProvider } from "@/store/provider";
 
 import "@/shared/styles/globals.css";
 
 import { routing } from "@/shared/lib/i18n/routing";
+import { ReduxProvider } from "@/store/provider";
+
+export const metadata: Metadata = {
+  title: "PingPong",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -28,12 +33,16 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <ReduxProvider>
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <Header />
-        {children}
-        <Footer />
-      </NextIntlClientProvider>
-    </ReduxProvider>
+    <html data-scroll-behavior="smooth" suppressHydrationWarning>
+      <body className="bg-bg-primary text-base">
+        <ReduxProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Header />
+            {children}
+            <Footer />
+          </NextIntlClientProvider>
+        </ReduxProvider>
+      </body>
+    </html>
   );
 }

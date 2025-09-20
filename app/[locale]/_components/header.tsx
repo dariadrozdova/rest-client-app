@@ -21,7 +21,7 @@ export default async function Header() {
           <LanguageSwitch />
 
           {session ? (
-            <SignOutButton label={t("logout")} />
+            <SignOutButton label={t("logoff")} />
           ) : (
             <>
               <Link
