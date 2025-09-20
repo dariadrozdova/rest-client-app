@@ -29,7 +29,7 @@ export default function RequestDetailsModal({
       <div className="relative z-10 w-[560px] max-w-[92vw] rounded-xl bg-white p-6 shadow-2xl">
         <button
           aria-label="Close"
-          className="absolute top-3 right-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
+          className="absolute top-3 right-3 inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-700 focus:ring-2 focus:ring-blue-500/80 focus:outline-none"
           onClick={onCloseAction}
           type="button"
         >

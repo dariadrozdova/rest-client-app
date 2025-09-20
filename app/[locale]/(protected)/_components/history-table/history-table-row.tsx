@@ -104,7 +104,13 @@ export function HistoryTableRow({
 
       <td className={classNames(tableStyles.cellPadding)}>
         <button
-          className="rounded border border-gray-300 px-2 py-1 text-xs hover:bg-gray-50"
+          className={classNames(
+            "rounded-md border border-gray-300 px-2 py-1 text-xs font-medium",
+            "bg-gray-100 text-gray-700",
+            "hover:bg-gray-200 hover:text-gray-900",
+            "cursor-pointer focus:ring-2 focus:ring-blue-500/80 focus:ring-offset-1 focus:outline-none",
+            "transition-colors",
+          )}
           onClick={(event) => {
             event.stopPropagation();
             onShowDetails();
