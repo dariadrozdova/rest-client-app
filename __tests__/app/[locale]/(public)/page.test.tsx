@@ -1,15 +1,12 @@
-// __tests__/app/[locale]/(public)/page.test.tsx
 import React from "react";
 
 import { render, screen } from "@testing-library/react";
 
-// ✅ мок, понимающий namespace (и string, и object)
 function buildTranslator(ns?: string) {
   return (key: string) => {
     const dict: Record<string, string> = {
       "main-page.slogan": "Test. Debug. Repeat.",
       "main-page.headline": "Meet the system",
-      // на всякий случай поддержим и вызовы без namespace
       slogan: "Test. Debug. Repeat.",
       headline: "Meet the system",
     };
@@ -29,12 +26,10 @@ async function mockGetTranslations(argument?: unknown) {
 
 vi.mock("next-intl/server", () => ({ getTranslations: mockGetTranslations }));
 
-// classNames
 vi.mock("@shared/styles", () => ({
   classNames: (...cn: string[]) => cn.filter(Boolean).join(" "),
 }));
 
-// дети страницы
 vi.mock("@app/[locale]/(public)/components", () => ({
   LogosShowcase: () => <section data-testid="logos" />,
   ThreeDScene: ({ layers }: { layers: string[] }) => (
@@ -42,10 +37,8 @@ vi.mock("@app/[locale]/(public)/components", () => ({
   ),
 }));
 
-// globals
 vi.mock("@/shared/globals", () => ({ LAYERS: ["/l1.png", "/l2.png"] }));
 
-// SUT
 import Page from "@app/[locale]/(public)/page";
 
 describe("Public page", () => {

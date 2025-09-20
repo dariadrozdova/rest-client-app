@@ -1,11 +1,14 @@
 {
   "logoAlt": "PingPong",
-  "title": "Стварыце акаўнт",
-  "emailPlaceholder": "Увядзіце ваш e-mail…",
-  "passwordPlaceholder": "Прыдумайце пароль…",
-  "confirmPlaceholder": "Пацвердзіце пароль…",
+  "title": "Стварыце ўліковы запіс",
+  "emailLabel": "Email",
+  "passwordLabel": "Пароль",
+  "confirmLabel": "Пацвердзіце пароль",
+  "emailPlaceholder": "Увядзіце ваш e-mail...",
+  "passwordPlaceholder": "Прыдумайце пароль...",
+  "confirmPlaceholder": "Паўтарыце пароль...",
   "buttonSubmit": "Зарэгістравацца",
-  "buttonLoading": "Ствараем…",
-  "haveAccountQuestion": "Ужо ёсць акаўнт?",
+  "buttonLoading": "Стварэнне…",
+  "haveAccountQuestion": "Ужо ёсць уліковы запіс?",
   "signInLink": "Увайсці"
 }

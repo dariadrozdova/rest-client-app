@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { InputField } from "@/app/[locale]/(auth)/_components/input-field";
 
@@ -17,6 +17,7 @@ function ControlledHarness({
   return (
     <InputField
       autoComplete="email"
+      label="Email"
       onChange={(v) => {
         onChange(v);
         setValue(v);

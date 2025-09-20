@@ -41,12 +41,6 @@ function mockHistoryDepsWithUidEmpty() {
   }));
 }
 
-/* ---------- i18n / navigation mocks ---------- */
-
-/**
- * Mock ONLY the client table (to avoid Redux <Provider>).
- * Keep the real empty-state so we can assert the actual text it renders.
- */
 function mockHistoryTableClient() {
   vi.doMock(
     "@/app/[locale]/(protected)/_components/history-table/history-table-client",

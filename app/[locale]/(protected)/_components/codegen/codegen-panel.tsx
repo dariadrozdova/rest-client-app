@@ -11,7 +11,7 @@ import { requestToGenerateCode } from "@utils/helpers";
 
 import { ISSUE_I18N_KEY } from "@/shared/globals";
 import type { RootState } from "@/store/store";
-import { selectResolvedRequest } from "@/utils/helpers/resolve-request"; // reselect selector
+import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 
 export function CodegenPanel() {
   const t = useTranslations("code-gen");

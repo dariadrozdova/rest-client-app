@@ -6,37 +6,55 @@ import { useTranslations } from "next-intl";
 
 import { logEvent } from "firebase/analytics";
 
-import { AuthError } from "@app/[locale]/(auth)/_components/auth-error";
 import { Button } from "@app/[locale]/(auth)/_components/form-button";
 import { InputField } from "@app/[locale]/(auth)/_components/input-field";
 import { logoSmall } from "@app/[locale]/(public)/images";
 import { getFreshIdToken, serverLogin, signInEmail } from "@shared/auth/auth";
 import { toErrorMessage } from "@shared/lib/errors/errors";
 import { Link } from "@shared/lib/i18n/navigation";
+import { isValidEmail } from "@shared/lib/validation/validate-email";
 import { useAuthRedirect } from "@utils/hooks";
 
 import { analytics } from "@/shared/lib/firebase/firebase";
 
 export default function EmailSignInForm() {
   const t = useTranslations("sign-in");
+  const _error = useTranslations("errors.auth");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<null | string>(null);
+  const [emailError, setEmailError] = useState<null | string>(null);
+  const [serverError, setServerError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { done, locale } = useAuthRedirect();
 
+  function handleEmailChange(value: string) {
+    setEmail(value);
+    setEmailError(
+      value && !isValidEmail(value) ? _error("invalidEmail") : null,
+    );
+  }
+
+  function handlePasswordChange(value: string) {
+    setPassword(value);
+  }
+
+  const isFormValid = isValidEmail(email) && password.length > 0;
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
+    setServerError(null);
+    if (!isFormValid) {
+      return;
+    }
 
     try {
       setLoading(true);
       const cred = await signInEmail(email, password);
       const idToken = await getFreshIdToken(cred);
       await serverLogin(locale, idToken);
-
       if (analytics) {
         logEvent(analytics, "login", { method: "password" });
       }
@@ -46,14 +64,14 @@ export default function EmailSignInForm() {
       if (analytics) {
         logEvent(analytics, "login_error", { message, method: "password" });
       }
-      setError(message || t("genericError"));
+      setServerError(_error("invalidCredentials"));
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm bg-white p-6">
+    <div className="bg-bg-primary mx-auto w-full max-w-sm p-6">
       <div className="mb-3">
         <Image
           alt={t("logoAlt")}
@@ -64,25 +82,38 @@ export default function EmailSignInForm() {
 
       <h2 className="text-center text-lg font-semibold">{t("title")}</h2>
 
-      <form className="mt-4 space-y-3" onSubmit={onSubmit}>
+      <form className="mt-4 space-y-3" noValidate onSubmit={onSubmit}>
         <InputField
           autoComplete="email"
-          onChange={setEmail}
+          error={emailError}
+          label={t("emailLabel")}
+          onChange={handleEmailChange}
           placeholder={t("emailPlaceholder")}
+          required
           type="email"
           value={email}
         />
+
         <InputField
           autoComplete="current-password"
-          onChange={setPassword}
+          isVisible={showPassword}
+          label={t("passwordLabel")}
+          onChange={handlePasswordChange}
+          onToggleVisibility={() => setShowPassword((previous) => !previous)}
           placeholder={t("passwordPlaceholder")}
+          required
+          showToggle
           type="password"
           value={password}
         />
-        <Button disabled={loading || !email || !password}>
+
+        <Button disabled={!isFormValid || loading}>
           {loading ? t("buttonLoading") : t("buttonSubmit")}
         </Button>
-        <div className="h-6">{error && <AuthError message={error} />}</div>
+
+        <div className="h-5 text-sm font-normal text-red-600">
+          {serverError || " "}
+        </div>
       </form>
 
       <p className="text-text-secondary mt-4 text-center text-xs">
