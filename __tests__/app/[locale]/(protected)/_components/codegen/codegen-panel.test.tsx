@@ -38,11 +38,13 @@ const H = vi.hoisted(() => {
 
   interface StoreShape {
     codeLang: { selectedCodeLang: Lang };
+    httpUrl: { httpUrl: string };
     tabs: { activeTab: string };
   }
   const STORE: StoreShape = {
     tabs: { activeTab: TABS.headers },
     codeLang: { selectedCodeLang: SELECTED_LANG },
+    httpUrl: { httpUrl: "https://" },
   };
 
   const RESOLVED_BOX: { current: ResolvedOut } = { current: RESOLVED_OK };
@@ -200,6 +202,7 @@ describe("CodegenPanel", () => {
   it("when open & canGenerate=false: shows errors and CopyButton gets empty text; JsonViewer shows hints", () => {
     H.setTab(H.TABS.codegen);
     H.setResolved(H.RESOLVED_CANNOT);
+    H.STORE.httpUrl.httpUrl = "https://example.com";
 
     render(<CodegenPanel />);
 
