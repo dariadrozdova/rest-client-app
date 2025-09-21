@@ -22,8 +22,8 @@ export default async function PublicLayout() {
         </div>
         <div
           className={classNames(
-            "pointer-events-none absolute inset-0 z-0 mt-28 [height:100%]",
-            "[mask-image:linear-gradient(0deg,transparent_0%,transparent_20%,white_40%,white_70%,transparent_100%)]",
+            "pointer-events-none absolute inset-0 z-0 mt-60 mb-8 [height:100%]",
+            "[mask-image:linear-gradient(0deg,transparent_0%,transparent_30%,white_40%,white_70%,transparent_100%)]",
             "[--h:900] [--k:calc(min(100vw/(var(--w)*1px),100dvh/(var(--h)*1px)))] [--w:1440]",
             "[perspective-origin:50%_40%] [perspective:calc(var(--k)*1000px)]",
           )}
