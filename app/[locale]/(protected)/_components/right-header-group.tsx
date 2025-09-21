@@ -30,16 +30,15 @@ export function RightHeaderGroup() {
     <>
       <div className="text-text-secondary flex min-h-full items-center justify-evenly gap-4 px-6 pt-8 text-lg font-bold">
         <span className="px-2 py-1">
+          {t("status")}
           {response ? (
-            <span className={getStatusColor(response.status)}>
+            <span className={`ml-2 ${getStatusColor(response.status)}`}>
               {response.status} {response.statusText}
             </span>
-          ) : error ? (
-            t("status")
-          ) : isLoading ? (
-            t("loading")
+          ) : error ? null : isLoading ? (
+            <span className="ml-2">{t("loading")}</span>
           ) : (
-            t("status")
+            <span className="ml-2 font-bold">-</span>
           )}
         </span>
 
