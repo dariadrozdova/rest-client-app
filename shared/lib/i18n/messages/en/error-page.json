@@ -1,0 +1,8 @@
+{
+  "go-to-homepage": "Go to Homepage",
+  "not-found-title": "Page not found",
+  "not-found-description": "The page you are looking for does not exist. It might have been moved or deleted.",
+  "global-error-title": "Something went wrong",
+  "global-error-description": "An unexpected error occurred. Please try again.",
+  "try-again": "Try again"
+}

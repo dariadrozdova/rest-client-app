@@ -1,0 +1,13 @@
+{
+  "logoAlt": "PingPong",
+  "title": "Log in to PingPong",
+  "emailLabel": "Email",
+  "emailPlaceholder": "Enter your e-mail address...",
+  "passwordLabel": "Password",
+  "passwordPlaceholder": "Enter your password...",
+  "buttonSubmit": "Log in",
+  "buttonLoading": "Logging in…",
+  "noAccountQuestion": "Don't have an account?",
+  "signUpLink": "Sign up",
+  "genericError": "Login error"
+}

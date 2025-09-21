@@ -1,0 +1,15 @@
+{
+  "sendButton": "Отправить",
+  "loading": "Загрузка...",
+  "status": "Статус:",
+  "size": "Размер: {bytes} Б",
+  "time": "Время: {ms} мс",
+  "response": "Ответ",
+  "tabs": {
+    "headers": "Заголовки",
+    "body": "Тело запроса",
+    "variables": "Переменные",
+    "codegen": "Код",
+    "requestHistory": "История"
+  }
+}

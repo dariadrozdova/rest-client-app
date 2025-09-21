@@ -1,0 +1,28 @@
+import { configureStore } from "@reduxjs/toolkit";
+
+import bodyEditorReducer from "@/store/slices/body-editor-slice";
+import codeLangReducer from "@/store/slices/code-lang-slice";
+import headersReducer from "@/store/slices/header-slice";
+import historyReducer from "@/store/slices/history-slice";
+import methodReducer from "@/store/slices/method-slice";
+import requestReducer from "@/store/slices/request-slice";
+import tabReducer from "@/store/slices/tab-open-slice";
+import httpUrlReducer from "@/store/slices/url-slice";
+import variablesReducer from "@/store/slices/variables-slice";
+
+export const store = configureStore({
+  reducer: {
+    tabs: tabReducer,
+    headers: headersReducer,
+    bodyEditor: bodyEditorReducer,
+    variables: variablesReducer,
+    method: methodReducer,
+    httpUrl: httpUrlReducer,
+    codeLang: codeLangReducer,
+    request: requestReducer,
+    history: historyReducer,
+  },
+});
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

@@ -1,0 +1,14 @@
+{
+  "logoAlt": "PingPong",
+  "title": "Create your account",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "confirmLabel": "Confirm password",
+  "emailPlaceholder": "Enter your e-mail address...",
+  "passwordPlaceholder": "Create a password...",
+  "confirmPlaceholder": "Confirm your password...",
+  "buttonSubmit": "Sign up",
+  "buttonLoading": "Creating…",
+  "haveAccountQuestion": "Already have an account?",
+  "signInLink": "Log in"
+}

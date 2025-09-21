@@ -1,0 +1,33 @@
+export { default as backgroundLine } from "./animation/1-background-line.png";
+export { default as browserControls } from "./animation/2-browser-controls.png";
+export { default as appControls } from "./animation/3-app-controls.png";
+export { default as favorites } from "./animation/4-favorites.png";
+export { default as teams } from "./animation/5-teams.png";
+export { default as projects } from "./animation/6-projects.png";
+export { default as inputLine } from "./animation/7-input-line.png";
+export { default as logoName } from "./animation/8-logo-name.png";
+export { default as requestHist } from "./animation/9-request-history.png";
+export { default as responsePanel } from "./animation/10-response-panel.png";
+export { default as requestTabs } from "./animation/11-request-tabs.png";
+export { default as appWindow } from "./animation/13-app-window.png";
+export { default as logoBand } from "./clients/logo-band.png";
+export { default as logoCamp } from "./clients/logo-camp.png";
+
+export { default as logoCar } from "./clients/logo-car.png";
+export { default as logoChurch } from "./clients/logo-church.png";
+export { default as logoDiner } from "./clients/logo-diner.png";
+export { default as logoHotel } from "./clients/logo-hotel.png";
+export { default as logoMarket } from "./clients/logo-market.png";
+export { default as logoPrimary } from "./clients/logo-primary.png";
+export { default as logoPub } from "./clients/logo-pub.png";
+export { default as logoSchool } from "./clients/logo-school.png";
+export { default as logoTatar } from "./clients/logo-tatar.png";
+export { default as logoTravel } from "./clients/logo-travel.png";
+export { default as logoVChoir } from "./clients/logo-v-choir.png";
+export { default as logoVCircus } from "./clients/logo-v-circus.png";
+
+export { default as logoVFishermen } from "./clients/logo-v-fishermen.png";
+export { default as logoVSumo } from "./clients/logo-v-sumo.png";
+export { default as errorImage } from "./icons/error-paddle.png";
+export { default as logoFull } from "./icons/Logo-paddle-text.svg";
+export { default as logoSmall } from "./icons/Logo-paddle.svg";

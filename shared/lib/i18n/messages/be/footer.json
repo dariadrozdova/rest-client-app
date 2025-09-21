@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "product": {
+      "title": "Прадукт",
+      "links": {
+        "howItWorks": "Як гэта працуе",
+        "clients": "Нашы кліенты",
+        "pricing": "Кошты"
+      }
+    },
+    "team": {
+      "title": "Каманда LoneStarDev",
+      "links": {
+        "daria": "Дар'я Ткачэнка",
+        "valeria": "Валерыя Бяссонава",
+        "aleksei": "Аляксей Шапавалаў"
+      }
+    },
+    "inspired": {
+      "title": "Нас натхнілі",
+      "links": {
+        "rsSchool": "RS School",
+        "reactCourse": "Курс React (RS School)",
+        "mentor": "Ментар (andron13)"
+      }
+    },
+    "support": {
+      "title": "Падтрымаць RS School",
+      "links": {
+        "boosty": "Падпісацца на Boosty",
+        "opencollective": "Ахвяраваць на Open Collective"
+      }
+    }
+  },
+  "legal": {
+    "copyright": "© {year} {company}. Усе правы абаронены.",
+    "build": "Зборка v{version}"
+  }
+}

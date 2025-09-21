@@ -1,0 +1,33 @@
+{
+  "title": "Request History",
+  "columns": {
+    "method": "Method",
+    "status": "Status",
+    "time": "Time",
+    "endpoint": "Endpoint",
+    "details": "Details"
+  },
+  "buttons": {
+    "rerun": "Rerun",
+    "show": "Show"
+  },
+  "empty": {
+    "message": "No requests yet. You can create a new request directly here.",
+    "goToHeaders": "Go to headers"
+  },
+  "modal": {
+    "title": "Request Details",
+    "labels": {
+      "datetime": "Request Date & Time",
+      "endpoint": "Endpoint / URL",
+      "method": "Request Method",
+      "status": "Request Status",
+      "requestSize": "Request Size",
+      "responseSize": "Response Size",
+      "duration": "Request Duration",
+      "error": "Error"
+    },
+    "units": { "ms": "ms" },
+    "notAvailable": "-"
+  }
+}
