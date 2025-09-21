@@ -12,3 +12,17 @@ vi.mock("next/image", () => ({
     return createElement("img", { alt, ...rest });
   },
 }));
+
+vi.mock("@/shared/lib/firebase/firebase", () => ({
+  auth: {},
+  googleProvider: {},
+  database: {},
+  analytics: null,
+  app: {},
+}));
+
+vi.mock("@firebase/auth", async () => {
+  return {
+    signOut: vi.fn().mockImplementation(() => Promise.resolve()),
+  };
+});

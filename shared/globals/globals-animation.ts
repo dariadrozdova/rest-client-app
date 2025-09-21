@@ -91,29 +91,17 @@ export const LAYERS: string[] = [
 ];
 
 export const LAYER_PRESETS: LayerPreset[] = [
-  // 0: background
   { scale: 2.5, x: 1050, y: 200, zAdjust: -40 },
-  // 1: appWindow
   { scale: 1.93, x: 600, y: 190, zAdjust: -20 },
-  // 2: browserControls
   { scale: 0.6, x: -55, y: -160 },
-  // 3: appControls
   { scale: 0.55, x: -70, y: -30 },
-  // 4: favorites
   { scale: 0.55, x: -45, y: 85 },
-  // 5: teams
   { scale: 0.5, x: -65, y: 300 },
-  // 6: projects
   { scale: 0.47, x: -85, y: 650 },
-  // 7: inputLine
   { scale: 0.62, x: 10, y: 110 },
-  // 8: logoName
   { scale: 0.55, x: 190, y: 10 },
-  // 9: requestHistory
   { scale: 0.55, x: -63, y: 105 },
-  // 10: responsePanel
   { scale: 0.55, x: 800, y: -15 },
-  // 11: requestTabs
   { scale: 0.5, x: -46, y: 248 },
 ];
 
