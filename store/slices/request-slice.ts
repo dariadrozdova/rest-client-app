@@ -18,47 +18,62 @@ export const executeRequest = createAsyncThunk<
   ResponseData,
   ResolvedSelectorOutput,
   { rejectValue: string }
->(
-  "request/execute",
-  async (resolvedOutput, { rejectWithValue, dispatch: _dispatch }) => {
-    if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
-      return rejectWithValue(
-        resolvedOutput.issues.map((issue) => issue.type).join(", "),
-      );
-    }
+>("request/execute", async (resolvedOutput, { rejectWithValue }) => {
+  if (!resolvedOutput.canGenerate || !resolvedOutput.resolved) {
+    return rejectWithValue(
+      resolvedOutput.issues.map((issue) => issue.type).join(", "),
+    );
+  }
 
-    const resolved = resolvedOutput.resolved;
+  const resolved = resolvedOutput.resolved;
+
+  try {
+    const resp = await fetch("/api/request", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        method: resolved.method,
+        url: resolved.url,
+        headers: Object.fromEntries(
+          resolved.headers.map((header) => [header.name, header.value]),
+        ),
+        body: resolved.body,
+      }),
+      credentials: "include",
+    });
 
     try {
-      const resp = await fetch("/api/request", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          method: resolved.method,
-          url: resolved.url,
-          headers: Object.fromEntries(
-            resolved.headers.map((header) => [header.name, header.value]),
-          ),
-          body: resolved.body,
-        }),
-        credentials: "include",
-      });
+      const text = await resp.text();
 
       try {
-        const text = await resp.text();
-        return text
-          ? JSON.parse(text)
-          : { status: 200, statusText: resp.statusText };
+        const historyResp = await fetch("/api/history", {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (historyResp.ok) {
+          const { items } = await historyResp.json();
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(
+              new CustomEvent("refresh-history", { detail: items }),
+            );
+          }
+        }
       } catch {
-        return { status: 200, statusText: resp.statusText };
+        console.warn("Failed to refresh history after request");
       }
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+
+      return text
+        ? JSON.parse(text)
+        : { status: 200, statusText: resp.statusText };
+    } catch {
+      return { status: 200, statusText: resp.statusText };
     }
-  },
-);
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    return rejectWithValue(errorMessage);
+  }
+});
 
 const requestSlice = createSlice({
   name: "request",
