@@ -35,10 +35,10 @@ export async function POST(request: Request) {
 
     await persistHistorySafe(startedAt, payload, executed);
 
-    return NextResponse.json(dto, { status: dto.status });
+    return NextResponse.json(dto, { status: 200 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     await persistHistoryErrorSafe(startedAt, payload, message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 200 });
   }
 }

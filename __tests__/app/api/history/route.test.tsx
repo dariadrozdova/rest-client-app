@@ -64,7 +64,6 @@ vi.mock("@/utils/server/history-store", () => ({
 import { GET } from "@/app/api/history/route";
 
 const HTTP_UNAUTHORIZED = 401;
-const HTTP_INTERNAL_ERROR = 500;
 
 beforeEach(() => {
   ST.uid = null;
@@ -137,18 +136,18 @@ describe("GET /api/history", () => {
     ]);
   });
 
-  it("returns 500 with error message when history store throws an Error", async () => {
+  it("returns 200 with error message when history store throws an Error", async () => {
     ST.uid = "user-123";
     ST.failMode = "error";
 
     await GET();
 
     expect(ST.jsonCalls).toEqual([
-      { body: { error: "boom" }, init: { status: HTTP_INTERNAL_ERROR } },
+      { body: { error: "boom" }, init: { status: 200 } },
     ]);
   });
 
-  it("returns 500 with generic message when thrown value is not an Error", async () => {
+  it("returns 200 with generic message when thrown value is not an Error", async () => {
     ST.uid = "user-123";
     ST.failMode = "nonerror";
 
@@ -157,7 +156,7 @@ describe("GET /api/history", () => {
     expect(ST.jsonCalls).toEqual([
       {
         body: { error: "Internal error" },
-        init: { status: HTTP_INTERNAL_ERROR },
+        init: { status: 200 },
       },
     ]);
   });

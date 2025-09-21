@@ -166,7 +166,7 @@ describe("request slice thunk (integration)", () => {
     expect(addEntryMock).not.toHaveBeenCalled();
   });
 
-  it("success (text): sets error when backend returns non-JSON (resp.json() throws)", async () => {
+  it("success (text): keeps status 200 and clears error when backend returns non-JSON", async () => {
     const fetchMock = vi.fn(async () => {
       const headers = new Headers();
       headers.set(H.HDR_CT, "text/plain");
@@ -188,8 +188,8 @@ describe("request slice thunk (integration)", () => {
 
     const s = store.getState().request;
     expect(s.isLoading).toBe(false);
-    expect(s.response).toBeNull();
-    expect(s.error).toMatch(/Unexpected token/i);
+    expect(s.response).toEqual({ status: 200, statusText: "OK" });
+    expect(s.error).toBeNull();
   });
 
   it("cannot generate: joins issue types and rejects with joined string; does not dispatch addEntry", async () => {
