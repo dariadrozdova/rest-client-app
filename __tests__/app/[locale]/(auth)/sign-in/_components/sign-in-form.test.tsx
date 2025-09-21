@@ -158,9 +158,11 @@ describe("EmailSignInForm", () => {
     expect(serverLoginMock).toHaveBeenCalledTimes(COUNTS.once);
     expect(serverLoginMock).toHaveBeenLastCalledWith("en", TOKEN);
 
-    expect(logEventMock).toHaveBeenCalledWith(expect.any(Object), "login", {
-      method: "password",
-    });
+    const [analyticsArgument, eventName, eventParams] =
+      logEventMock.mock.calls[0];
+    expect(analyticsArgument).toBeDefined();
+    expect(eventName).toBe("login");
+    expect(eventParams).toEqual({ method: "password" });
 
     expect(doneMock).toHaveBeenCalledTimes(COUNTS.once);
   });
