@@ -24,6 +24,8 @@ export type {
   KeyValueRowProps,
   Language,
   LayoutProps,
+  PasswordChecks,
+  PasswordStrengthLevel,
   PublicLayoutProps,
   RequestState,
   ResolvedHeader,

@@ -229,6 +229,17 @@ export interface LinkItem {
   labelKey: string;
 }
 
+export interface PasswordChecks {
+  hasDigit: boolean;
+  hasLetter: boolean;
+  hasSpecial: boolean;
+  lengthOk: boolean;
+  score: number;
+  strength: PasswordStrengthLevel;
+}
+
+export type PasswordStrengthLevel = "medium" | "strong" | "weak";
+
 export interface PublicLayoutProps {
   children: ReactNode;
 }

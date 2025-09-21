@@ -8,6 +8,7 @@ import header from "@shared/lib/i18n/messages/en/header.json";
 import headerTab from "@shared/lib/i18n/messages/en/header-tab.json";
 import historyTable from "@shared/lib/i18n/messages/en/history-table.json";
 import mainPage from "@shared/lib/i18n/messages/en/main.json";
+import passwordStrength from "@shared/lib/i18n/messages/en/password-strength.json";
 import protectedHeader from "@shared/lib/i18n/messages/en/protected-header.json";
 import responsePanel from "@shared/lib/i18n/messages/en/response-panel.json";
 import signIn from "@shared/lib/i18n/messages/en/sign-in.json";
@@ -30,4 +31,5 @@ export default {
   "main-page": mainPage,
   "history-table": historyTable,
   "error-page": errorPage,
+  "password-strength": passwordStrength,
 } as const;

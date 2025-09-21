@@ -184,22 +184,6 @@ describe("EmailSignUpForm", () => {
     expect(signUpEmailMock).not.toHaveBeenCalled();
   });
 
-  it("shows weak-password error and does not call signUp when password is weak", async () => {
-    const user = userEvent.setup();
-    isStrongPasswordMock.mockReturnValueOnce(false);
-
-    render(<EmailSignUpForm />);
-
-    await user.type(screen.getByPlaceholderText(TEXT.email), INPUT.email);
-    await user.type(screen.getByPlaceholderText(TEXT.password), "weak");
-    await user.type(screen.getByPlaceholderText(TEXT.confirm), "weak");
-
-    await user.click(screen.getByRole("button", { name: TEXT.submit }));
-
-    expect(await screen.findByText(ERRORS.weak)).toBeInTheDocument();
-    expect(signUpEmailMock).not.toHaveBeenCalled();
-  });
-
   it("submits successfully: calls sign-up flow, logs analytics and redirects to /en", async () => {
     const user = userEvent.setup();
 

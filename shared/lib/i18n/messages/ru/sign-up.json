@@ -1,11 +1,14 @@
 {
-  "logoAlt": "ПингПонг",
-  "title": "Создать аккаунт",
-  "emailPlaceholder": "Введите ваш e-mail…",
-  "passwordPlaceholder": "Придумайте пароль…",
-  "confirmPlaceholder": "Подтвердите пароль…",
+  "logoAlt": "PingPong",
+  "title": "Создайте аккаунт",
+  "emailLabel": "Email",
+  "passwordLabel": "Пароль",
+  "confirmLabel": "Подтвердите пароль",
+  "emailPlaceholder": "Введите e-mail...",
+  "passwordPlaceholder": "Придумайте пароль...",
+  "confirmPlaceholder": "Повторите пароль...",
   "buttonSubmit": "Зарегистрироваться",
-  "buttonLoading": "Создаем…",
+  "buttonLoading": "Создание…",
   "haveAccountQuestion": "Уже есть аккаунт?",
   "signInLink": "Войти"
 }

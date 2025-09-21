@@ -2,7 +2,6 @@ import React, { ComponentProps, createElement } from "react";
 
 import { render, screen } from "@testing-library/react";
 
-// framer-motion: оставляем только div (контейнер сцены)
 vi.mock("framer-motion", () => {
   const motion = {
     div: (
@@ -14,7 +13,6 @@ vi.mock("framer-motion", () => {
   return { motion, AnimatePresence };
 });
 
-// ⬅️ добавь этот мок:
 vi.mock("@app/[locale]/(public)/components/three-d-layer", () => ({
   default: ({ src, layerIndex }: { layerIndex: number; src: string }) =>
     createElement("div", {
