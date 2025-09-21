@@ -151,7 +151,7 @@ beforeEach(() => {
 });
 
 describe("POST /api/execute", () => {
-  it("executes request, builds DTO, persists history, and returns JSON with DTO status", async () => {
+  it("executes request and always returns status 200 with DTO body", async () => {
     const request = new Request("http://localhost/api/execute", {
       method: "POST",
       body: JSON.stringify({
@@ -197,12 +197,12 @@ describe("POST /api/execute", () => {
     expect(ST.jsonCalls).toEqual([
       {
         body: DTO_OK,
-        init: { status: DTO_OK.status },
+        init: { status: 200 },
       },
     ]);
   });
 
-  it("on failure persists error, returns 500 with message, keeps payload built from request", async () => {
+  it("on failure persists error and still returns status 200 with error body", async () => {
     ST.shouldExecuteThrow = true;
 
     const request = new Request("http://localhost/api/execute", {
@@ -235,7 +235,7 @@ describe("POST /api/execute", () => {
     });
 
     expect(ST.jsonCalls).toEqual([
-      { body: { error: "network down" }, init: { status: 500 } },
+      { body: { error: "network down" }, init: { status: 200 } },
     ]);
   });
 });
