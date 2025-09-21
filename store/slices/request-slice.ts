@@ -43,7 +43,14 @@ export const executeRequest = createAsyncThunk<
         }),
       });
 
-      return await resp.json();
+      try {
+        const text = await resp.text();
+        return text
+          ? JSON.parse(text)
+          : { status: resp.status, statusText: resp.statusText };
+      } catch {
+        return { status: resp.status, statusText: resp.statusText };
+      }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
