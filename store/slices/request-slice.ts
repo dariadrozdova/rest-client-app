@@ -41,15 +41,16 @@ export const executeRequest = createAsyncThunk<
           ),
           body: resolved.body,
         }),
+        credentials: "include",
       });
 
       try {
         const text = await resp.text();
         return text
           ? JSON.parse(text)
-          : { status: resp.status, statusText: resp.statusText };
+          : { status: 200, statusText: resp.statusText };
       } catch {
-        return { status: resp.status, statusText: resp.statusText };
+        return { status: 200, statusText: resp.statusText };
       }
     } catch (error) {
       const errorMessage =

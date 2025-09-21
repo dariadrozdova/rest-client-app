@@ -38,6 +38,6 @@ export async function GET() {
     return NextResponse.json({ items: data });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Internal error";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 200 });
   }
 }
