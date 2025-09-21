@@ -1,3 +1,5 @@
+import { NextIntlClientProvider } from "next-intl";
+
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
@@ -7,15 +9,6 @@ import {
   NOW_ISO,
 } from "@/__tests__/app/[locale]/(protected)/_components/history-table/fixtures/history";
 import { HistoryTableRow } from "@/app/[locale]/(protected)/_components/history-table/history-table-row";
-
-vi.mock("use-intl", () => ({
-  useTranslations: () => (key: string) => {
-    const DICT: Record<string, string> = {
-      "buttons.show": "Show",
-    };
-    return DICT[key] ?? key;
-  },
-}));
 
 vi.mock("@/features/history/history-row", () => ({
   mapHistoryEntryToRowView: (_entry: unknown) => ({
@@ -43,22 +36,31 @@ describe("HistoryTableRow", () => {
     const onShowDetails = vi.fn();
 
     render(
-      <table>
-        <tbody>
-          <HistoryTableRow
-            entry={entry}
-            isSelected
-            onSelect={onSelect}
-            onShowDetails={onShowDetails}
-            tableStyles={{
-              cellPadding: "px-4 py-3",
-              headerBase: "px-4 py-3",
-              headerText: "text-xs",
-              textMedium: "font-medium",
-            }}
-          />
-        </tbody>
-      </table>,
+      <NextIntlClientProvider
+        locale="en"
+        messages={{
+          "history-table": {
+            buttons: { show: "Show" },
+          },
+        }}
+      >
+        <table>
+          <tbody>
+            <HistoryTableRow
+              entry={entry}
+              isSelected
+              onSelect={onSelect}
+              onShowDetails={onShowDetails}
+              tableStyles={{
+                cellPadding: "px-4 py-3",
+                headerBase: "px-4 py-3",
+                headerText: "text-xs",
+                textMedium: "font-medium",
+              }}
+            />
+          </tbody>
+        </table>
+      </NextIntlClientProvider>,
     );
 
     const checkbox = screen.getByRole("checkbox");

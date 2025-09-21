@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "use-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import type { HistoryEntry } from "@shared/types";
 
@@ -32,6 +32,7 @@ export function HistoryTableRow({
 }: HistoryTableRowProps) {
   const rowView = mapHistoryEntryToRowView(entry);
   const t = useTranslations("history-table");
+  const locale = useLocale();
 
   return (
     <tr
@@ -73,7 +74,7 @@ export function HistoryTableRow({
       <td
         className={classNames(tableStyles.cellPadding, "text-sm text-gray-500")}
       >
-        {getTimeAgo(rowView.requestTimestamp)}
+        {getTimeAgo(rowView.requestTimestamp, locale)}
       </td>
 
       <td
