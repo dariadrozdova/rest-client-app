@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 
-import { AuthProvider } from "@/providers/AuthProvider";
+import { AuthProvider } from "@/providers/auth-provider";
 import { store } from "@/store/store";
 
 export function ReduxProvider({ children }: { children: ReactNode }) {
