@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import RequestDetailsModal from "@app/[locale]/(protected)/_components/history-table/request-details-modal";
 import type { HistoryEntry } from "@shared/types";
@@ -18,7 +18,7 @@ import { selectResolvedRequest } from "@/utils/helpers/resolve-request";
 import { restoreRequest } from "@/utils/helpers/restore-request";
 
 export function HistoryTableClient({
-  entries,
+  entries: initialEntries,
   labels,
   detailsLabel,
   title,
@@ -30,9 +30,22 @@ export function HistoryTableClient({
 }) {
   const dispatch = useAppDispatch();
   const selectedEntryId = useAppSelector(selectSelectedEntryId);
-
+  const [entries, setEntries] = useState(initialEntries);
   const [open, setOpen] = useState(false);
   const [modalEntry, setModalEntry] = useState<HistoryEntry | null>(null);
+
+  useEffect(() => {
+    const handleRefreshHistory = (event: Event) => {
+      if (event instanceof CustomEvent) {
+        setEntries(event.detail);
+      }
+    };
+
+    window.addEventListener("refresh-history", handleRefreshHistory);
+    return () => {
+      window.removeEventListener("refresh-history", handleRefreshHistory);
+    };
+  }, []);
 
   const handleSelect = (entry: HistoryEntry) => {
     dispatch(setSelectedEntryId(entry.id));
