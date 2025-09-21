@@ -3,6 +3,10 @@
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 
+import { signOut } from "@firebase/auth";
+
+import { auth } from "@shared/lib/firebase/firebase";
+
 import { classNames } from "@/shared/styles";
 
 interface Props {
@@ -15,6 +19,7 @@ export function SignOutButton({ className, label = "Log out" }: Props) {
   const locale = useLocale();
 
   async function handleClick() {
+    await signOut(auth);
     await fetch(`/${locale}/api/auth/logout`, { method: "POST" });
     router.push(`/${locale}`);
     router.refresh();
