@@ -1,8 +1,17 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { HistoryHeader } from "@/app/[locale]/(protected)/_components/history-table/history-header";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    if (key === "buttons.rerun") {
+      return "Rerun";
+    }
+    return key;
+  },
+}));
 
 describe("HistoryHeader", () => {
   const TITLE = "Request history";
@@ -10,6 +19,7 @@ describe("HistoryHeader", () => {
   it("disables Rerun when canRerun=false", async () => {
     const onRerun = vi.fn();
     render(<HistoryHeader canRerun={false} onRerun={onRerun} title={TITLE} />);
+
     expect(
       screen.getByRole("heading", { level: 2, name: TITLE }),
     ).toBeInTheDocument();
