@@ -19,13 +19,21 @@ export function CodegenPanel() {
   const isOpen = activeTab === "codegen";
   const selected = useSelector((s: RootState) => s.codeLang.selectedCodeLang);
   const resolvedOutput = useSelector(selectResolvedRequest);
+  const httpURL = useSelector((s: RootState) => s.httpUrl.httpUrl ?? "");
   const [snippet, setSnippet] = useState("");
   const canGenerate = resolvedOutput.canGenerate && !!resolvedOutput.resolved;
   const issues = resolvedOutput.issues;
   const request = resolvedOutput.resolved;
 
+  const isVisualUrlEmpty = httpURL.replace(/^https?:\/\//i, "").trim() === "";
+
   useEffect(() => {
-    if (!isOpen || !canGenerate || !request) {
+    if (!isOpen) {
+      return;
+    }
+
+    if (!canGenerate || !request) {
+      setSnippet("");
       return;
     }
 
@@ -45,7 +53,7 @@ export function CodegenPanel() {
     <div className="col-span-full row-start-3 flex h-full flex-col gap-3 p-4">
       <div className="flex items-center gap-3">
         <CodeLangSwitch />
-        {!canGenerate && (
+        {!canGenerate && !isVisualUrlEmpty && (
           <div className="text-accent-red text-sm">
             {t("codeGenErrors.unable")}{" "}
             {issues
