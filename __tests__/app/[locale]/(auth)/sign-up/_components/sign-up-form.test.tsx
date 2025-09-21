@@ -212,9 +212,11 @@ describe("EmailSignUpForm", () => {
     expect(serverLoginMock).toHaveBeenCalledTimes(COUNTS.once);
     expect(serverLoginMock).toHaveBeenLastCalledWith("en", TOKEN);
 
-    expect(logEventMock).toHaveBeenCalledWith(expect.any(Object), "sign_up", {
-      method: "password",
-    });
+    const [analyticsArgument, eventName, eventParams] =
+      logEventMock.mock.calls[0];
+    expect(analyticsArgument).toBeDefined();
+    expect(eventName).toBe("sign_up");
+    expect(eventParams).toEqual({ method: "password" });
 
     expect(doneMock).toHaveBeenCalledWith("/en");
     expect(doneMock).toHaveBeenCalledTimes(COUNTS.once);
@@ -237,14 +239,14 @@ describe("EmailSignUpForm", () => {
 
     expect(await screen.findByText(MAPPED)).toBeInTheDocument();
 
-    expect(logEventMock).toHaveBeenCalledWith(
-      expect.any(Object),
-      "sign_up_error",
-      {
-        message: MAPPED,
-        method: "password",
-      },
-    );
+    const [analyticsArgument, eventName, eventParams] =
+      logEventMock.mock.calls[0];
+    expect(analyticsArgument).toBeDefined();
+    expect(eventName).toBe("sign_up_error");
+    expect(eventParams).toEqual({
+      message: MAPPED,
+      method: "password",
+    });
 
     expect(doneMock).not.toHaveBeenCalled();
   });
