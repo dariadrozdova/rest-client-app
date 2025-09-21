@@ -35,13 +35,13 @@ export default async function LocaleLayout({
   return (
     <html data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="bg-bg-primary text-base">
-        <ReduxProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ReduxProvider>
             <Header />
             {children}
             <Footer />
-          </NextIntlClientProvider>
-        </ReduxProvider>
+          </ReduxProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

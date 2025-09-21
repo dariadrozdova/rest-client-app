@@ -129,6 +129,7 @@ describe("HistoryTableClient", () => {
 
     render(
       <HistoryTableClient
+        detailsLabel="Details"
         entries={ENTRIES}
         labels={{
           endpoint: "Endpoint",
